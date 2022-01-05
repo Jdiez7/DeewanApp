@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "528643408666",
+    "project_id": "arabicdeewan",
+    "storage_bucket": "arabicdeewan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528643408666:android:16606f8cf7e8a83b8662a3",
+        "android_client_info": {
+          "package_name": "com.deewan.appwithfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "528643408666-or2036e5d8tt7ptr07dqvhe6hh5rnmdl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhLYbKNhDVvyslQiI1TGXFpCce_KimVk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "528643408666-or2036e5d8tt7ptr07dqvhe6hh5rnmdl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
