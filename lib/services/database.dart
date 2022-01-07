@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DataBaseService {
-  final String uid;
-  DataBaseService({required this.uid});
+  final String? uid;
+  DataBaseService({this.uid});
 
   // collection reference
   final CollectionReference deewanCollection = FirebaseFirestore.instance.collection('deewans');
@@ -16,5 +16,8 @@ class DataBaseService {
       }
     );
   }
-
+// set deewani stream
+Stream<QuerySnapshot> get deewans {
+    return deewanCollection.snapshots();
+}
 }
