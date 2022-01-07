@@ -38,6 +38,7 @@ dependencies:
   cloud_firestore: any
   firebase_core: any
   provider: any
+  flutter_spinkit: "4.0.0"
 
 dev_dependencies:
   flutter_test:
