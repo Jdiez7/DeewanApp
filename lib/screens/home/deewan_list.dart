@@ -1,4 +1,5 @@
 import 'package:appwithfirebase/models/deewani.dart';
+import 'package:appwithfirebase/screens/home/deewan_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,14 @@ class _DeewanListState extends State<DeewanList> {
       print(deewani.sugars);
       print(deewani.strength);
     });
-    return Container(
+
+
+
+    return ListView.builder(
+      itemCount: deewans.length,
+      itemBuilder: (context, index) {
+        return DeewaniTile(deewani: deewans[index]);
+      },
     );
   }
 }

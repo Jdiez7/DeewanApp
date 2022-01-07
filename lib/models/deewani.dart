@@ -1,8 +1,8 @@
 class Deewani {
-  final String? name;
-  final String? sugars;
-  final int? strength;
+  final String name;
+  final String sugars;
+  final int strength;
 
-  Deewani({this.name, this.sugars, this.strength});
+  Deewani({required this.name,required this.sugars, required this.strength});
 
 }
