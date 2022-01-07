@@ -14,6 +14,18 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    void _showSettingsPanel(){
+      showModalBottomSheet(context: context,
+          builder: (context) {
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+          child: Text('bottom Sheet')
+        );
+          }
+      );
+    }
+
     return StreamProvider<List<Deewani>>.value(
       value: DataBaseService().deewans,
       initialData: [],
@@ -30,7 +42,12 @@ class Home extends StatelessWidget {
               onPressed: () async{
                 await _auth.signOut();
               },
-            )
+            ),
+            ElevatedButton.icon(
+              
+                icon: Icon(Icons.person),
+                label: Text('settings'),
+                onPressed: () => _showSettingsPanel(),)
           ],
         ),
         body: DeewanList(
