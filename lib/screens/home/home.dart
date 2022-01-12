@@ -1,4 +1,5 @@
 import 'package:appwithfirebase/models/deewani.dart';
+import 'package:appwithfirebase/screens/home/settings_form.dart';
 import 'package:appwithfirebase/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class Home extends StatelessWidget {
           builder: (context) {
         return Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-          child: Text('bottom Sheet')
+          child: SettingsForm(),
         );
           }
       );
@@ -44,7 +45,7 @@ class Home extends StatelessWidget {
               },
             ),
             ElevatedButton.icon(
-              
+
                 icon: Icon(Icons.person),
                 label: Text('settings'),
                 onPressed: () => _showSettingsPanel(),)
