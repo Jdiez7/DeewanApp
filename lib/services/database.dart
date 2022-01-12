@@ -1,4 +1,5 @@
 import 'package:appwithfirebase/models/deewani.dart';
+import 'package:appwithfirebase/models/myuser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DataBaseService {
@@ -27,9 +28,26 @@ class DataBaseService {
       );
     }).toList();
   }
-// set deewani stream
+  //userData from snapshot
+  UserData _userDataFromSnapshot(DocumentSnapshot snapshot){
+    return UserData(
+      uid: uid,
+      name: snapshot.get('name'),
+        sugars: snapshot.get('sugars'),
+        strength: snapshot.get('strengt'));
+  }
+
+
+
+// get deewani stream
   Stream<List<Deewani>> get deewans {
     return deewanCollection.snapshots()
     .map(_deewaniListFromSnapshot);
+  }
+
+  // get user doc stream
+
+  Stream<UserData> get userData{
+    return deewanCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
 }
