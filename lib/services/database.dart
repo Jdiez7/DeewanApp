@@ -11,7 +11,7 @@ class DataBaseService {
   final CollectionReference deewanCollection =
       FirebaseFirestore.instance.collection('deewans');
 
-  Future updateUserData(String sugars, String name, int strength) async {
+  Future<void> updateUserData(String sugars, String name, int strength) async {
     return await deewanCollection.doc(uid).set({
       'sugars': sugars,
       'name': name,
@@ -34,7 +34,7 @@ class DataBaseService {
       uid: uid,
       name: snapshot.get('name'),
         sugars: snapshot.get('sugars'),
-        strength: snapshot.get('strengt'));
+        strength: snapshot.get('strength'));
   }
 
 
