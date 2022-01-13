@@ -1,4 +1,4 @@
-import 'package:appwithfirebase/models/deewani.dart';
+import 'package:appwithfirebase/models/deewani_deewanuser.dart';
 import 'package:appwithfirebase/screens/home/settings_form.dart';
 import 'package:appwithfirebase/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:appwithfirebase/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:appwithfirebase/screens/home/deewan_list.dart';
-import 'package:appwithfirebase/models/deewani.dart';
+import 'package:appwithfirebase/models/deewani_deewanuser.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);

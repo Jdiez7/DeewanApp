@@ -1,4 +1,4 @@
-import 'package:appwithfirebase/models/deewani.dart';
+import 'package:appwithfirebase/models/deewani_deewanuser.dart';
 import 'package:appwithfirebase/screens/home/deewan_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

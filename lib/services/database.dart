@@ -1,4 +1,4 @@
-import 'package:appwithfirebase/models/deewani.dart';
+import 'package:appwithfirebase/models/deewani_deewanuser.dart';
 import 'package:appwithfirebase/models/myuser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -64,4 +64,51 @@ class DataBaseService {
     return deewanCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
 
+}
+
+class DeewanDataBaseService {
+  final String? uid;
+
+  DeewanDataBaseService({this.uid});
+
+  // collection reference
+  final CollectionReference deewanuserCollection =
+  FirebaseFirestore.instance.collection('deewanUsers');
+
+  Future<void> updateDeewanUserData(String name, List<int> myFavoriteVocabs) async {
+    return await deewanuserCollection.doc(uid).set({
+      'name': name,
+      'myFavoriteVocabs': myFavoriteVocabs,
+    });
+  }
+  //Deewanusers from snapshot
+  List<DeewanUsers> _deewanUserListFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.docs.map((doc){
+      return DeewanUsers(
+        name: doc.get('name') ?? '',
+        myFavoriteVocabs: doc.get('myFavoriteVocab') ?? [],
+      );
+    }).toList();
+  }
+
+  //Deewan userData from snapshot
+  DeewanUserData _deewanUserDataFromSnapshot(DocumentSnapshot snapshot){
+    return DeewanUserData(
+      uid: uid,
+      name: snapshot.get('name'),
+      myFavoriteVocabs: snapshot.get('myFavoriteVocabs'),);
+  }
+
+
+// get deewani stream
+  Stream<List<DeewanUsers>> get deewanUsers {
+    return deewanuserCollection.snapshots()
+        .map(_deewanUserListFromSnapshot);
+  }
+
+  // get user doc stream
+
+  Stream<DeewanUserData> get deewanUserData{
+    return deewanuserCollection.doc(uid).snapshots().map(_deewanUserDataFromSnapshot);
+  }
 }

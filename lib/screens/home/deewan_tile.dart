@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:appwithfirebase/models/deewani.dart';
+import 'package:appwithfirebase/models/deewani_deewanuser.dart';
 
 class DeewaniTile extends StatelessWidget {
 

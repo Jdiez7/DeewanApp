@@ -6,3 +6,11 @@ class Deewani {
   Deewani({required this.name,required this.sugars, required this.strength});
 
 }
+
+class DeewanUsers {
+  final String name;
+  final List<int> myFavoriteVocabs;
+
+  DeewanUsers({required this.name,required this.myFavoriteVocabs,});
+
+}
