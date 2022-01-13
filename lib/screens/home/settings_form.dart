@@ -27,7 +27,6 @@ class _SettingsFormState extends State<SettingsForm> {
   @override
   Widget build(BuildContext context) {
     MyUser user = Provider.of<MyUser>(context);
-    print(user.uid.toString());
     return StreamBuilder<UserData>(
       stream: DataBaseService(uid: user.uid).userData,
       builder: (context, snapshot) {
@@ -68,7 +67,7 @@ class _SettingsFormState extends State<SettingsForm> {
                     activeColor: Colors.brown[_currentStrength],
                     inactiveColor: Colors.brown,
                     divisions: 8,
-                   value: (userData!.strength!).toDouble(),
+                   value: (_currentStrength).toDouble(),
                     onChanged: (val) => setState(() {
                       _currentStrength = val.round();
                     })),
@@ -76,16 +75,21 @@ class _SettingsFormState extends State<SettingsForm> {
                     style: ElevatedButton.styleFrom(primary: Colors.pink),
                     child: Text('Update', style: TextStyle(color: Colors.white),),
                     onPressed: () async {
-                      print(_currentName);
-                      print(_currentStrength);
-                      print(_currentSugars);
+                      if(_formKey.currentState!.validate()){
+                        await DataBaseService(uid: user.uid).updateUserData(
+                            _currentSugars,
+                            _currentName,
+                            _currentStrength);
+                        Navigator.pop(context);
+                      }
+                      
                     })
               ],
             ),
           );
         }else{
           print ('ERROR');
-          return Home();
+          return Loading();
         }
       }
     );
