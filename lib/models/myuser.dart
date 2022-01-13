@@ -18,7 +18,7 @@ class DeewanUserData {
 
   final String? uid;
   final String? name;
-  final List<int> myFavoriteVocabs;
+  final List myFavoriteVocabs;
 
   DeewanUserData({ this.name, this.uid, required this.myFavoriteVocabs,});
 }

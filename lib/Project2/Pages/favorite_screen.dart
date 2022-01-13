@@ -1,6 +1,8 @@
+import 'package:appwithfirebase/Project2/Pages/learning_material.dart';
 import 'package:appwithfirebase/Project2/Search/search.dart';
 import 'package:appwithfirebase/Project2/Search/vocab.dart';
 import 'package:appwithfirebase/models/myuser.dart';
+import 'package:appwithfirebase/screens/home/home.dart';
 import 'package:appwithfirebase/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,10 +22,12 @@ class FavoriteScreen extends StatefulWidget {
 class FavoriteScreenState extends State<FavoriteScreen> {
   Widget _buildList(BuildContext context) {
     MyUser user = Provider.of<MyUser>(context);
-
     return StreamBuilder<DeewanUserData>(
         stream: DeewanDataBaseService(uid: user.uid).deewanUserData,
         builder: (context, snapshot) {
+          DeewanUserData? deewanUserData = snapshot.data!;
+          print('name');
+          print('name: $deewanUserData.name');
           if (snapshot.hasData) {
             DeewanUserData? deewanUserData = snapshot.data!;
             return ListView.builder(

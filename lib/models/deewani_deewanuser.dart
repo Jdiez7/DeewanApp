@@ -9,7 +9,7 @@ class Deewani {
 
 class DeewanUsers {
   final String name;
-  final List<int> myFavoriteVocabs;
+  final List myFavoriteVocabs;
 
   DeewanUsers({required this.name,required this.myFavoriteVocabs,});
 

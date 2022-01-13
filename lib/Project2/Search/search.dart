@@ -34,7 +34,7 @@ class SearchWordScreenState extends State<SearchWordScreen> {
         stream: DeewanDataBaseService(uid: user.uid).deewanUserData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            DeewanUserData? deewanUserData = snapshot.data!;
+            DeewanUserData deewanUserData = snapshot.data!;
             return Scaffold(
               appBar: AppBar(
                 title: Text('SEARCH'),

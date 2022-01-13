@@ -72,11 +72,11 @@ class DeewanDataBaseService {
   DeewanDataBaseService({this.uid});
 
   // collection reference
-  final CollectionReference deewanuserCollection =
+  final CollectionReference deewanUserCollection =
   FirebaseFirestore.instance.collection('deewanUsers');
 
   Future<void> updateDeewanUserData(String name, List<int> myFavoriteVocabs) async {
-    return await deewanuserCollection.doc(uid).set({
+    return await deewanUserCollection.doc(uid).set({
       'name': name,
       'myFavoriteVocabs': myFavoriteVocabs,
     });
@@ -86,13 +86,14 @@ class DeewanDataBaseService {
     return snapshot.docs.map((doc){
       return DeewanUsers(
         name: doc.get('name') ?? '',
-        myFavoriteVocabs: doc.get('myFavoriteVocab') ?? [],
+        myFavoriteVocabs: doc.get('myFavoriteVocab') ?? <int>[],
       );
     }).toList();
   }
 
   //Deewan userData from snapshot
   DeewanUserData _deewanUserDataFromSnapshot(DocumentSnapshot snapshot){
+    print('TEST');
     return DeewanUserData(
       uid: uid,
       name: snapshot.get('name'),
@@ -102,13 +103,13 @@ class DeewanDataBaseService {
 
 // get deewani stream
   Stream<List<DeewanUsers>> get deewanUsers {
-    return deewanuserCollection.snapshots()
+    return deewanUserCollection.snapshots()
         .map(_deewanUserListFromSnapshot);
   }
 
   // get user doc stream
 
   Stream<DeewanUserData> get deewanUserData{
-    return deewanuserCollection.doc(uid).snapshots().map(_deewanUserDataFromSnapshot);
+    return deewanUserCollection.doc(uid).snapshots().map(_deewanUserDataFromSnapshot);
   }
 }
