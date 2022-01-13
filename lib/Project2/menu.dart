@@ -68,7 +68,7 @@ class FavoriteVocabs extends StatelessWidget{
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FavoriteScreen(vocabs, favoriteVocabs)),
+                MaterialPageRoute(builder: (context) => FavoriteScreen(vocabs,)),
               );
             },
             splashColor: Colors.green,

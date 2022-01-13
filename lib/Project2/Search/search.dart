@@ -1,7 +1,11 @@
 import 'package:appwithfirebase/Project2/Search/allvocabs.dart';
 import 'package:appwithfirebase/Project2/Search/search_widget.dart';
 import 'package:appwithfirebase/Project2/Search/vocab.dart';
+import 'package:appwithfirebase/models/myuser.dart';
+import 'package:appwithfirebase/services/database.dart';
+import 'package:appwithfirebase/shared/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SearchWordScreen extends StatefulWidget {
   final List<Vocab> vocabs;
@@ -24,27 +28,38 @@ class SearchWordScreenState extends State<SearchWordScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text('SEARCH'),
-          centerTitle: true,
-        ),
-        body: Column(
-          children: <Widget>[
-            buildSearch(),
-            Expanded(
-              child: ListView.builder(
-                itemCount: vocabs.length,
-                itemBuilder: (context, index) {
-                  final vocab = vocabs[index];
-
-                  return buildVocab(vocab);
-                },
+  Widget build(BuildContext context) {
+    MyUser user = Provider.of<MyUser>(context);
+    return StreamBuilder<DeewanUserData>(
+        stream: DeewanDataBaseService(uid: user.uid).deewanUserData,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            DeewanUserData? deewanUserData = snapshot.data!;
+            return Scaffold(
+              appBar: AppBar(
+                title: Text('SEARCH'),
+                centerTitle: true,
               ),
-            ),
-          ],
-        ),
-      );
+              body: Column(
+                children: <Widget>[
+                  buildSearch(),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: vocabs.length,
+                      itemBuilder: (context, index) {
+                        final vocab = vocabs[index];
+                        return buildVocab(vocab, deewanUserData);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return Loading();
+          }
+        });
+  }
 
   Widget buildSearch() => SearchWidget(
         text: query,
@@ -52,32 +67,35 @@ class SearchWordScreenState extends State<SearchWordScreen> {
         onChanged: searchVocab,
       );
 
-  Widget buildVocab(Vocab vocab) => ListTile(
-        //leading: Text(vocab.englishMain),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [Text(vocab.englishMain), Text(vocab.arabicMain)],
-        ),
-        trailing: IconButton(
-          icon: Icon(widget.favoriteVocabs.contains(vocab.id)
+  Widget buildVocab(Vocab vocab, DeewanUserData deewanUserData) => ListTile(
+      //leading: Text(vocab.englishMain),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [Text(vocab.englishMain), Text(vocab.arabicMain)],
+      ),
+      trailing: IconButton(
+        icon: Icon(
+          deewanUserData.myFavoriteVocabs.contains(vocab.id)
               ? Icons.favorite
-              : Icons.favorite_border,color: Colors.red, ),
-          onPressed: () => setState(() {
-            if(widget.favoriteVocabs.contains(vocab.id)){
-              widget.favoriteVocabs.remove(vocab.id);
-            } else {
-              widget.favoriteVocabs.add(vocab.id);
-            }
-          }),
+              : Icons.favorite_border,
+          color: Colors.red,
         ),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => VocabScreen(vocab)),
-          );}
+        onPressed: () => setState(() {
+          if (deewanUserData.myFavoriteVocabs.contains(vocab.id)) {
+            deewanUserData.myFavoriteVocabs.remove(vocab.id);
+          } else {
+            deewanUserData.myFavoriteVocabs.add(vocab.id);
+          }
+        }),
+      ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => VocabScreen(vocab)),
+        );
+      }
 
-
-          /*Navigator.pushNamed(context, VocabScreen.routeName,
+      /*Navigator.pushNamed(context, VocabScreen.routeName,
               arguments: ScreenArguments(vocab));
         },*/
       );
@@ -99,10 +117,9 @@ class SearchWordScreenState extends State<SearchWordScreen> {
   }
 }
 
-
 class VocabScreen extends StatelessWidget {
-
   final Vocab vocab;
+
   VocabScreen(this.vocab, {Key? key}) : super(key: key);
   static const routeName = '/extractArguments';
 
