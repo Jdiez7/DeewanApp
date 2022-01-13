@@ -37,6 +37,13 @@ class DataBaseService {
         strength: snapshot.get('strength'));
   }
 
+  //Deewan userData from snapshot
+  DeewanUserData _deewanUserDataFromSnapshot(DocumentSnapshot snapshot){
+    return DeewanUserData(
+        uid: uid,
+        name: snapshot.get('name'),
+        myFavoriteVocabs: snapshot.get('myFavoriteVocabs'),);
+  }
 
 
 // get deewani stream
@@ -50,4 +57,11 @@ class DataBaseService {
   Stream<UserData> get userData{
     return deewanCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
+
+  // get DeewanUserData
+
+  Stream<UserData> get deewanUserData{
+    return deewanCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
+  }
+
 }

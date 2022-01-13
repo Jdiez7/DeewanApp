@@ -82,13 +82,12 @@ class _SettingsFormState extends State<SettingsForm> {
                             _currentStrength);
                         Navigator.pop(context);
                       }
-                      
+
                     })
               ],
             ),
           );
         }else{
-          print ('ERROR');
           return Loading();
         }
       }

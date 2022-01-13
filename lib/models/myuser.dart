@@ -13,3 +13,12 @@ class UserData {
 
   UserData({ this.name, this.uid, this.sugars, this.strength});
 }
+
+class DeewanUserData {
+
+  final String? uid;
+  final String? name;
+  final List<int> myFavoriteVocabs;
+
+  DeewanUserData({ this.name, this.uid, required this.myFavoriteVocabs,});
+}
