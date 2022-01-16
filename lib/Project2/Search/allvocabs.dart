@@ -1,7 +1,25 @@
 
 import 'package:appwithfirebase/Project2/Search/vocab.dart';
+import 'package:appwithfirebase/services/database.dart';
+import 'package:flutter/material.dart';
 
-final allVocabs = <Vocab>[
+class HoldVocab with ChangeNotifier{
+  final List<Vocab> allVocabs = [];
+  HoldVocab(){
+    final dataBaseService = DeewanDataBaseService();
+    dataBaseService.backendVocabs.listen((event) {
+      for (var element in event) {
+        if(!allVocabs.contains(element)) {
+          allVocabs.add(element);
+          notifyListeners();
+        }
+      }
+    });
+  }
+}
+
+
+final allVocabs2 = <Vocab>[
   const Vocab(
     id: 1,
     arabicMain: 'مَرحَبا',

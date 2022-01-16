@@ -47,18 +47,23 @@ class FavoriteScreenState extends State<FavoriteScreen> {
                       ],
                     ),
                     trailing: IconButton(
-                      icon: Icon(Icons.remove),
-                      onPressed: () => setState(() {
-                        deewanUserData.myFavoriteVocabs.remove(thisVocab.id);
-                      }),
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => VocabScreen(thisVocab)),
-                      );
-                    });
+                        icon: Icon(Icons.remove),
+                        onPressed: () async {
+
+                          List _withoutTheFavorite = List.from(deewanUserData.myFavoriteVocabs);
+                          _withoutTheFavorite.remove(thisVocab.id);
+                          await DeewanDataBaseService(uid: user.uid)
+                              .updateDeewanUserFavorite(
+                                  _withoutTheFavorite);
+                        }),
+                onTap:
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => VocabScreen(thisVocab)),
+                  );
+                });
               },
             );
           } else {

@@ -1,3 +1,4 @@
+import 'package:appwithfirebase/Project2/Search/vocab.dart';
 import 'package:appwithfirebase/models/deewani_deewanuser.dart';
 import 'package:appwithfirebase/models/myuser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -75,9 +76,18 @@ class DeewanDataBaseService {
   final CollectionReference deewanUserCollection =
   FirebaseFirestore.instance.collection('deewanUsers');
 
-  Future<void> updateDeewanUserData(String name, List<int> myFavoriteVocabs) async {
+  final CollectionReference vocabularyCollection =
+  FirebaseFirestore.instance.collection('Vocabulary');
+
+  Future<void> updateDeewanUserData(String name, List myFavoriteVocabs) async {
     return await deewanUserCollection.doc(uid).set({
       'name': name,
+      'myFavoriteVocabs': myFavoriteVocabs,
+    });
+  }
+
+  Future<void> updateDeewanUserFavorite(List myFavoriteVocabs) async {
+    return await deewanUserCollection.doc(uid).update({
       'myFavoriteVocabs': myFavoriteVocabs,
     });
   }
@@ -93,7 +103,6 @@ class DeewanDataBaseService {
 
   //Deewan userData from snapshot
   DeewanUserData _deewanUserDataFromSnapshot(DocumentSnapshot snapshot){
-    print('TEST');
     return DeewanUserData(
       uid: uid,
       name: snapshot.get('name'),
@@ -112,4 +121,26 @@ class DeewanDataBaseService {
   Stream<DeewanUserData> get deewanUserData{
     return deewanUserCollection.doc(uid).snapshots().map(_deewanUserDataFromSnapshot);
   }
+
+  List<Vocab> _vocabListFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.docs.map((doc){
+      final id = int.tryParse(doc.get('id'));
+      if(id == null) throw Exception('couldn\'t pass ID');
+      return Vocab(
+        id: id,
+        englishMain: doc.get('englishMain') ?? 'NO ENTRY',
+        arabicMain: doc.get('arabicMain') ?? 'NO ENTRY',
+        exampleSentence: doc.get('exampleSentence') ?? 'NO ENTRY',
+      );
+    }).toList();
+  }
+
+  // get deewani stream
+  Stream<List<Vocab>> get backendVocabs {
+
+    return vocabularyCollection.snapshots()
+        .map(_vocabListFromSnapshot);
+  }
+
+
 }

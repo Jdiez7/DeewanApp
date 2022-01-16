@@ -38,7 +38,7 @@ class _Home2State extends State<Home2>{
   final String accountName;
   final String accountEmail;
   List<int> favoriteVocab = List<int>.empty(growable: true);
-  List<Vocab> vocabs = allVocabs;
+  List<Vocab> vocabs = allVocabs2;
   final AuthService _auth = AuthService();
 
 
@@ -109,7 +109,6 @@ class _Home2State extends State<Home2>{
       ),
     );
   }
-
 }
 
 

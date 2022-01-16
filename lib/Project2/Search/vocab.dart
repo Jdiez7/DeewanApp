@@ -25,3 +25,5 @@ class Vocab {
     'urlImage': exampleSentence,
   };
 }
+
+final List<int> hello = [1,2,3,4,];

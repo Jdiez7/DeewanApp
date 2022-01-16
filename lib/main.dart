@@ -1,3 +1,4 @@
+import 'package:appwithfirebase/Project2/Search/allvocabs.dart';
 import 'package:appwithfirebase/models/myuser.dart';
 import 'package:appwithfirebase/screens/wrapper.dart';
 import 'package:appwithfirebase/services/auth.dart';
@@ -18,12 +19,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<MyUser?>.value(
-      value: AuthService().user,
-      initialData: null,
-      child: MaterialApp(
-        home: Wrapper(),
-      )
+    return MultiProvider(
+      providers: [ChangeNotifierProvider<HoldVocab>(create: (context) => HoldVocab())],
+      child: StreamProvider<MyUser?>.value(
+        value: AuthService().user,
+        initialData: null,
+        child: MaterialApp(
+          home: Wrapper(),
+        )
+      ),
     );
   }
 }
