@@ -1,3 +1,4 @@
+import 'package:appwithfirebase/From%20other%20git/vocablist.dart';
 import 'package:appwithfirebase/Project2/Search/search.dart';
 import 'package:appwithfirebase/Project2/Search/vocab.dart';
 import 'package:flutter/material.dart';
@@ -98,13 +99,12 @@ class MyMenu3 extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return  Card(
-
         margin: const EdgeInsets.all(8.0),
         child: InkWell(
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => quiz_page()),
+                MaterialPageRoute(builder: (context) => VocabList()),
               );
             },
             splashColor: Colors.green,

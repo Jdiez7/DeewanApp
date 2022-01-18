@@ -19,15 +19,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [ChangeNotifierProvider<HoldVocab>(create: (context) => HoldVocab())],
-      child: StreamProvider<MyUser?>.value(
+    return StreamProvider<MyUser?>.value(
         value: AuthService().user,
         initialData: null,
         child: MaterialApp(
           home: Wrapper(),
-        )
-      ),
+        ),
     );
   }
 }

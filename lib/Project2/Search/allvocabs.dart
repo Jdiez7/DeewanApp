@@ -1,13 +1,17 @@
 
 import 'package:appwithfirebase/Project2/Search/vocab.dart';
 import 'package:appwithfirebase/services/database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class HoldVocab with ChangeNotifier{
   final List<Vocab> allVocabs = [];
+  final dataBaseService = DeewanDataBaseService();
+
   HoldVocab(){
     final dataBaseService = DeewanDataBaseService();
     dataBaseService.backendVocabs.listen((event) {
+      print(event.toString());
       for (var element in event) {
         if(!allVocabs.contains(element)) {
           allVocabs.add(element);

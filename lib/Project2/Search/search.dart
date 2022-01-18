@@ -19,7 +19,9 @@ class SearchWordScreen extends StatefulWidget {
 
 class SearchWordScreenState extends State<SearchWordScreen> {
   String query = '';
+  final List<Vocab> allVocabs = [];
   late List<Vocab> vocabs;
+
 
   @override
   void initState() {
@@ -30,6 +32,7 @@ class SearchWordScreenState extends State<SearchWordScreen> {
   @override
   Widget build(BuildContext context) {
     MyUser user = Provider.of<MyUser>(context);
+
     return StreamBuilder<DeewanUserData>(
         stream: DeewanDataBaseService(uid: user.uid).deewanUserData,
         builder: (context, snapshot) {
@@ -43,16 +46,12 @@ class SearchWordScreenState extends State<SearchWordScreen> {
               body: Column(
                 children: <Widget>[
                   buildSearch(),
-                  Expanded(
-                    child: Consumer<HoldVocab>(
-                      builder:(context,holdVocab,_) => ListView.builder(
-                        itemCount: vocabs.length,
-                        itemBuilder: (context, index) {
-                          final vocab = vocabs[index];
-                          return buildVocab(vocab, deewanUserData);
-                        },
-                      ),
-                    ),
+                  ListView.builder(
+                    itemCount: vocabs.length,
+                    itemBuilder: (context, index) {
+                      final vocab = vocabs[index];
+                      return buildVocab(vocab, deewanUserData);
+                    },
                   ),
                 ],
               ),
@@ -63,21 +62,21 @@ class SearchWordScreenState extends State<SearchWordScreen> {
         });
   }
 
-  Widget buildSearch() => Consumer<HoldVocab>(
-    builder: (context, holdVocab, _) {
-      vocabs = holdVocab.allVocabs;
-      //searchVocab(query);
-      return SearchWidget(
-            text: query,
-            hintText: 'Search Word',
-            onChanged: searchVocab,
-          );
-    }
-  );
+  Widget buildSearch() => Consumer<HoldVocab>(builder: (context, holdVocab, _) {
+      // vocabs = Provider.of<List<Vocab>>(context);
+
+    //vocabs = holdVocab.allVocabs;
+        searchVocab(query);
+        return SearchWidget(
+          text: query,
+          hintText: 'Search Word',
+          onChanged: searchVocab,
+        );
+      });
 
   Widget buildVocab(Vocab vocab, DeewanUserData deewanUserData) => ListTile(
       //leading: Text(vocab.englishMain),
-  title: Row(
+      title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [Text(vocab.englishMain), Text(vocab.arabicMain)],
       ),
@@ -90,17 +89,14 @@ class SearchWordScreenState extends State<SearchWordScreen> {
         ),
         onPressed: () => setState(() async {
           List _withoutTheFavorite = List.from(deewanUserData.myFavoriteVocabs);
-          if (deewanUserData.myFavoriteVocabs.contains(vocab.id))  {
-              _withoutTheFavorite.remove(vocab.id);
-              await DeewanDataBaseService(uid: deewanUserData.uid)
-                  .updateDeewanUserFavorite(
-                  _withoutTheFavorite);
-            }
-           else {
+          if (deewanUserData.myFavoriteVocabs.contains(vocab.id)) {
+            _withoutTheFavorite.remove(vocab.id);
+            await DeewanDataBaseService(uid: deewanUserData.uid)
+                .updateDeewanUserFavorite(_withoutTheFavorite);
+          } else {
             _withoutTheFavorite.add(vocab.id);
             await DeewanDataBaseService(uid: deewanUserData.uid)
-                .updateDeewanUserFavorite(
-                _withoutTheFavorite);
+                .updateDeewanUserFavorite(_withoutTheFavorite);
           }
         }),
       ),
