@@ -21,6 +21,7 @@ class Vocab {
   final String adjective;
   final String adjectiveEng;
   final String masder;
+  final String masderENG;
   final String ex1ENG;
   final String ex1ARA;
   final String ex2ENG;
@@ -69,6 +70,7 @@ class Vocab {
     required this.adjective,
     required this.adjectiveEng,
     required this.masder,
+    required this.masderENG,
     required this.ex1ENG,
     required this.ex1ARA,
     required this.ex2ENG,

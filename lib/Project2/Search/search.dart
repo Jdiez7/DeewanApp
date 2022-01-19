@@ -151,7 +151,7 @@ class VocabScreen extends StatelessWidget {
         title: Text(vocab.englishMain + '  -  ' + vocab.arabicMain),
       ),
       body: Center(
-        child: Text(vocab.exampleSentence),
+        child: Text(vocab.ex1ENG),
       ),
     );
   }
