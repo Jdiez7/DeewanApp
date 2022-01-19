@@ -44,8 +44,7 @@ class SearchWordScreenState extends State<SearchWordScreen> {
                 children: <Widget>[
                   buildSearch(),
                   Expanded(
-                    child: Consumer<HoldVocab>(
-                      builder:(context,holdVocab,_) => ListView.builder(
+                    child: ListView.builder(
                         itemCount: vocabs.length,
                         itemBuilder: (context, index) {
                           final vocab = vocabs[index];
@@ -53,7 +52,7 @@ class SearchWordScreenState extends State<SearchWordScreen> {
                         },
                       ),
                     ),
-                  ),
+
                 ],
               ),
             );
@@ -62,8 +61,12 @@ class SearchWordScreenState extends State<SearchWordScreen> {
           }
         });
   }
-
-  Widget buildSearch() => Consumer<HoldVocab>(
+  Widget buildSearch() => SearchWidget(
+    text: query,
+    hintText: 'Search Word',
+    onChanged: searchVocab,
+  );
+  /*Widget buildSearch() => Consumer<HoldVocab>(
     builder: (context, holdVocab, _) {
       vocabs = holdVocab.allVocabs;
       //searchVocab(query);
@@ -74,7 +77,7 @@ class SearchWordScreenState extends State<SearchWordScreen> {
           );
     }
   );
-
+*/
   Widget buildVocab(Vocab vocab, DeewanUserData deewanUserData) => ListTile(
       //leading: Text(vocab.englishMain),
   title: Row(
@@ -117,7 +120,7 @@ class SearchWordScreenState extends State<SearchWordScreen> {
       );
 
   void searchVocab(String query) {
-    final vocabs = allVocabs2.where((vocab) {
+    final vocabs = widget.vocabs.where((vocab) {
       final titleLower = vocab.englishMain.toLowerCase();
       final authorLower = vocab.arabicMain.toLowerCase();
       final searchLower = query.toLowerCase();

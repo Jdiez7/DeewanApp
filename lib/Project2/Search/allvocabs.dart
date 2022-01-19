@@ -1,9 +1,11 @@
+/*
 
 import 'package:appwithfirebase/Project2/Search/vocab.dart';
 import 'package:appwithfirebase/services/database.dart';
 import 'package:flutter/material.dart';
 
-class HoldVocab with ChangeNotifier{
+*/
+/*class HoldVocab with ChangeNotifier{
   final List<Vocab> allVocabs = [];
   HoldVocab(){
     final dataBaseService = DeewanDataBaseService();
@@ -16,7 +18,8 @@ class HoldVocab with ChangeNotifier{
       }
     });
   }
-}
+}*//*
+
 
 
 final allVocabs2 = <Vocab>[
@@ -79,4 +82,4 @@ final allVocabs2 = <Vocab>[
       arabicMain: 'مَدينة',
       englishMain: 'City',
       exampleSentence:
-'Example Sentence with City',),];
+'Example Sentence with City',),];*/

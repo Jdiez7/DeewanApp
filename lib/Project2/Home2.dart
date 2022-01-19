@@ -1,4 +1,6 @@
+import 'package:appwithfirebase/services/database.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../services/auth.dart';
 import './menu.dart';
 import 'Search/allvocabs.dart';
@@ -38,7 +40,7 @@ class _Home2State extends State<Home2>{
   final String accountName;
   final String accountEmail;
   List<int> favoriteVocab = List<int>.empty(growable: true);
-  List<Vocab> vocabs = allVocabs2;
+  //List<Vocab> vocabs = allVocabs2;
   final AuthService _auth = AuthService();
 
 
@@ -94,18 +96,24 @@ class _Home2State extends State<Home2>{
         ),
       ),
 
-      body: Container(
-        padding: const EdgeInsets.all(30.0),
-        child: GridView.count(
-            crossAxisCount: 2,
-            children: <Widget>[
-              MyMenu(title: 'Word Search', icon: Icons.search, warna: Colors.brown,vocabs: vocabs, favoriteVocabs: favoriteVocab),
-              FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: Colors.brown, vocabs: vocabs, favoriteVocabs: favoriteVocab),
-              MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.brown,),
-              MyMenu4(title: 'Learning Material', icon: Icons.school, warna: Colors.brown,),
-              MyMenu5(title: 'My Account', icon: Icons.account_circle, warna: Colors.brown,),
-              MyMenu6(title: 'Refer to a friend', icon: Icons.send, warna: Colors.brown,),
-            ],)
+      body: StreamProvider<List<Vocab>>.value(
+        value: DeewanDataBaseService().backendVocabs,
+        initialData: [],
+        builder: (context, snapshot) {
+          return Container(
+            padding: const EdgeInsets.all(30.0),
+            child: GridView.count(
+                crossAxisCount: 2,
+                children: <Widget>[
+                  MyMenu(title: 'Word Search', icon: Icons.search, warna: Colors.brown,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
+                  FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: Colors.brown, /*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
+                  MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.brown,),
+                  MyMenu4(title: 'Learning Material', icon: Icons.school, warna: Colors.brown,),
+                  MyMenu5(title: 'My Account', icon: Icons.account_circle, warna: Colors.brown,),
+                  MyMenu6(title: 'Refer to a friend', icon: Icons.send, warna: Colors.brown,),
+                ],)
+          );
+        }
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:appwithfirebase/Project2/Search/search.dart';
 import 'package:appwithfirebase/Project2/Search/vocab.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'Pages/favorite_screen.dart';
 import 'Pages/quiz_page.dart';
 import 'Pages/favorite_words.dart';
@@ -16,13 +17,15 @@ class MyMenu extends StatelessWidget{
   final IconData icon;
   final MaterialColor warna;
   final List<int> favoriteVocabs;
-  final List<Vocab> vocabs;
+  //final List<Vocab> vocabs;
 
-  MyMenu({this.title = 'ERROR', this.icon = Icons.error, this.warna = Colors.purple, required this.favoriteVocabs,required this.vocabs});
+  MyMenu({this.title = 'ERROR', this.icon = Icons.error, this.warna = Colors.purple, required this.favoriteVocabs,/*required this.vocabs*/});
+
 
 
   @override
   Widget build(BuildContext context){
+    final vocabs = Provider.of<List<Vocab>>(context);
     return  Card(
 
         margin: const EdgeInsets.all(8.0),
@@ -54,13 +57,14 @@ class FavoriteVocabs extends StatelessWidget{
   final IconData icon;
   final MaterialColor warna;
   final List<int> favoriteVocabs;
-  final List<Vocab> vocabs;
+  //final List<Vocab> vocabs;
 
-  FavoriteVocabs({this.title = 'ERROR', this.icon = Icons.error, this.warna = Colors.purple, required this.favoriteVocabs, required this.vocabs,});
+  FavoriteVocabs({this.title = 'ERROR', this.icon = Icons.error, this.warna = Colors.purple, required this.favoriteVocabs, /*required this.vocabs,*/});
 
 
   @override
   Widget build(BuildContext context){
+    final vocabs = Provider.of<List<Vocab>>(context);
     return  Card(
 
         margin: const EdgeInsets.all(8.0),
