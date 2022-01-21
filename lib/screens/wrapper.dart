@@ -1,3 +1,5 @@
+import 'package:appwithfirebase/From%20other%20git/Home3.dart';
+import 'package:appwithfirebase/Project2/Home2.dart';
 import 'package:appwithfirebase/models/myuser.dart';
 import 'package:appwithfirebase/screens/authenticate/authenticate.dart';
 import 'package:appwithfirebase/screens/home/home.dart';
@@ -16,7 +18,7 @@ class Wrapper extends StatelessWidget {
     if (user == null){
       return Authenticate();
     } else {
-      return Home();
+      return Home2();
     }
       }
 }

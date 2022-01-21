@@ -1,3 +1,4 @@
+import 'package:appwithfirebase/Project2/Search/allvocabs.dart';
 import 'package:appwithfirebase/models/myuser.dart';
 import 'package:appwithfirebase/screens/wrapper.dart';
 import 'package:appwithfirebase/services/auth.dart';
@@ -19,11 +20,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<MyUser?>.value(
-      value: AuthService().user,
-      initialData: null,
-      child: MaterialApp(
-        home: Wrapper(),
-      )
+        value: AuthService().user,
+        initialData: null,
+        child: MaterialApp(
+          home: Wrapper(),
+        )
+
     );
   }
 }
