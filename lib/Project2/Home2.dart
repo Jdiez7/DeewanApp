@@ -49,10 +49,10 @@ class _Home2State extends State<Home2>{
     return Scaffold(
       appBar: AppBar(
         title: const Text('Menu'),
-        backgroundColor: Colors.brown,
+        backgroundColor: Colors.blue,
         actions: <Widget>[
           ElevatedButton.icon(
-      style: ElevatedButton.styleFrom(primary: Colors.brown[300]),
+      style: ElevatedButton.styleFrom(primary: Colors.blue[300]),
             icon: const Icon(Icons.person),
             label: Text('Logout'),
             onPressed: () async{
@@ -61,7 +61,7 @@ class _Home2State extends State<Home2>{
           )
         ],
       ),
-      backgroundColor: Colors.brown[100],
+      backgroundColor: Colors.green[300],
 
       drawer: Drawer(
         child: ListView(
@@ -72,7 +72,7 @@ class _Home2State extends State<Home2>{
                 currentAccountPicture: const CircleAvatar(
                   backgroundImage: NetworkImage("https://pic.onlinewebfonts.com/svg/img_335286.png"),
                 ),
-                decoration: const BoxDecoration(color: Colors.brown),
+                decoration: const BoxDecoration(color: Colors.blue),
             ),
 
             const ListTile(
@@ -105,12 +105,12 @@ class _Home2State extends State<Home2>{
             child: GridView.count(
                 crossAxisCount: 2,
                 children: <Widget>[
-                  MyMenu(title: 'Word Search', icon: Icons.search, warna: Colors.brown,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
-                  FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: Colors.brown, /*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
-                  MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.brown,),
-                  MyMenu4(title: 'Learning Material', icon: Icons.school, warna: Colors.brown,),
-                  MyMenu5(title: 'My Account', icon: Icons.account_circle, warna: Colors.brown,),
-                  MyMenu6(title: 'Refer to a friend', icon: Icons.send, warna: Colors.brown,),
+                  MyMenu(title: 'Word Search', icon: Icons.search, warna: Colors.blue,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
+                  FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: Colors.blue, /*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
+                  MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
+                  MyMenu4(title: 'Learning Material', icon: Icons.school, warna: Colors.blue,),
+                  MyMenu5(title: 'My Account', icon: Icons.account_circle, warna: Colors.blue,),
+                  MyMenu6(title: 'Refer to a friend', icon: Icons.send, warna: Colors.blue,),
                 ],)
           );
         }

@@ -1,13 +1,14 @@
+
 import 'package:appwithfirebase/models/myuser.dart';
 import 'package:appwithfirebase/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+/*
 class AuthService{
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //create user obj based on FirebaseUser
-  MyUser? _userFromFirebaseUser(User? user){
+  MyUser? _userFromFirebaseUser(User user){
     return user != null ? MyUser(uid: user.uid) : null;
   }
 
@@ -23,8 +24,8 @@ class AuthService{
   Future signinAnon() async {
     try {
       UserCredential result = await _auth.signInAnonymously();
-      User? user = result.user;
-      return _userFromFirebaseUser(user!);
+      User user = result.user;
+      return _userFromFirebaseUser(user);
     } catch(e){
       print(e.toString());
       return null;
@@ -37,10 +38,10 @@ class AuthService{
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      User? myUser = result.user;
+      User myUser = result.user;
 
 
-      return _userFromFirebaseUser(myUser!);
+      return _userFromFirebaseUser(myUser);
     } catch(e){
       print(e.toString());
       return null;
@@ -52,11 +53,11 @@ class AuthService{
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      User? myDeewanUser = result.user;
+      User myDeewanUser = result.user;
 
       // create a new document for the user with the uid
-      await DeewanDataBaseService(uid: myDeewanUser?.uid).updateDeewanUserData('new Deewan user', <int>[]);
-      return _userFromFirebaseUser(myDeewanUser!);
+      await DeewanDataBaseService(uid: myDeewanUser.uid).updateDeewanUserData('new Deewan user', <int>[]);
+      return _userFromFirebaseUser(myDeewanUser);
     } catch(e){
       print(e.toString());
       return null;
@@ -72,4 +73,4 @@ class AuthService{
       return null;
     }
   }
-}
+}*/

@@ -76,7 +76,7 @@ class FavoriteScreenState extends State<FavoriteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.blue,
           title: const Text('Favorite Words'),
         ),
         /*actions: <Widget>[
