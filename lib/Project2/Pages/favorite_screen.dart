@@ -3,6 +3,7 @@ import 'package:appwithfirebase/Project2/Search/search.dart';
 import 'package:appwithfirebase/Project2/Search/vocab.dart';
 import 'package:appwithfirebase/models/myuser.dart';
 import 'package:appwithfirebase/screens/home/home.dart';
+import 'package:appwithfirebase/screens/home/vocab_screen.dart';
 import 'package:appwithfirebase/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
