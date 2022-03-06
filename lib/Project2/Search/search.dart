@@ -93,17 +93,19 @@ class SearchWordScreenState extends State<SearchWordScreen> {
               : Icons.favorite_border,
           color: Colors.red,
         ),
-        onPressed: () => setState(() async {
+        onPressed: () =>
+
+            setState(()  {
           List _withoutTheFavorite = List.from(deewanUserData.myFavoriteVocabs);
           if (deewanUserData.myFavoriteVocabs.contains(vocab.id))  {
               _withoutTheFavorite.remove(vocab.id);
-              await DeewanDataBaseService(uid: deewanUserData.uid)
+              DeewanDataBaseService(uid: deewanUserData.uid)
                   .updateDeewanUserFavorite(
                   _withoutTheFavorite);
             }
            else {
             _withoutTheFavorite.add(vocab.id);
-            await DeewanDataBaseService(uid: deewanUserData.uid)
+            DeewanDataBaseService(uid: deewanUserData.uid)
                 .updateDeewanUserFavorite(
                 _withoutTheFavorite);
           }

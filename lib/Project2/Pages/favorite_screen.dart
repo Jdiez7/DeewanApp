@@ -26,9 +26,9 @@ class FavoriteScreenState extends State<FavoriteScreen> {
     return StreamBuilder<DeewanUserData>(
         stream: DeewanDataBaseService(uid: user.uid).deewanUserData,
         builder: (context, snapshot) {
-          DeewanUserData? deewanUserData = snapshot.data!;
-          print('name');
-          print('name: $deewanUserData.name');
+          //DeewanUserData? deewanUserData = snapshot.data;
+          //print('name');
+          //print('name: $deewanUserData.name');
           if (snapshot.hasData) {
             DeewanUserData? deewanUserData = snapshot.data!;
             return ListView.builder(
