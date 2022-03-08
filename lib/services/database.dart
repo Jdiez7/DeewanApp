@@ -100,6 +100,10 @@ class DeewanDataBaseService {
     });
   }
 
+  Future<void> deleteFile(docid) async {
+    return await deewanUserCollection.doc(uid).collection('personalVocabs').doc(docid).delete();
+  }
+
   Future<void> updateDeewanUserPersonalVocab(List personalVocab) async {
     return await deewanUserCollection.doc(uid).update({
       'personalVocab': personalVocab,
@@ -120,8 +124,9 @@ class DeewanDataBaseService {
   List<SinglePersonalVocabList> _personalVocabFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return SinglePersonalVocabList(
+        docId: doc.reference.id,
         listName: doc.get('name') ?? '',
-        personalVocabsList: doc.get('vocablist') ?? <int>[1,2,3],
+        personalVocabsList: doc.get('vocablist') ?? <int>[2,3],
       );
     }).toList();
   }

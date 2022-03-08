@@ -32,7 +32,7 @@ class FavoriteScreenState extends State<FavoriteScreen> {
         stream: DeewanDataBaseService(uid: user.uid).personalVocabData,
         initialData: [],
         builder: (context, snapshot) {
-          String _query ='';
+          String _query = '';
           //final personalVocabs = Provider.of<List<NewVocabList>>(context);
           //DeewanUserData? deewanUserData = snapshot.data;
           //print('name');
@@ -40,62 +40,69 @@ class FavoriteScreenState extends State<FavoriteScreen> {
           if (snapshot.hasData) {
             List<SinglePersonalVocabList>? personalVocabList = snapshot.data;
             final int _Listlength;
-            if (personalVocabList == null) {_Listlength=2;} else{_Listlength=personalVocabList.length + 2; }
+            if (personalVocabList == null) {
+              _Listlength = 2;
+            } else {
+              _Listlength = personalVocabList.length + 2;
+            }
 
             return ListView.builder(
               itemCount: _Listlength,
               padding: const EdgeInsets.all(16.0),
               itemBuilder: (context, index) {
-                if (index == _Listlength-1) {
+                if (index == _Listlength - 1) {
                   return ListTile(
-                    title: TextField(
-                      onChanged:(text) {
-                   _query = text;
-                  },
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Add New Collection',
+                      title: TextField(
+                        onChanged: (text) {
+                          _query = text;
+                        },
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Add New Collection',
+                        ),
                       ),
-                    ),
-                    leading: IconButton(
-                      icon: Icon(Icons.add),
-                    onPressed: () async {
-                      print(personalVocabList![0].listName);
-                      await DeewanDataBaseService(uid: user.uid)
-                          .addNewFile(_query);}),
-                    onTap: () async {
-
-
-
-                    });}
+                      leading: IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: () async {
+                            print(personalVocabList![0].listName);
+                            await DeewanDataBaseService(uid: user.uid)
+                                .addNewFile(_query);
+                          }),
+                      onTap: () async {});
+                }
                 if (index == 0) {
                   return ListTile(
                       title: Text('Favorite List'),
-                      onTap:
-                          () {
+                      onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => FavoriteScreenSubOld(widget.vocabs)),
+                              builder: (context) =>
+                                  FavoriteScreenSubOld(widget.vocabs)),
                         );
-
-                      });}
+                      });
+                }
 
                 return ListTile(
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(personalVocabList![index-1].listName),
+                        Text(personalVocabList![index - 1].listName),
                       ],
                     ),
-                onTap:
-                () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => FavoriteScreenSub(widget.vocabs, personalVocabList[index-1])),
-                  );
-                });
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FavoriteScreenSub(
+                                widget.vocabs, personalVocabList[index - 1])),
+                      );
+                    },
+                trailing: IconButton(
+                icon: Icon(Icons.remove),
+                onPressed: () async {await DeewanDataBaseService(uid: user.uid)
+                    .deleteFile(personalVocabList[index - 1].docId);
+                }),);
               },
             );
           } else {
