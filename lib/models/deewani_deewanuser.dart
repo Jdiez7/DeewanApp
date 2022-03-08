@@ -1,3 +1,5 @@
+import 'package:appwithfirebase/models/myuser.dart';
+
 class Deewani {
   final String name;
   final String sugars;
@@ -10,7 +12,7 @@ class Deewani {
 class DeewanUsers {
   final String name;
   final List myFavoriteVocabs;
-
-  DeewanUsers({required this.name,required this.myFavoriteVocabs,});
+  final List<SinglePersonalVocabList> personalVocab;
+  DeewanUsers({required this.name,required this.myFavoriteVocabs, required this.personalVocab});
 
 }

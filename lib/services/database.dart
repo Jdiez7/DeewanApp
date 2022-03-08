@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DataBaseService {
   final String? uid;
-
   DataBaseService({this.uid});
 
   // collection reference
@@ -46,6 +45,7 @@ class DataBaseService {
       uid: uid,
       name: snapshot.get('name'),
       myFavoriteVocabs: snapshot.get('myFavoriteVocabs'),
+      personalVocab: snapshot.get('personalVocab')
     );
   }
 
@@ -79,10 +79,11 @@ class DeewanDataBaseService {
   final CollectionReference vocabularyCollection =
       FirebaseFirestore.instance.collection('Vocabulary');
 
-  Future<void> updateDeewanUserData(String name, List myFavoriteVocabs) async {
+  Future<void> updateDeewanUserData(String name, List myFavoriteVocabs, List<SinglePersonalVocabList> personalVocab) async {
     return await deewanUserCollection.doc(uid).set({
       'name': name,
       'myFavoriteVocabs': myFavoriteVocabs,
+      'personalVocab': personalVocab,
     });
   }
 
@@ -92,15 +93,40 @@ class DeewanDataBaseService {
     });
   }
 
+  Future<DocumentReference<Map<String, dynamic>>> addNewFile(name) async {
+    return await deewanUserCollection.doc(uid).collection('personalVocabs').add({
+      'name': name,
+      'vocablist': [1,2,3],
+    });
+  }
+
+  Future<void> updateDeewanUserPersonalVocab(List personalVocab) async {
+    return await deewanUserCollection.doc(uid).update({
+      'personalVocab': personalVocab,
+    });
+  }
+
   //Deewanusers from snapshot
   List<DeewanUsers> _deewanUserListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return DeewanUsers(
         name: doc.get('name') ?? '',
-        myFavoriteVocabs: doc.get('myFavoriteVocab') ?? <int>[],
+        myFavoriteVocabs: doc.get('myFavoriteVocabs') ?? <int>[],
+        personalVocab: doc.get('personalVocab') ?? <SinglePersonalVocabList>[],
       );
     }).toList();
   }
+
+  List<SinglePersonalVocabList> _personalVocabFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return SinglePersonalVocabList(
+        listName: doc.get('name') ?? '',
+        personalVocabsList: doc.get('vocablist') ?? <int>[1,2,3],
+      );
+    }).toList();
+  }
+
+
 
   //Deewan userData from snapshot
   DeewanUserData _deewanUserDataFromSnapshot(DocumentSnapshot snapshot) {
@@ -108,8 +134,10 @@ class DeewanDataBaseService {
       uid: uid,
       name: snapshot.get('name'),
       myFavoriteVocabs: snapshot.get('myFavoriteVocabs'),
+     personalVocab: snapshot.get('personalVocab'),
     );
   }
+
 
 // get deewani stream
   Stream<List<DeewanUsers>> get deewanUsers {
@@ -124,6 +152,12 @@ class DeewanDataBaseService {
         .snapshots()
         .map(_deewanUserDataFromSnapshot);
   }
+
+  Stream<List<SinglePersonalVocabList>> get personalVocabData {
+    return deewanUserCollection.doc(uid).collection('personalVocabs').snapshots().map(_personalVocabFromSnapshot);
+  }
+
+
 
   List<Vocab> _vocabListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {

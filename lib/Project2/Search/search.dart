@@ -1,8 +1,10 @@
 import 'package:appwithfirebase/Project2/Search/allvocabs.dart';
 import 'package:appwithfirebase/Project2/Search/search_widget.dart';
 import 'package:appwithfirebase/Project2/Search/vocab.dart';
+import 'package:appwithfirebase/Project2/menu.dart';
 import 'package:appwithfirebase/models/myuser.dart';
 import 'package:appwithfirebase/screens/home/vocab_screen.dart';
+import 'package:appwithfirebase/screens/wrapper.dart';
 import 'package:appwithfirebase/services/database.dart';
 import 'package:appwithfirebase/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +61,7 @@ class SearchWordScreenState extends State<SearchWordScreen> {
               ),
             );
           } else {
-            return Loading();
+            return Wrapper();
           }
         });
   }

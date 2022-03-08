@@ -19,6 +19,13 @@ class DeewanUserData {
   final String? uid;
   final String? name;
   final List myFavoriteVocabs;
+  final List personalVocab;
 
-  DeewanUserData({ this.name, this.uid, required this.myFavoriteVocabs,});
+  DeewanUserData({ this.name, this.uid, required this.myFavoriteVocabs, required this.personalVocab});
+}
+
+class SinglePersonalVocabList{
+  final String listName;
+  final List personalVocabsList;
+  SinglePersonalVocabList({required this.listName, required this.personalVocabsList,});
 }

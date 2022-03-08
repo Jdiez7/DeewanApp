@@ -55,7 +55,7 @@ class AuthService{
       User? myDeewanUser = result.user;
 
       // create a new document for the user with the uid
-      await DeewanDataBaseService(uid: myDeewanUser?.uid).updateDeewanUserData('new Deewan user', <int>[]);
+      await DeewanDataBaseService(uid: myDeewanUser?.uid).updateDeewanUserData('new Deewan user', <int>[], <SinglePersonalVocabList>[]);
       return _userFromFirebaseUser(myDeewanUser!);
     } catch(e){
       print(e.toString());
