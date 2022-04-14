@@ -1,3 +1,5 @@
+import 'package:appwithfirebase/Project2/Search/add_vocab.dart';
+import 'package:appwithfirebase/Project2/Search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -5,12 +7,15 @@ import '../../models/myuser.dart';
 import '../../screens/home/vocab_screen.dart';
 import '../../services/database.dart';
 import '../../shared/loading.dart';
+import '../Search/vocab.dart';
 
 class FavoriteScreenSub extends StatefulWidget {
-  final List vocabs;
+  final List<Vocab> vocabs;
   final SinglePersonalVocabList _SinglePersonalVocabList;
 
-  const FavoriteScreenSub(this.vocabs, this._SinglePersonalVocabList, {Key? key}) : super(key: key);
+  const FavoriteScreenSub(this.vocabs, this._SinglePersonalVocabList,
+      {Key? key})
+      : super(key: key);
 
   @override
   _FavoriteScreenSubState createState() => _FavoriteScreenSubState();
@@ -18,54 +23,93 @@ class FavoriteScreenSub extends StatefulWidget {
 
 class _FavoriteScreenSubState extends State<FavoriteScreenSub> {
   Widget _buildList(BuildContext context) {
-    return ListView.builder(
-      itemCount: widget._SinglePersonalVocabList.personalVocabsList.length,
-      padding: const EdgeInsets.all(16.0),
-      itemBuilder: (context, index) {
-        final thisVocab = widget.vocabs
-                    .where((element) =>
-                element.id == widget._SinglePersonalVocabList.personalVocabsList[index])
-                    .first;
-                return ListTile(
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(thisVocab.englishMain),
-                        Text(thisVocab.arabicMain)
-                      ],
-                    ),
-                    /*trailing: IconButton(
-                        icon: Icon(Icons.remove),
-                        onPressed: () async {
-                          List _withoutTheFavorite = List.from(deewanUserData.myFavoriteVocabs);
-                          _withoutTheFavorite.remove(thisVocab.id);
-                          await DeewanDataBaseService(uid: user.uid)
-                              .updateDeewanUserFavorite(
-                              _withoutTheFavorite);
-                        }),*/
-                    onTap:
-                        () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => VocabScreen(thisVocab)),
-                      );
-                    });
-              },
-            );
+    MyUser user = Provider.of<MyUser>(context);
+    return StreamBuilder<DeewanUserData>(
+        stream: DeewanDataBaseService(uid: user.uid).deewanUserData,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            DeewanUserData? deewanUserData = snapshot.data!;
+            return StreamBuilder<SinglePersonalVocabList>(
+                stream: DeewanDataBaseService(
+                        uid: user.uid,
+                        docID: widget._SinglePersonalVocabList.docId)
+                    .personalList,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    SinglePersonalVocabList _singleList = snapshot.data!;
 
+                    return ListView.builder(
+                      itemCount: _singleList.personalVocabsList.length,
+                      padding: const EdgeInsets.all(16.0),
+                      itemBuilder: (context, index) {
+                        final thisVocab = widget.vocabs
+                            .where((element) =>
+                                element.id ==
+                                _singleList
+                                    .personalVocabsList[index])
+                            .first;
+                        return ListTile(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(thisVocab.englishMain),
+                                Text(thisVocab.arabicMain)
+                              ],
+                            ),
+                            trailing: IconButton(
+                                icon: Icon(Icons.remove),
+                                onPressed: () async {
+                                  List _withoutTheFavorite = List.from(_singleList
+                                      .personalVocabsList);
+                                  _withoutTheFavorite.remove(thisVocab.id);
+                                  await DeewanDataBaseService(uid: user.uid)
+                                      .updatePersonalVocabList(
+                                          _withoutTheFavorite,
+                                          _singleList.docId);
+                                }),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        VocabScreen(thisVocab)),
+                              );
+                            });
+                      },
+                    );
+                  } else {
+                    return Loading();
+                  }
+                });
+          } else {
+            return Loading();
+          }
+        });
   }
 
   Widget build(BuildContext context) {
+    MyUser user = Provider.of<MyUser>(context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
-          title: const Text('Favorite Words'),
+          title: Text(widget._SinglePersonalVocabList.listName),
+          actions: <Widget>[
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(primary: Colors.blue[300]),
+              icon: const Icon(Icons.add),
+              label: Text('Add Vocab'),
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          AddVocabScreen(widget.vocabs, widget._SinglePersonalVocabList.docId, user.uid!),
+                ));
+              },
+            )
+          ],
         ),
-        /*actions: <Widget>[
-              IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved)
-            ]),*/
         body: _buildList(context));
+
   }
 }
-

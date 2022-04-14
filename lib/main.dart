@@ -1,4 +1,4 @@
-import 'package:appwithfirebase/Project2/Search/allvocabs.dart';
+import 'package:appwithfirebase/Project2/Search/Xallvocabs.dart';
 import 'package:appwithfirebase/models/myuser.dart';
 import 'package:appwithfirebase/screens/wrapper.dart';
 import 'package:appwithfirebase/services/auth.dart';
@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         value: AuthService().user,
         initialData: null,
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           home: Wrapper(),
         )
 

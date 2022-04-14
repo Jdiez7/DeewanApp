@@ -10,7 +10,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:appwithfirebase/services/database.dart';
-
 import 'favorite_screen_sub.dart';
 
 class FavoriteScreen extends StatefulWidget {
@@ -58,13 +57,12 @@ class FavoriteScreenState extends State<FavoriteScreen> {
                         },
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText: 'Add New Collection',
+                          hintText: 'Add New List',
                         ),
                       ),
                       leading: IconButton(
                           icon: Icon(Icons.add),
                           onPressed: () async {
-                            print(personalVocabList![0].listName);
                             await DeewanDataBaseService(uid: user.uid)
                                 .addNewFile(_query);
                           }),

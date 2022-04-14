@@ -69,8 +69,9 @@ class DataBaseService {
 
 class DeewanDataBaseService {
   final String? uid;
+  final String? docID;
 
-  DeewanDataBaseService({this.uid});
+  DeewanDataBaseService({this.uid, this.docID});
 
   // collection reference
   final CollectionReference deewanUserCollection =
@@ -109,6 +110,11 @@ class DeewanDataBaseService {
       'personalVocab': personalVocab,
     });
   }
+  Future<void> updatePersonalVocabList(List vocablist, String docID) async {
+    return await deewanUserCollection.doc(uid).collection('personalVocabs').doc(docID).update({
+      'vocablist': vocablist,
+    });
+  }
 
   //Deewanusers from snapshot
   List<DeewanUsers> _deewanUserListFromSnapshot(QuerySnapshot snapshot) {
@@ -143,6 +149,14 @@ class DeewanDataBaseService {
     );
   }
 
+  SinglePersonalVocabList _personalListFromSnapshot(DocumentSnapshot snapshot) {
+    return SinglePersonalVocabList(
+      docId: docID ?? '',
+      listName: snapshot.get('name'),
+      personalVocabsList: snapshot.get('vocablist'),
+    );
+  }
+
 
 // get deewani stream
   Stream<List<DeewanUsers>> get deewanUsers {
@@ -157,6 +171,15 @@ class DeewanDataBaseService {
         .snapshots()
         .map(_deewanUserDataFromSnapshot);
   }
+
+  Stream<SinglePersonalVocabList> get personalList {
+    return deewanUserCollection
+        .doc(uid).collection('personalVocabs').doc(docID)
+        .snapshots()
+        .map(_personalListFromSnapshot);
+  }
+
+
 
   Stream<List<SinglePersonalVocabList>> get personalVocabData {
     return deewanUserCollection.doc(uid).collection('personalVocabs').snapshots().map(_personalVocabFromSnapshot);

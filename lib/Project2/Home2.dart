@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/auth.dart';
 import './menu.dart';
-import 'Search/allvocabs.dart';
-import 'Search/search.dart';
 import 'Search/vocab.dart';
 
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 // import 'firebase_options.dart';
 
 
@@ -63,7 +61,7 @@ class _Home2State extends State<Home2>{
       ),
       backgroundColor: Colors.green[300],
 
-      drawer: Drawer(
+      /*drawer: Drawer(
         child: ListView(
           children: <Widget>[
             UserAccountsDrawerHeader(
@@ -94,7 +92,7 @@ class _Home2State extends State<Home2>{
           ],
 
         ),
-      ),
+      ),*/
 
       body: StreamProvider<List<Vocab>>.value(
         value: DeewanDataBaseService().backendVocabs,
@@ -107,10 +105,10 @@ class _Home2State extends State<Home2>{
                 children: <Widget>[
                   MyMenu(title: 'Word Search', icon: Icons.search, warna: Colors.blue,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
                   FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: Colors.blue, /*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
-                  MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
+                 /* MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
                   MyMenu4(title: 'Learning Material', icon: Icons.school, warna: Colors.blue,),
                   MyMenu5(title: 'My Account', icon: Icons.account_circle, warna: Colors.blue,),
-                  MyMenu6(title: 'Refer to a friend', icon: Icons.send, warna: Colors.blue,),
+                  MyMenu6(title: 'Refer to a friend', icon: Icons.send, warna: Colors.blue,),*/
                 ],)
           );
         }

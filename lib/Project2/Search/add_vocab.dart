@@ -10,17 +10,18 @@ import 'package:appwithfirebase/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SearchWordScreen extends StatefulWidget {
+class AddVocabScreen extends StatefulWidget {
   final List<Vocab> vocabs;
-  final List favoriteVocabs;
+  final String docID;
+  final String uid;
 
-  SearchWordScreen(this.vocabs, this.favoriteVocabs);
+  AddVocabScreen(this.vocabs, this.docID, this.uid);
 
   @override
-  SearchWordScreenState createState() => SearchWordScreenState();
+  AddVocabScreenState createState() => AddVocabScreenState();
 }
 
-class SearchWordScreenState extends State<SearchWordScreen> {
+class AddVocabScreenState extends State<AddVocabScreen> {
   String query = '';
   late List<Vocab> vocabs;
 
@@ -33,14 +34,14 @@ class SearchWordScreenState extends State<SearchWordScreen> {
   @override
   Widget build(BuildContext context) {
     MyUser user = Provider.of<MyUser>(context);
-    return StreamBuilder<DeewanUserData>(
-        stream: DeewanDataBaseService(uid: user.uid).deewanUserData,
+    return StreamBuilder<SinglePersonalVocabList>(
+        stream: DeewanDataBaseService(uid: user.uid, docID: widget.docID).personalList,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            DeewanUserData deewanUserData = snapshot.data!;
+            SinglePersonalVocabList _singleList = snapshot.data!;
             return Scaffold(
               appBar: AppBar(
-                title: Text('SEARCH'),
+                title: Text('Add Vocab to $_singleList.listName'),
                 centerTitle: true,
               ),
               body: Column(
@@ -48,14 +49,14 @@ class SearchWordScreenState extends State<SearchWordScreen> {
                   buildSearch(),
                   Expanded(
                     child: ListView.builder(
-                        itemCount: vocabs.length,
-                        itemBuilder: (context, index) {
-                          vocabs.sort((a, b) => a.englishMain.toLowerCase().compareTo(b.englishMain.toLowerCase()));
-                          final vocab = vocabs[index];
-                          return buildVocab(vocab, deewanUserData);
-                        },
-                      ),
+                      itemCount: vocabs.length,
+                      itemBuilder: (context, index) {
+                        vocabs.sort((a, b) => a.englishMain.toLowerCase().compareTo(b.englishMain.toLowerCase()));
+                        final vocab = vocabs[index];
+                        return buildVocab(vocab, _singleList.personalVocabsList);
+                      },
                     ),
+                  ),
 
                 ],
               ),
@@ -82,15 +83,15 @@ class SearchWordScreenState extends State<SearchWordScreen> {
     }
   );
 */
-  Widget buildVocab(Vocab vocab, DeewanUserData deewanUserData) => ListTile(
-      //leading: Text(vocab.englishMain),
-  title: Row(
+  Widget buildVocab(Vocab vocab, List specificList) => ListTile(
+    //leading: Text(vocab.englishMain),
+      title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Flexible(child:Text(vocab.englishMain,overflow: TextOverflow.ellipsis,)), Text(vocab.arabicMain,overflow: TextOverflow.ellipsis,)],
+        children: [Text(vocab.englishMain), Text(vocab.arabicMain)],
       ),
       trailing: IconButton(
         icon: Icon(
-          deewanUserData.myFavoriteVocabs.contains(vocab.id)
+          specificList.contains(vocab.id)
               ? Icons.favorite
               : Icons.favorite_border,
           color: Colors.red,
@@ -98,20 +99,20 @@ class SearchWordScreenState extends State<SearchWordScreen> {
         onPressed: () =>
 
             setState(()  {
-          List _withoutTheFavorite = List.from(deewanUserData.myFavoriteVocabs);
-          if (deewanUserData.myFavoriteVocabs.contains(vocab.id))  {
-              _withoutTheFavorite.remove(vocab.id);
-              DeewanDataBaseService(uid: deewanUserData.uid)
-                  .updateDeewanUserFavorite(
-                  _withoutTheFavorite);
-            }
-           else {
-            _withoutTheFavorite.add(vocab.id);
-            DeewanDataBaseService(uid: deewanUserData.uid)
-                .updateDeewanUserFavorite(
-                _withoutTheFavorite);
-          }
-        }),
+              List _withoutTheFavorite = List.from(specificList);
+              if (specificList.contains(vocab.id))  {
+                _withoutTheFavorite.remove(vocab.id);
+                DeewanDataBaseService(uid: widget.uid, docID: widget.docID)
+                    .updatePersonalVocabList(
+                    _withoutTheFavorite, widget.docID);
+              }
+              else {
+                _withoutTheFavorite.add(vocab.id);
+                DeewanDataBaseService(uid: widget.uid, docID: widget.docID)
+                    .updatePersonalVocabList(
+                    _withoutTheFavorite, widget.docID);
+              }
+            }),
       ),
       onTap: () {
         Navigator.push(
@@ -120,10 +121,10 @@ class SearchWordScreenState extends State<SearchWordScreen> {
         );
       }
 
-      /*Navigator.pushNamed(context, VocabScreen.routeName,
+    /*Navigator.pushNamed(context, VocabScreen.routeName,
               arguments: ScreenArguments(vocab));
         },*/
-      );
+  );
 
   void searchVocab(String query) {
     final vocabs = widget.vocabs.where((vocab) {
@@ -168,7 +169,7 @@ normalise(input) => input
     .replaceAll('\u0613', '') //ARABIC SIGN RADI ALLAHOU ANHU
     .replaceAll('\u0614', '') //ARABIC SIGN TAKHALLUS
 
-    //Remove koranic anotation
+//Remove koranic anotation
     .replaceAll('\u0615', '') //ARABIC SMALL HIGH TAH
     .replaceAll(
     '\u0616', '') //ARABIC SMALL HIGH LIGATURE ALEF WITH LAM WITH YEH
@@ -203,10 +204,10 @@ normalise(input) => input
     .replaceAll('\u06EC', '') //ARABIC ROUNDED HIGH STOP WITH FILLED CENTRE
     .replaceAll('\u06ED', '') //ARABIC SMALL LOW MEEM
 
-    //Remove tatweel
+//Remove tatweel
     .replaceAll('\u0640', '')
 
-    //Remove tashkeel
+//Remove tashkeel
     .replaceAll('\u064B', '') //ARABIC FATHATAN
     .replaceAll('\u064C', '') //ARABIC DAMMATAN
     .replaceAll('\u064D', '') //ARABIC KASRATAN
@@ -230,19 +231,19 @@ normalise(input) => input
     .replaceAll('\u065F', '') //ARABIC WAVY HAMZA BELOW
     .replaceAll('\u0670', '') //ARABIC LETTER SUPERSCRIPT ALEF
 
-    //Replace Waw Hamza Above by Waw
+//Replace Waw Hamza Above by Waw
     .replaceAll('\u0624', '\u0648')
 
-    //Replace Ta Marbuta by Ha
+//Replace Ta Marbuta by Ha
     .replaceAll('\u0629', '\u0647')
 
-    //Replace Ya
-    // and Ya Hamza Above by Alif Maksura
+//Replace Ya
+// and Ya Hamza Above by Alif Maksura
     .replaceAll('\u064A', '\u0649')
     .replaceAll('\u0626', '\u0649')
 
-    // Replace Alifs with Hamza Above/Below
-    // and with Madda Above by Alif
+// Replace Alifs with Hamza Above/Below
+// and with Madda Above by Alif
     .replaceAll('\u0622', '\u0627')
     .replaceAll('\u0623', '\u0627')
     .replaceAll('\u0625', '\u0627');
