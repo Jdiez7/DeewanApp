@@ -43,8 +43,11 @@ class _Home2State extends State<Home2>{
 
 
   @override
+
+
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         title: const Text('Menu'),
         backgroundColor: Colors.blue,
@@ -59,7 +62,7 @@ class _Home2State extends State<Home2>{
           )
         ],
       ),
-      backgroundColor: Colors.green[300],
+      backgroundColor: Colors.white,
 
       /*drawer: Drawer(
         child: ListView(
@@ -94,24 +97,36 @@ class _Home2State extends State<Home2>{
         ),
       ),*/
 
-      body: StreamProvider<List<Vocab>>.value(
-        value: DeewanDataBaseService().backendVocabs,
-        initialData: [],
-        builder: (context, snapshot) {
-          return Container(
-            padding: const EdgeInsets.all(30.0),
-            child: GridView.count(
-                crossAxisCount: 2,
-                children: <Widget>[
-                  MyMenu(title: 'Word Search', icon: Icons.search, warna: Colors.blue,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
-                  FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: Colors.blue, /*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
-                 /* MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
-                  MyMenu4(title: 'Learning Material', icon: Icons.school, warna: Colors.blue,),
-                  MyMenu5(title: 'My Account', icon: Icons.account_circle, warna: Colors.blue,),
-                  MyMenu6(title: 'Refer to a friend', icon: Icons.send, warna: Colors.blue,),*/
-                ],)
-          );
-        }
+      body: Container(
+        constraints: BoxConstraints.expand(),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/app_bg.png"),
+                fit: BoxFit.cover,
+              colorFilter:
+              ColorFilter.mode(Colors.black.withOpacity(0.4),
+                  BlendMode.dstATop),)),
+
+
+        child: StreamProvider<List<Vocab>>.value(
+          value: DeewanDataBaseService().backendVocabs,
+          initialData: [],
+          builder: (context, snapshot) {
+            return Container(
+              padding: const EdgeInsets.all(30.0),
+              child: GridView.count(
+                  crossAxisCount: 2,
+                  children: <Widget>[
+                    MyMenu(title: 'Word Search', icon: Icons.search, warna: Colors.blue,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
+                    FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: Colors.blue, /*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
+                   /* MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
+                    MyMenu4(title: 'Learning Material', icon: Icons.school, warna: Colors.blue,),
+                    MyMenu5(title: 'My Account', icon: Icons.account_circle, warna: Colors.blue,),
+                    MyMenu6(title: 'Refer to a friend', icon: Icons.send, warna: Colors.blue,),*/
+                  ],)
+            );
+          }
+        ),
       ),
     );
   }
