@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/auth.dart';
 import './menu.dart';
-import 'Search/vocab.dart';
+import 'Search/class_vocab.dart';
 
 // import 'package:firebase_core/firebase_core.dart';
 // import 'firebase_options.dart';

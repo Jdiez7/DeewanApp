@@ -28,5 +28,6 @@ class SinglePersonalVocabList{
   final String docId;
   final String listName;
   final List personalVocabsList;
-  SinglePersonalVocabList({required this.docId, required this.listName, required this.personalVocabsList,});
+  final bool fixed;
+  SinglePersonalVocabList({required this.docId, required this.listName, required this.personalVocabsList, this.fixed = false});
 }

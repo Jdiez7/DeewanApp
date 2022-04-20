@@ -1,4 +1,4 @@
-import 'package:appwithfirebase/Project2/Search/vocab.dart';
+import 'package:appwithfirebase/Project2/Search/class_vocab.dart';
 import 'package:appwithfirebase/models/deewani_deewanuser.dart';
 import 'package:appwithfirebase/models/myuser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -94,10 +94,11 @@ class DeewanDataBaseService {
     });
   }
 
-  Future<DocumentReference<Map<String, dynamic>>> addNewFile(name) async {
+  Future<DocumentReference<Map<String, dynamic>>> addNewFile(name, {bool? fixed}) async {
     return await deewanUserCollection.doc(uid).collection('personalVocabs').add({
       'name': name,
       'vocablist': [1,2,3],
+      'fixed' : fixed,
     });
   }
 
@@ -133,6 +134,7 @@ class DeewanDataBaseService {
         docId: doc.reference.id,
         listName: doc.get('name') ?? '',
         personalVocabsList: doc.get('vocablist') ?? <int>[2,3],
+        fixed: doc.get('fixed') ?? false,
       );
     }).toList();
   }
@@ -154,6 +156,7 @@ class DeewanDataBaseService {
       docId: docID ?? '',
       listName: snapshot.get('name'),
       personalVocabsList: snapshot.get('vocablist'),
+      fixed: snapshot.get('fixed') ?? false,
     );
   }
 

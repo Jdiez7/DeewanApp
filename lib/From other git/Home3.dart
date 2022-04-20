@@ -1,5 +1,5 @@
 import 'package:appwithfirebase/From%20other%20git/vocablist.dart';
-import 'package:appwithfirebase/Project2/Search/vocab.dart';
+import 'package:appwithfirebase/Project2/Search/class_vocab.dart';
 import 'package:appwithfirebase/models/myuser.dart';
 import 'package:appwithfirebase/services/auth.dart';
 import 'package:appwithfirebase/services/database.dart';

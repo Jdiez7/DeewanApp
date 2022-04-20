@@ -1,7 +1,7 @@
 import 'package:appwithfirebase/Project2/Pages/favorite_screen_sub_old.dart';
 import 'package:appwithfirebase/Project2/Pages/learning_material.dart';
 import 'package:appwithfirebase/Project2/Search/search.dart';
-import 'package:appwithfirebase/Project2/Search/vocab.dart';
+import 'package:appwithfirebase/Project2/Search/class_vocab.dart';
 import 'package:appwithfirebase/models/myuser.dart';
 import 'package:appwithfirebase/screens/home/home.dart';
 import 'package:appwithfirebase/screens/home/vocab_screen.dart';
@@ -32,12 +32,16 @@ class FavoriteScreenState extends State<FavoriteScreen> {
         initialData: [],
         builder: (context, snapshot) {
           String _query = '';
-          //final personalVocabs = Provider.of<List<NewVocabList>>(context);
-          //DeewanUserData? deewanUserData = snapshot.data;
-          //print('name');
-          //print('name: $deewanUserData.name');
           if (snapshot.hasData) {
             List<SinglePersonalVocabList>? personalVocabList = snapshot.data;
+            personalVocabList?.sort((a, b) {
+             return a.listName.toLowerCase().compareTo(b.listName.toLowerCase());});
+            personalVocabList?.sort((a, b) {
+              if(b.fixed) {
+                return 1;
+              }
+              return -1;
+            });
             final int _Listlength;
             if (personalVocabList == null) {
               _Listlength = 2;
@@ -96,11 +100,12 @@ class FavoriteScreenState extends State<FavoriteScreen> {
                                 widget.vocabs, personalVocabList[index - 1])),
                       );
                     },
-                trailing: IconButton(
+                trailing: personalVocabList[index - 1].fixed == false ?
+                    IconButton(
                 icon: Icon(Icons.remove),
                 onPressed: () async {await DeewanDataBaseService(uid: user.uid)
                     .deleteFile(personalVocabList[index - 1].docId);
-                }),);
+                }):null,);
               },
             );
           } else {

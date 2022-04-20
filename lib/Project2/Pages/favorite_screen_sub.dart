@@ -7,7 +7,7 @@ import '../../models/myuser.dart';
 import '../../screens/home/vocab_screen.dart';
 import '../../services/database.dart';
 import '../../shared/loading.dart';
-import '../Search/vocab.dart';
+import '../Search/class_vocab.dart';
 
 class FavoriteScreenSub extends StatefulWidget {
   final List<Vocab> vocabs;
