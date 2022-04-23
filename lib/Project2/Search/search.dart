@@ -43,21 +43,32 @@ class SearchWordScreenState extends State<SearchWordScreen> {
                 title: Text('SEARCH'),
                 centerTitle: true,
               ),
-              body: Column(
-                children: <Widget>[
-                  buildSearch(),
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: vocabs.length,
-                        itemBuilder: (context, index) {
-                          vocabs.sort((a, b) => a.englishMain.toLowerCase().compareTo(b.englishMain.toLowerCase()));
-                          final vocab = vocabs[index];
-                          return buildVocab(vocab, deewanUserData);
-                        },
-                      ),
-                    ),
+              body: Container(
+                constraints: BoxConstraints.expand(),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/app_bg.png"),
+                      fit: BoxFit.cover,
+                      colorFilter:
+                      ColorFilter.mode(Colors.black.withOpacity(0.1),
+                          BlendMode.dstATop),)),
 
-                ],
+                child: Column(
+                  children: <Widget>[
+                    buildSearch(),
+                    Expanded(
+                      child: ListView.builder(
+                          itemCount: vocabs.length,
+                          itemBuilder: (context, index) {
+                            vocabs.sort((a, b) => a.englishMain.toLowerCase().compareTo(b.englishMain.toLowerCase()));
+                            final vocab = vocabs[index];
+                            return buildVocab(vocab, deewanUserData);
+                          },
+                        ),
+                      ),
+
+                  ],
+                ),
               ),
             );
           } else {

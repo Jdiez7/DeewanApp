@@ -123,6 +123,16 @@ class FavoriteScreenState extends State<FavoriteScreen> {
         /*actions: <Widget>[
               IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved)
             ]),*/
-        body: _buildList(context));
+        body: Container(
+            constraints: BoxConstraints.expand(),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/app_bg.png"),
+                  fit: BoxFit.cover,
+                  colorFilter:
+                  ColorFilter.mode(Colors.black.withOpacity(0.1),
+                      BlendMode.dstATop),)),
+
+            child: _buildList(context)));
   }
 }
