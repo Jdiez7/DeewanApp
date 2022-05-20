@@ -1,5 +1,5 @@
 import 'package:appwithfirebase/From%20other%20git/vocab_tile.dart';
-import 'package:appwithfirebase/Project2/Search/class_vocab.dart';
+import 'package:appwithfirebase/services/class_vocab.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

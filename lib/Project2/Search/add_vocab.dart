@@ -1,6 +1,6 @@
 import 'package:appwithfirebase/Project2/Search/Xallvocabs.dart';
 import 'package:appwithfirebase/Project2/Search/search_widget.dart';
-import 'package:appwithfirebase/Project2/Search/class_vocab.dart';
+import 'package:appwithfirebase/services/class_vocab.dart';
 import 'package:appwithfirebase/Project2/menu.dart';
 import 'package:appwithfirebase/models/myuser.dart';
 import 'package:appwithfirebase/screens/home/vocab_screen.dart';

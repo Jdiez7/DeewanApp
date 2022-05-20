@@ -1,4 +1,4 @@
-import 'package:appwithfirebase/Project2/Search/class_vocab.dart';
+import 'package:appwithfirebase/services/class_vocab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,11 +6,23 @@ import 'package:provider/provider.dart';
 import '../../models/myuser.dart';
 import '../../services/database.dart';
 import '../../shared/loading.dart';
+import 'package:just_audio/just_audio.dart';
 
-class VocabScreen extends StatelessWidget {
+
+class VocabScreen extends StatefulWidget {
   final Vocab vocab;
 
   VocabScreen(this.vocab, {Key? key}) : super(key: key);
+
+  @override
+  _VocabScreenState createState() => _VocabScreenState();
+}
+
+
+class _VocabScreenState extends  State<VocabScreen>{
+  bool loading = false;
+  bool _isLoading = false;
+  final player = AudioPlayer();
   static const routeName = '/extractArguments';
 
   @override
@@ -18,7 +30,7 @@ class VocabScreen extends StatelessWidget {
     MyUser user = Provider.of<MyUser>(context);
     // Extract the arguments from the current ModalRoute
     // settings and cast them as ScreenArguments.
-    return StreamBuilder<List<SinglePersonalVocabList>>(
+    return loading ? Loading() : StreamBuilder<List<SinglePersonalVocabList>>(
         stream: DeewanDataBaseService(uid: user.uid).personalVocabData,
         initialData: [],
         builder: (context, snapshot) {
@@ -41,7 +53,7 @@ class VocabScreen extends StatelessWidget {
 
             return Scaffold(
               appBar: AppBar(
-                title: Text(vocab.arabicMain),
+                title: Text(widget.vocab.arabicMain),
                 actions: [
                   PopupMenuButton(
                       color: Colors.white,
@@ -52,17 +64,17 @@ class VocabScreen extends StatelessWidget {
 
                         if (_personalVocabList[value]
                             .personalVocabsList
-                            .contains(vocab.id)) {
+                            .contains(widget.vocab.id)) {
                           List _withoutTheFavorite = List.from(
                               _personalVocabList[value].personalVocabsList);
-                          _withoutTheFavorite.remove(this.vocab.id);
+                          _withoutTheFavorite.remove(widget.vocab.id);
                           await DeewanDataBaseService(uid: user.uid)
                             .updatePersonalVocabList(_withoutTheFavorite,
                             _personalVocabList[value].docId);}
                         else{
                           List _withoutTheFavorite = List.from(
                               _personalVocabList[value].personalVocabsList);
-                          _withoutTheFavorite.add(this.vocab.id);
+                          _withoutTheFavorite.add(widget.vocab.id);
                           await DeewanDataBaseService(uid: user.uid)
                               .updatePersonalVocabList(_withoutTheFavorite,
                                   _personalVocabList[value].docId);
@@ -73,7 +85,7 @@ class VocabScreen extends StatelessWidget {
                           return PopupMenuItem(
                             value: index,
                             child: ListTile(
-                              leading: Icon(_personalVocabList[index].personalVocabsList.contains(vocab.id)
+                              leading: Icon(_personalVocabList[index].personalVocabsList.contains(widget.vocab.id)
                                   ? Icons.check
                                   : Icons.add),
                           title: Text(_personalVocabList[index].listName),
@@ -81,13 +93,33 @@ class VocabScreen extends StatelessWidget {
 
                           );
                         }).toList();
-                      })
+                      }),
+                  Padding(
+                      padding: EdgeInsets.only(right: 20.0),
+                      child: widget.vocab.mp3ID == "" ? null : GestureDetector(
+                        onTap: () async {
+                          if (player.playing==false){
+                            setState(() => _isLoading = true);
+                          await player.setUrl('http://docs.google.com/uc?export=open&id='+widget.vocab.mp3ID);
+                            setState(() => _isLoading = false);
+                            player.play();
+                          }else{
+                            player.stop();
+                            setState(() {
+
+                            });
+
+                      }},
+                        child: Icon(_isLoading ? Icons.refresh : player.playing ?  Icons.crop_square:Icons.audiotrack,
+                          color: player.playing ? Colors.red : Colors.white,
+                        )
+                  ),)
                 ],
               ),
               body: Container(constraints: BoxConstraints.expand(),
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/app_bg.png"),
+                      image: AssetImage("assets/app_bg.jpg"),
                       fit: BoxFit.cover,
                       colorFilter:
                       ColorFilter.mode(Colors.black.withOpacity(0.4),
@@ -96,27 +128,27 @@ class VocabScreen extends StatelessWidget {
                 child: ListView(
                   children: [
                     const Placeholder(5),
-                    Definitions(vocab),
+                    Definitions(widget.vocab),
                     const Placeholder(0),
-                    Plural(vocab),
+                    Plural(widget.vocab),
                     const Placeholder(0),
-                    Fusha(vocab),
+                    Fusha(widget.vocab),
                     const Placeholder(0),
-                    Prepositions(vocab),
+                    Prepositions(widget.vocab),
                     const Placeholder(0),
-                    Synonyms(vocab),
+                    Synonyms(widget.vocab),
                     const Placeholder(0),
-                    ExampleSentences2(vocab),
+                    ExampleSentences2(widget.vocab),
                     const Placeholder(0),
-                    Verb(vocab),
+                    Verb(widget.vocab),
                     const Placeholder(0),
-                    NominalVerb(vocab),
+                    NominalVerb(widget.vocab),
                     const Placeholder(0),
-                    Noun(vocab),
+                    Noun(widget.vocab),
                     const Placeholder(0),
-                    Adjective(vocab),
+                    Adjective(widget.vocab),
                     const Placeholder(0),
-                    Masder(vocab),
+                    Masder(widget.vocab),
                     const Placeholder(0),
                   ],
                 ),
@@ -126,6 +158,11 @@ class VocabScreen extends StatelessWidget {
             return Loading();
           }
         });
+  }
+  @override
+  void dispose() {
+    player.stop();
+    super.dispose();
   }
 }
 
@@ -340,6 +377,7 @@ class Prepositions extends StatelessWidget {
       ),
     );
   }
+
 }
 
 class Placeholder extends StatelessWidget {
@@ -556,7 +594,9 @@ class ExampleSentences2 extends StatelessWidget {
                 ),
               ],
             )));
+
   }
+
 }
 
 class Verb extends StatelessWidget {

@@ -59,6 +59,7 @@ class Vocab {
   final String pREPex4ENG;
   final String pREPex4ARA;
   final String lvl;
+  final String mp3ID;
 
 
   const Vocab({
@@ -122,6 +123,7 @@ class Vocab {
     required this.pREPex4ENG,
     required this.pREPex4ARA,
     required this.lvl,
+    required this.mp3ID,
   });
 
   /*Map<String, dynamic> toJson() => {

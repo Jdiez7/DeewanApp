@@ -58,6 +58,8 @@ class AuthService{
       await DeewanDataBaseService(uid: myDeewanUser?.uid).updateDeewanUserData('new Deewan user', <int>[], <SinglePersonalVocabList>[]);
       // create deewan Lists
       await DeewanDataBaseService(uid: myDeewanUser?.uid).addNewFile('Verbs', fixed: true);
+      await DeewanDataBaseService(uid: myDeewanUser?.uid).addNewFile('Nouns', fixed: true);
+      await DeewanDataBaseService(uid: myDeewanUser?.uid).addNewFile('Adjectives', fixed: true);
 
 
       return _userFromFirebaseUser(myDeewanUser!);

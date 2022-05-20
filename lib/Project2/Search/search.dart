@@ -1,6 +1,6 @@
 import 'package:appwithfirebase/Project2/Search/Xallvocabs.dart';
 import 'package:appwithfirebase/Project2/Search/search_widget.dart';
-import 'package:appwithfirebase/Project2/Search/class_vocab.dart';
+import 'package:appwithfirebase/services/class_vocab.dart';
 import 'package:appwithfirebase/Project2/menu.dart';
 import 'package:appwithfirebase/models/myuser.dart';
 import 'package:appwithfirebase/screens/home/vocab_screen.dart';
@@ -47,7 +47,7 @@ class SearchWordScreenState extends State<SearchWordScreen> {
                 constraints: BoxConstraints.expand(),
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/app_bg.png"),
+                      image: AssetImage("assets/app_bg.jpg"),
                       fit: BoxFit.cover,
                       colorFilter:
                       ColorFilter.mode(Colors.black.withOpacity(0.1),

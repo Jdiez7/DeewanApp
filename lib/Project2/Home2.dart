@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/auth.dart';
 import './menu.dart';
-import 'Search/class_vocab.dart';
+import '../services/class_vocab.dart';
 
 // import 'package:firebase_core/firebase_core.dart';
 // import 'firebase_options.dart';
@@ -101,7 +101,7 @@ class _Home2State extends State<Home2>{
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/app_bg.png"),
+                image: AssetImage("assets/app_bg.jpg"),
                 fit: BoxFit.cover,
               colorFilter:
               ColorFilter.mode(Colors.black.withOpacity(0.4),
