@@ -483,114 +483,163 @@ class ExampleSentences2 extends StatelessWidget {
                       " \n",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+
                     ),
                     Text(
-                      "\t Example Sentences",
+                      "Example Sentences",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+
                     ),
                     Text(
                       "",
                       style: TextStyle(fontSize: 20),
+                      overflow: TextOverflow.ellipsis,
+
                     )
+                  ],
+                ),
+                const Divider(
+                  thickness: 2, // thickness of the line
+                  indent: 20, // empty space to the leading edge of divider.
+                  endIndent: 20, // empty space to the trailing edge of the divider.
+                  color: Colors.black, // The color to use when painting the line.
+                  height: 10, // The divider's height extent.
+                ),
+
+
+                vocab.ex1ARA ==""? Container() : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(flex: 5, child:
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Text(
+                      vocab.ex1ARA ,
+                      maxLines: 3,
+                      style: TextStyle(fontSize: 20),
+                      overflow: TextOverflow.ellipsis,
+                    )))
+                  ],
+                ),
+                vocab.ex1ENG ==""? Container() : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(flex: 5, child:Align(
+                        alignment: Alignment.topCenter,
+                        child:Text(
+                      vocab.ex1ENG,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 20),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+
+                    ))),
+
+                    const Text(
+                      "",
+                      style: TextStyle(fontSize: 20),
+                      overflow: TextOverflow.ellipsis,
+
+                    )
+                  ],
+                ),
+
+                vocab.ex2ARA ==""? Container() : const Divider(
+                  thickness: 1, // thickness of the line
+                  indent: 20, // empty space to the leading edge of divider.
+                  endIndent: 20, // empty space to the trailing edge of the divider.
+                  color: Colors.black, // The color to use when painting the line.
+                  height: 10, // The divider's height extent.
+                ),
+                vocab.ex2ARA ==""? Container() : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children:[
+                    Expanded(flex: 5,child:Align(
+                        alignment: Alignment.topCenter,
+                        child: Text(
+                      vocab.ex2ARA ,
+                      style: TextStyle(fontSize: 20),
+                      overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          maxLines: 3,
+
+                    )))
+                  ],
+                ),
+                vocab.ex2ENG ==""? Container() : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(flex: 5,
+                        child:Align(
+                            alignment: Alignment.topCenter,
+                            child:Text(
+                       vocab.ex2ENG,
+                      style: TextStyle(fontSize: 20),
+                      overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                              maxLines: 3,
+
+                    ))),
+                    const Text(
+                      "",
+                      style: TextStyle(fontSize: 20),
+                      overflow: TextOverflow.ellipsis,
+
+                    )
+                  ],
+                ),
+                vocab.ex3ARA ==""? Container() : const Divider(
+                  thickness: 1, // thickness of the line
+                  indent: 20, // empty space to the leading edge of divider.
+                  endIndent: 20, // empty space to the trailing edge of the divider.
+                  color: Colors.black, // The color to use when painting the line.
+                  height: 10, // The divider's height extent.
+                ),
+                vocab.ex3ARA ==""? Container() : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+
+                    ),
+                    Expanded(flex: 5, child: Align(
+                        alignment: Alignment.topCenter,
+                        child:Text(
+                      vocab.ex3ARA,
+                      style: TextStyle(fontSize: 20),
+                      overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          maxLines: 3,
+
+                    )))
+                  ],
+                ),
+                vocab.ex3ENG ==""? Container() : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(flex: 5, child: Align(
+                        alignment: Alignment.topCenter,
+                        child:Text(
+                      vocab.ex3ENG,
+                      style: TextStyle(fontSize: 20),
+                      overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          maxLines: 3,
+
+                    ))),
                   ],
                 ),
                 const Text(
                   " \n",
-                  style: TextStyle(fontSize: 3, fontWeight: FontWeight.bold),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      vocab.ex1ARA + "\t \t",
-                      style: TextStyle(fontSize: 20),
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "\t \t" + vocab.ex1ENG,
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    const Text(
-                      "",
-                      style: TextStyle(fontSize: 20),
-                    )
-                  ],
-                ),
-                const Text(
-                  " \n",
-                  style: TextStyle(fontSize: 3, fontWeight: FontWeight.bold),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      vocab.ex2ARA + "\t \t",
-                      style: TextStyle(fontSize: 20),
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "\t \t" + vocab.ex2ENG,
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    const Text(
-                      "",
-                      style: TextStyle(fontSize: 20),
-                    )
-                  ],
-                ),
-                const Text(
-                  " \n",
-                  style: TextStyle(fontSize: 3, fontWeight: FontWeight.bold),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      vocab.ex3ARA + "\t \t",
-                      style: TextStyle(fontSize: 20),
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "\t \t" + vocab.ex3ENG,
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    const Text(
-                      "",
-                      style: TextStyle(fontSize: 20),
-                    )
-                  ],
-                ),
-                const Text(
-                  " \n",
-                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 6, fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.ellipsis,
+
                 ),
               ],
             )));
@@ -682,12 +731,13 @@ class NominalVerb extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  Expanded(flex: 5, child: Text(
                     vocab.nomVerbType == ""
                         ? "\t Nominal Verb"
                         : "\t Nominal Verb (" + vocab.nomVerbType + ")",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
+                    overflow: TextOverflow.ellipsis,
+                  )),
                 ],
               ),
               const Text(
@@ -697,14 +747,22 @@ class NominalVerb extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "\t \t \t \t" + vocab.nomVerbEng,
+                  Expanded(flex: 5, child: Padding(
+                      padding: EdgeInsets.fromLTRB(20,0,0,0),
+                      child: Text(
+                    vocab.nomVerbEng,
+                    maxLines: 3,
+                    style: TextStyle(fontSize: 20, ),
+                    overflow: TextOverflow.ellipsis,
+                  ))),
+          Expanded(flex: 5, child: Padding(
+
+            padding: EdgeInsets.fromLTRB(0,0,30,0),
+            child: Align(
+              alignment: Alignment.topRight,child: Text(
+                    vocab.nomVerbAra ,
                     style: TextStyle(fontSize: 20),
-                  ),
-                  Text(
-                    vocab.nomVerbAra + "\t \t \t \t",
-                    style: TextStyle(fontSize: 20),
-                  )
+                  ))))
                 ],
               ),
               const Text(
@@ -742,7 +800,7 @@ class Noun extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Text(
-                    "\t corresponding Noun",
+                    "corresponding Noun",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -753,15 +811,21 @@ class Noun extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                 children: [
-                  Text(
-                    "\t \t \t \t" + vocab.nounEng,
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20,0,0,0),
+                    child: Text(
+                    vocab.nounEng,
                     style: TextStyle(fontSize: 20),
-                  ),
-                  Text(
-                    vocab.noun + "\t \t \t \t",
+
+                  )),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0,0,30,0),
+                    child: Text(
+                    vocab.noun,
                     style: TextStyle(fontSize: 20),
-                  )
+                  ))
                 ],
               ),
               const Text(
