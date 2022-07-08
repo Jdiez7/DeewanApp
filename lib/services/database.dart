@@ -80,11 +80,23 @@ class DeewanDataBaseService {
   final CollectionReference vocabularyCollection =
       FirebaseFirestore.instance.collection('Vocabulary');
 
+  final CollectionReference requestCollection =
+  FirebaseFirestore.instance.collection('Requests');
+
   Future<void> updateDeewanUserData(String name, List myFavoriteVocabs, List<SinglePersonalVocabList> personalVocab) async {
     return await deewanUserCollection.doc(uid).set({
       'name': name,
       'myFavoriteVocabs': myFavoriteVocabs,
       'personalVocab': personalVocab,
+    });
+  }
+
+  Future<DocumentReference<Map<String, dynamic>>> newRequest(englishReq, arabicReq, notesReq) async {
+    return await FirebaseFirestore.instance.collection('requests').add({
+      'englishReq': englishReq.text,
+      'arabicReq': arabicReq.text,
+      'notesReq': notesReq.text,
+      'uid': uid,
     });
   }
 
@@ -128,6 +140,18 @@ class DeewanDataBaseService {
     }).toList();
   }
 
+  List<Request> _requestListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+     /*if(uid.toString()==doc.get('uid')){*/
+      return Request(
+        araReq: doc.get('arabicReq') ?? '',
+        engReq: doc.get('englishReq') ?? '',
+        notesReq: doc.get('notesReq') ?? '',
+        uid: doc.get('uid') ?? '',
+      );
+      }/*}*/).toList();
+  }
+
   List<SinglePersonalVocabList> _personalVocabFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return SinglePersonalVocabList(
@@ -158,6 +182,11 @@ class DeewanDataBaseService {
       personalVocabsList: snapshot.get('vocablist'),
       fixed: snapshot.get('fixed') ?? false,
     );
+  }
+
+  // get requests Stream
+  Stream<List<Request>> get requests {
+    return requestCollection.snapshots().map(_requestListFromSnapshot);
   }
 
 

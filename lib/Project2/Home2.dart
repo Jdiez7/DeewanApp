@@ -120,7 +120,7 @@ class _Home2State extends State<Home2>{
                     MyMenu(title: 'Word Search', icon: Icons.search, warna: Colors.blue,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
                     FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: Colors.blue, /*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
                    /*MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
-                    */MyMenu4(title: 'Word Request', icon: Icons.add, warna: Colors.blue,),
+                    */WordRequest(title: 'Word Request', icon: Icons.add, warna: Colors.blue,),
                    /* MyMenu5(title: 'My Account', icon: Icons.account_circle, warna: Colors.blue,),
                     MyMenu6(title: 'Refer to a friend', icon: Icons.send, warna: Colors.blue,),*/
                   ],)

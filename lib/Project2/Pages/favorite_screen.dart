@@ -133,6 +133,9 @@ class FavoriteScreenState extends State<FavoriteScreen> {
                   ColorFilter.mode(Colors.black.withOpacity(0.1),
                       BlendMode.dstATop),)),
 
-            child: _buildList(context)));
+            child: _buildList(context)
+
+            )
+    );
   }
 }

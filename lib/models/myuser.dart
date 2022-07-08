@@ -31,3 +31,11 @@ class SinglePersonalVocabList{
   final bool fixed;
   SinglePersonalVocabList({required this.docId, required this.listName, required this.personalVocabsList, this.fixed = false});
 }
+
+class Request{
+  final String engReq;
+  final String araReq;
+  final String notesReq;
+  final String uid;
+  Request({required this.engReq, required this.araReq, required this.notesReq, required this.uid});
+}
