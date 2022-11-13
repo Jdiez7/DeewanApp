@@ -1,3 +1,4 @@
+import 'package:appwithfirebase/Project2/Pages/admin_requested_screen.dart';
 import 'package:appwithfirebase/Project2/Search/search.dart';
 import 'package:appwithfirebase/services/class_vocab.dart';
 import 'package:flutter/material.dart';
@@ -163,6 +164,41 @@ class WordRequest extends StatelessWidget {
   }
 }
 
+class AdminWordsRequested extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final MaterialColor warna;
+
+  AdminWordsRequested({this.title = 'ERROR', this.icon = Icons.error, this.warna = Colors.purple,});
+
+
+  @override
+  Widget build(BuildContext context) {
+    return  Card(
+
+        margin: const EdgeInsets.all(8.0),
+        child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AdminRequestedScreen()),
+              );
+            },
+            splashColor: Colors.blue,
+            child: Center(
+                child:Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Icon(icon, size:70.0, color: warna,),
+                    Text(title, style : const TextStyle(fontSize: 17.0))
+                  ],
+                )
+            )
+        )
+    );
+
+  }
+}
 
 class MyMenu4 extends StatelessWidget{
 

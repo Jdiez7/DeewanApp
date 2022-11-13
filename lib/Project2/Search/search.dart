@@ -47,7 +47,7 @@ class SearchWordScreenState extends State<SearchWordScreen> {
                 constraints: BoxConstraints.expand(),
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/app_bg.jpg"),
+                      image: AssetImage("assets/app_bg5.jpg"),
                       fit: BoxFit.cover,
                       colorFilter:
                       ColorFilter.mode(Colors.black.withOpacity(0.1),

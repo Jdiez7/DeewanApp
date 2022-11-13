@@ -39,9 +39,10 @@ class AddVocabScreenState extends State<AddVocabScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             SinglePersonalVocabList _singleList = snapshot.data!;
+            String listName = _singleList.listName;
             return Scaffold(
               appBar: AppBar(
-                title: Text('Add Vocab to $_singleList.listName'),
+                title: Text('Add Vocab to $listName'),
                 centerTitle: true,
               ),
               body: Column(
@@ -92,9 +93,10 @@ class AddVocabScreenState extends State<AddVocabScreen> {
       trailing: IconButton(
         icon: Icon(
           specificList.contains(vocab.id)
-              ? Icons.favorite
-              : Icons.favorite_border,
-          color: Colors.red,
+              ? Icons.check
+              : Icons.add,
+          color: specificList.contains(vocab.id)
+              ? Colors.red : Colors.grey,
         ),
         onPressed: () =>
 

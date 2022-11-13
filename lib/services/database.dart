@@ -81,13 +81,14 @@ class DeewanDataBaseService {
       FirebaseFirestore.instance.collection('Vocabulary');
 
   final CollectionReference requestCollection =
-  FirebaseFirestore.instance.collection('Requests');
+  FirebaseFirestore.instance.collection('requests');
 
   Future<void> updateDeewanUserData(String name, List myFavoriteVocabs, List<SinglePersonalVocabList> personalVocab) async {
     return await deewanUserCollection.doc(uid).set({
       'name': name,
       'myFavoriteVocabs': myFavoriteVocabs,
       'personalVocab': personalVocab,
+      'role': 'user',
     });
   }
 
@@ -106,16 +107,21 @@ class DeewanDataBaseService {
     });
   }
 
+
   Future<DocumentReference<Map<String, dynamic>>> addNewFile(name, {bool? fixed}) async {
     return await deewanUserCollection.doc(uid).collection('personalVocabs').add({
       'name': name,
-      'vocablist': [1,2,3],
+      'vocablist': [],
       'fixed' : fixed,
     });
   }
 
   Future<void> deleteFile(docid) async {
     return await deewanUserCollection.doc(uid).collection('personalVocabs').doc(docid).delete();
+  }
+
+  Future<void> deleteRequest(docid) async {
+    return await requestCollection.doc(docid).delete();
   }
 
   Future<void> updateDeewanUserPersonalVocab(List personalVocab) async {
@@ -148,6 +154,7 @@ class DeewanDataBaseService {
         engReq: doc.get('englishReq') ?? '',
         notesReq: doc.get('notesReq') ?? '',
         uid: doc.get('uid') ?? '',
+        reference: doc.reference.id,
       );
       }/*}*/).toList();
   }
@@ -170,6 +177,7 @@ class DeewanDataBaseService {
     return DeewanUserData(
       uid: uid,
       name: snapshot.get('name'),
+      role: snapshot.get('role') ?? 'user',
       myFavoriteVocabs: snapshot.get('myFavoriteVocabs'),
      personalVocab: snapshot.get('personalVocab'),
     );

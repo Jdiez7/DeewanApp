@@ -1,6 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class MyUser {
   final String? uid;
-
   MyUser({this.uid});
 }
 
@@ -20,8 +21,9 @@ class DeewanUserData {
   final String? name;
   final List myFavoriteVocabs;
   final List personalVocab;
+  final String? role;
 
-  DeewanUserData({ this.name, this.uid, required this.myFavoriteVocabs, required this.personalVocab});
+  DeewanUserData({ this.name, this.uid, this.role, required this.myFavoriteVocabs, required this.personalVocab});
 }
 
 class SinglePersonalVocabList{
@@ -37,5 +39,6 @@ class Request{
   final String araReq;
   final String notesReq;
   final String uid;
-  Request({required this.engReq, required this.araReq, required this.notesReq, required this.uid});
+  final String reference;
+  Request({required this.engReq, required this.araReq, required this.notesReq, required this.uid, required this.reference});
 }

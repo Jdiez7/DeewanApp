@@ -1,6 +1,7 @@
 import 'package:appwithfirebase/services/class_vocab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/myuser.dart';
@@ -110,16 +111,19 @@ class _VocabScreenState extends  State<VocabScreen>{
                             });
 
                       }},
-                        child: Icon(_isLoading ? Icons.refresh : player.playing ?  Icons.crop_square:Icons.audiotrack,
-                          color: player.playing ? Colors.red : Colors.white,
-                        )
+                        child: _isLoading ? SpinKitChasingDots(
+                          color: Colors.white,
+                          size: 25,
+                        ): Icon(player.playing ?  Icons.crop_square:Icons.audiotrack,
+                          color: player.playing ? Colors.red : Colors.white),
+
                   ),)
                 ],
               ),
               body: Container(constraints: BoxConstraints.expand(),
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/app_bg.jpg"),
+                      image: AssetImage("assets/app_bg5.jpg"),
                       fit: BoxFit.cover,
                       colorFilter:
                       ColorFilter.mode(Colors.black.withOpacity(0.4),
@@ -686,17 +690,19 @@ class Verb extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
+                children: <Widget>[
+                  Flexible(child:Text(
                     "\t \t \t \t" + vocab.verbEng,
                     style: TextStyle(fontSize: 20),
-                  ),
-                  Text(
-                    vocab.verb + "\t \t \t \t",
+                  )),
+                  Flexible(child:Text(
+                    vocab.verb+ "\t \t \t \t",
                     style: TextStyle(fontSize: 20),
-                  )
+
+                  ))
                 ],
               ),
+
               const Text(
                 " \n",
                 style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
