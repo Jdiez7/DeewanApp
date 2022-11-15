@@ -278,6 +278,8 @@ class DeewanDataBaseService {
         aDJECTIVEplMale: doc.get('aDJECTIVEplMale') ?? 'NO ENTRY',
         aDJECTIVEplFemale: doc.get('aDJECTIVEplFemale') ?? 'NO ENTRY',
         aDJECTIVEpltype: doc.get('aDJECTIVEpltype') ?? 'NO ENTRY',
+        aDJECTIVEmale: doc.get('aDJECTIVEmale')?? 'NO ENTRY',
+        aDJECTIVEpl: doc.get('aDJECTIVEpl')?? 'NO ENTRY',
         pREPex1ENG: doc.get('pREPex1ENG') ?? 'NO ENTRY',
         pREPex1ARA: doc.get('pREPex1ARA') ?? 'NO ENTRY',
         pREPex2ENG: doc.get('pREPex2ENG') ?? 'NO ENTRY',
@@ -288,6 +290,10 @@ class DeewanDataBaseService {
         pREPex4ARA: doc.get('pREPex4ARA') ?? 'NO ENTRY',
         lvl: doc.get('lvl') ?? 'NO ENTRY',
         mp3ID: doc.get('mp3ID') ?? 'NO ENTRY',
+          nomVerbAct: doc.get('nomVerbAct')?? 'NO ENTRY',
+          nomVerbActEng: doc.get('nomVerbActEng')?? 'NO ENTRY',
+          nomVerbPas: doc.get('nomVerbPas')?? 'NO ENTRY',
+          nomVerbPasEng: doc.get('nomVerbPasEng')?? 'NO ENTRY',
       );
     }).toList();
   }

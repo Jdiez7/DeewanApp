@@ -149,6 +149,9 @@ class SearchWordScreenState extends State<SearchWordScreen> {
       final nomengLower = vocab.nomVerbEng.toLowerCase();
       final masLower = vocab.masder.toLowerCase();
       final masengLower = vocab.masderENG.toLowerCase();
+      final english2 = vocab.english2.toLowerCase();
+      final english3 = vocab.english3.toLowerCase();
+      final english4 = vocab.english4.toLowerCase();
 
       final searchLower = normalise(query.toLowerCase());
 
@@ -162,7 +165,10 @@ class SearchWordScreenState extends State<SearchWordScreen> {
           nomVerbLower.contains(searchLower)||
           nomengLower.contains(searchLower)||
           masLower.contains(searchLower)||
-          masengLower.contains(searchLower);
+          masengLower.contains(searchLower)||
+          english2.contains(searchLower)||
+          english3.contains(searchLower)||
+          english4.contains(searchLower);
     }).toList();
 
     setState(() {

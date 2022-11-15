@@ -46,9 +46,11 @@ class Vocab {
   final String nOUNtype;
   final String nOUNplural;
   final String nounpluralType;
+  final String aDJECTIVEmale;
   final String aDJECTIVEfemale;
   final String aDJECTIVEplMale;
   final String aDJECTIVEplFemale;
+  final String aDJECTIVEpl;
   final String aDJECTIVEpltype;
   final String pREPex1ENG;
   final String pREPex1ARA;
@@ -60,6 +62,10 @@ class Vocab {
   final String pREPex4ARA;
   final String lvl;
   final String mp3ID;
+  final String nomVerbAct;
+  final String nomVerbActEng;
+  final String nomVerbPas;
+  final String nomVerbPasEng;
 
 
   const Vocab({
@@ -110,6 +116,8 @@ class Vocab {
     required this.nOUNtype,
     required this.nOUNplural,
     required this.nounpluralType,
+    required this.aDJECTIVEpl,
+    required this.aDJECTIVEmale,
     required this.aDJECTIVEfemale,
     required this.aDJECTIVEplMale,
     required this.aDJECTIVEplFemale,
@@ -124,6 +132,12 @@ class Vocab {
     required this.pREPex4ARA,
     required this.lvl,
     required this.mp3ID,
+    required this.nomVerbAct,
+    required this.nomVerbActEng,
+    required this.nomVerbPas,
+    required this.nomVerbPasEng,
+
+
   });
 
   /*Map<String, dynamic> toJson() => {

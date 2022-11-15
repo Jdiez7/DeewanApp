@@ -9,7 +9,6 @@ import '../../services/database.dart';
 import '../../shared/loading.dart';
 import 'package:just_audio/just_audio.dart';
 
-
 class VocabScreen extends StatefulWidget {
   final Vocab vocab;
 
@@ -19,8 +18,7 @@ class VocabScreen extends StatefulWidget {
   _VocabScreenState createState() => _VocabScreenState();
 }
 
-
-class _VocabScreenState extends  State<VocabScreen>{
+class _VocabScreenState extends State<VocabScreen> {
   bool loading = false;
   bool _isLoading = false;
   final player = AudioPlayer();
@@ -31,138 +29,148 @@ class _VocabScreenState extends  State<VocabScreen>{
     MyUser user = Provider.of<MyUser>(context);
     // Extract the arguments from the current ModalRoute
     // settings and cast them as ScreenArguments.
-    return loading ? Loading() : StreamBuilder<List<SinglePersonalVocabList>>(
-        stream: DeewanDataBaseService(uid: user.uid).personalVocabData,
-        initialData: [],
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<SinglePersonalVocabList> _personalVocabList = snapshot.data!;
-            _personalVocabList.sort((a, b) {
-              return a.listName
-                  .toLowerCase()
-                  .compareTo(b.listName.toLowerCase());
-            });
-            _personalVocabList.sort((a, b) {
-              if (b.fixed) {
-                return 1;
-              }
-              return -1;
-            });
-            var _list = [
-              for (var i = 0; i < _personalVocabList.length; i += 1) i
-            ];
+    return loading
+        ? Loading()
+        : StreamBuilder<List<SinglePersonalVocabList>>(
+            stream: DeewanDataBaseService(uid: user.uid).personalVocabData,
+            initialData: [],
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<SinglePersonalVocabList> _personalVocabList =
+                    snapshot.data!;
+                _personalVocabList.sort((a, b) {
+                  return a.listName
+                      .toLowerCase()
+                      .compareTo(b.listName.toLowerCase());
+                });
+                _personalVocabList.sort((a, b) {
+                  if (b.fixed) {
+                    return 1;
+                  }
+                  return -1;
+                });
+                var _list = [
+                  for (var i = 0; i < _personalVocabList.length; i += 1) i
+                ];
 
-            return Scaffold(
-              appBar: AppBar(
-                title: Text(widget.vocab.arabicMain),
-                actions: [
-                  PopupMenuButton(
-                      color: Colors.white,
-                      elevation: 20,
-                      enabled: true,
-                      onSelected: (int value) async {
-
-
-                        if (_personalVocabList[value]
-                            .personalVocabsList
-                            .contains(widget.vocab.id)) {
-                          List _withoutTheFavorite = List.from(
-                              _personalVocabList[value].personalVocabsList);
-                          _withoutTheFavorite.remove(widget.vocab.id);
-                          await DeewanDataBaseService(uid: user.uid)
-                            .updatePersonalVocabList(_withoutTheFavorite,
-                            _personalVocabList[value].docId);}
-                        else{
-                          List _withoutTheFavorite = List.from(
-                              _personalVocabList[value].personalVocabsList);
-                          _withoutTheFavorite.add(widget.vocab.id);
-                          await DeewanDataBaseService(uid: user.uid)
-                              .updatePersonalVocabList(_withoutTheFavorite,
-                                  _personalVocabList[value].docId);
-                        }
-                      },
-                      itemBuilder: (context) {
-                        return _list.map((int index) {
-                          return PopupMenuItem(
-                            value: index,
-                            child: ListTile(
-                              leading: Icon(_personalVocabList[index].personalVocabsList.contains(widget.vocab.id)
-                                  ? Icons.check
-                                  : Icons.add),
-                          title: Text(_personalVocabList[index].listName),
-                          ),
-
-                          );
-                        }).toList();
-                      }),
-                  Padding(
-                      padding: EdgeInsets.only(right: 20.0),
-                      child: widget.vocab.mp3ID == "" ? null : GestureDetector(
-                        onTap: () async {
-                          if (player.playing==false){
-                            setState(() => _isLoading = true);
-                          await player.setUrl('http://docs.google.com/uc?export=open&id='+widget.vocab.mp3ID);
-                            setState(() => _isLoading = false);
-                            player.play();
-                          }else{
-                            player.stop();
-                            setState(() {
-
-                            });
-
-                      }},
-                        child: _isLoading ? SpinKitChasingDots(
+                return Scaffold(
+                  appBar: AppBar(
+                    centerTitle: true,
+                    title: Text(widget.vocab.englishMain +
+                        ' - ' +
+                        widget.vocab.arabicMain),
+                    actions: [
+                      PopupMenuButton(
                           color: Colors.white,
-                          size: 25,
-                        ): Icon(player.playing ?  Icons.crop_square:Icons.audiotrack,
-                          color: player.playing ? Colors.red : Colors.white),
-
-                  ),)
-                ],
-              ),
-              body: Container(constraints: BoxConstraints.expand(),
-                decoration: BoxDecoration(
-                    image: DecorationImage(
+                          elevation: 20,
+                          enabled: true,
+                          onSelected: (int value) async {
+                            if (_personalVocabList[value]
+                                .personalVocabsList
+                                .contains(widget.vocab.id)) {
+                              List _withoutTheFavorite = List.from(
+                                  _personalVocabList[value].personalVocabsList);
+                              _withoutTheFavorite.remove(widget.vocab.id);
+                              await DeewanDataBaseService(uid: user.uid)
+                                  .updatePersonalVocabList(_withoutTheFavorite,
+                                      _personalVocabList[value].docId);
+                            } else {
+                              List _withoutTheFavorite = List.from(
+                                  _personalVocabList[value].personalVocabsList);
+                              _withoutTheFavorite.add(widget.vocab.id);
+                              await DeewanDataBaseService(uid: user.uid)
+                                  .updatePersonalVocabList(_withoutTheFavorite,
+                                      _personalVocabList[value].docId);
+                            }
+                          },
+                          itemBuilder: (context) {
+                            return _list.map((int index) {
+                              return PopupMenuItem(
+                                value: index,
+                                child: ListTile(
+                                  leading: Icon(_personalVocabList[index]
+                                          .personalVocabsList
+                                          .contains(widget.vocab.id)
+                                      ? Icons.check
+                                      : Icons.add),
+                                  title:
+                                      Text(_personalVocabList[index].listName),
+                                ),
+                              );
+                            }).toList();
+                          }),
+                      Padding(
+                        padding: EdgeInsets.only(right: 20.0),
+                        child: widget.vocab.mp3ID == ""
+                            ? null
+                            : GestureDetector(
+                                onTap: () async {
+                                  if (player.playing == false) {
+                                    setState(() => _isLoading = true);
+                                    await player.setUrl(
+                                        'http://docs.google.com/uc?export=open&id=' +
+                                            widget.vocab.mp3ID);
+                                    setState(() => _isLoading = false);
+                                    player.play();
+                                  } else {
+                                    player.stop();
+                                    setState(() {});
+                                  }
+                                },
+                                child: _isLoading
+                                    ? SpinKitChasingDots(
+                                        color: Colors.white,
+                                        size: 25,
+                                      )
+                                    : Icon(
+                                        player.playing
+                                            ? Icons.crop_square
+                                            : Icons.audiotrack,
+                                        color: player.playing
+                                            ? Colors.red
+                                            : Colors.white),
+                              ),
+                      )
+                    ],
+                  ),
+                  body: Container(
+                    constraints: BoxConstraints.expand(),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
                       image: AssetImage("assets/app_bg5.jpg"),
                       fit: BoxFit.cover,
-                      colorFilter:
-                      ColorFilter.mode(Colors.black.withOpacity(0.4),
-                          BlendMode.dstATop),)),
-
-                child: ListView(
-                  children: [
-                    const Placeholder(5),
-                    Definitions(widget.vocab),
-                    const Placeholder(0),
-                    Plural(widget.vocab),
-                    const Placeholder(0),
-                    Fusha(widget.vocab),
-                    const Placeholder(0),
-                    Prepositions(widget.vocab),
-                    const Placeholder(0),
-                    Synonyms(widget.vocab),
-                    const Placeholder(0),
-                    ExampleSentences2(widget.vocab),
-                    const Placeholder(0),
-                    Verb(widget.vocab),
-                    const Placeholder(0),
-                    NominalVerb(widget.vocab),
-                    const Placeholder(0),
-                    Noun(widget.vocab),
-                    const Placeholder(0),
-                    Adjective(widget.vocab),
-                    const Placeholder(0),
-                    Masder(widget.vocab),
-                    const Placeholder(0),
-                  ],
-                ),
-              ),
-            );
-          } else {
-            return Loading();
-          }
-        });
+                      colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.4), BlendMode.dstATop),
+                    )),
+                    child: ListView(
+                      children: [
+                        const Placeholder(5),
+                        Definitions(widget.vocab),
+                        /*   const Placeholder(0),*/
+                        Plural(widget.vocab),
+                        adjForms(widget.vocab),
+                        Fusha(widget.vocab),
+                        Prepositions(widget.vocab),
+                        Synonyms(widget.vocab),
+                        ExampleSentences2(widget.vocab),
+                        Verb(widget.vocab),
+                        NominalVerb(widget.vocab),
+                        Noun(widget.vocab),
+                        Adjective(widget.vocab),
+                        Masder(widget.vocab),
+                        NomVerbAct(widget.vocab),
+                        NomVerbPas(widget.vocab),
+                        const Placeholder(0),
+                      ],
+                    ),
+                  ),
+                );
+              } else {
+                return Loading();
+              }
+            });
   }
+
   @override
   void dispose() {
     player.stop();
@@ -180,14 +188,8 @@ class Definitions extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Container(
-        height: vocab.english2 == ""
-            ? 70
-            : vocab.english3 == ""
-                ? 100
-                : vocab.english4 == ""
-                    ? 130
-                    : 160,
         color: Colors.blue[100],
+        padding: EdgeInsets.all(4.0),
         child: RichText(
           text: TextSpan(
             style: const TextStyle(
@@ -213,39 +215,68 @@ class Definitions extends StatelessWidget {
               TextSpan(text: "\n"),
               TextSpan(text: "\n"),
               vocab.english2 == ""
-                  ? TextSpan(text: "")
+                  ? TextSpan(
+                      style: TextStyle(height: 0, fontSize: 0),
+                    )
                   : TextSpan(
                       text: "\t \t  2. " + vocab.english2,
                       style: TextStyle(fontSize: 17)),
               vocab.english2com == ""
-                  ? TextSpan(text: "")
+                  ? TextSpan(
+                      style: TextStyle(height: 0, fontSize: 0),
+                    )
                   : TextSpan(
                       text: "\t \t(" + vocab.english2com + ")",
                       style: TextStyle(fontSize: 17, color: Colors.black54)),
-              TextSpan(text: "\n"),
-              TextSpan(text: "\n"),
+              vocab.english2 == ""
+                  ? TextSpan(
+                      style: TextStyle(height: 0, fontSize: 0),
+                    )
+                  : TextSpan(text: "\n"),
+              vocab.english2 == ""
+                  ? TextSpan(
+                      style: TextStyle(height: 0, fontSize: 0),
+                    )
+                  : TextSpan(text: "\n"),
               vocab.english3 == ""
-                  ? TextSpan(text: "")
+                  ? TextSpan(
+                      style: TextStyle(height: 0, fontSize: 0),
+                    )
                   : TextSpan(
                       text: "\t \t  3. " + vocab.english3,
                       style: TextStyle(fontSize: 17)),
               vocab.english3com == ""
-                  ? TextSpan(text: "")
+                  ? TextSpan(
+                      style: TextStyle(height: 0, fontSize: 0),
+                    )
                   : TextSpan(
                       text: "\t \t(" + vocab.english3com + ")",
                       style: TextStyle(fontSize: 17, color: Colors.black54)),
-              TextSpan(text: "\n"),
-              TextSpan(text: "\n"),
+              vocab.english3 == ""
+                  ? TextSpan(
+                      style: TextStyle(height: 0, fontSize: 0),
+                    )
+                  : TextSpan(text: "\n"),
+              vocab.english3 == ""
+                  ? TextSpan(
+                      style: TextStyle(height: 0, fontSize: 0),
+                    )
+                  : TextSpan(text: "\n"),
               vocab.english4 == ""
-                  ? TextSpan(text: "")
+                  ? TextSpan(
+                      style: TextStyle(height: 0, fontSize: 0),
+                    )
                   : TextSpan(
                       text: "\t \t  4. " + vocab.english4,
                       style: TextStyle(fontSize: 17)),
               vocab.english4com == ""
-                  ? TextSpan(text: "")
+                  ? TextSpan(
+                      style: TextStyle(height: 0, fontSize: 0),
+                    )
                   : TextSpan(
                       text: "\t \t(" + vocab.english4com + ")",
                       style: TextStyle(fontSize: 17, color: Colors.black54)),
+              TextSpan(text: "\n"),
             ],
           ),
         ),
@@ -381,7 +412,6 @@ class Prepositions extends StatelessWidget {
       ),
     );
   }
-
 }
 
 class Placeholder extends StatelessWidget {
@@ -488,168 +518,188 @@ class ExampleSentences2 extends StatelessWidget {
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis,
-
                     ),
                     Text(
                       "Example Sentences",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis,
-
                     ),
                     Text(
                       "",
                       style: TextStyle(fontSize: 20),
                       overflow: TextOverflow.ellipsis,
-
                     )
                   ],
                 ),
                 const Divider(
-                  thickness: 2, // thickness of the line
-                  indent: 20, // empty space to the leading edge of divider.
-                  endIndent: 20, // empty space to the trailing edge of the divider.
-                  color: Colors.black, // The color to use when painting the line.
+                  thickness: 2,
+                  // thickness of the line
+                  indent: 20,
+                  // empty space to the leading edge of divider.
+                  endIndent: 20,
+                  // empty space to the trailing edge of the divider.
+                  color: Colors.black,
+                  // The color to use when painting the line.
                   height: 10, // The divider's height extent.
                 ),
-
-
-                vocab.ex1ARA ==""? Container() : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(flex: 5, child:
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Text(
-                      vocab.ex1ARA ,
-                      maxLines: 3,
-                      style: TextStyle(fontSize: 20),
-                      overflow: TextOverflow.ellipsis,
-                    )))
-                  ],
-                ),
-                vocab.ex1ENG ==""? Container() : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(flex: 5, child:Align(
-                        alignment: Alignment.topCenter,
-                        child:Text(
-                      vocab.ex1ENG,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 20),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-
-                    ))),
-
-                    const Text(
-                      "",
-                      style: TextStyle(fontSize: 20),
-                      overflow: TextOverflow.ellipsis,
-
-                    )
-                  ],
-                ),
-
-                vocab.ex2ARA ==""? Container() : const Divider(
-                  thickness: 1, // thickness of the line
-                  indent: 20, // empty space to the leading edge of divider.
-                  endIndent: 20, // empty space to the trailing edge of the divider.
-                  color: Colors.black, // The color to use when painting the line.
-                  height: 10, // The divider's height extent.
-                ),
-                vocab.ex2ARA ==""? Container() : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children:[
-                    Expanded(flex: 5,child:Align(
-                        alignment: Alignment.topCenter,
-                        child: Text(
-                      vocab.ex2ARA ,
-                      style: TextStyle(fontSize: 20),
-                      overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          maxLines: 3,
-
-                    )))
-                  ],
-                ),
-                vocab.ex2ENG ==""? Container() : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(flex: 5,
-                        child:Align(
-                            alignment: Alignment.topCenter,
-                            child:Text(
-                       vocab.ex2ENG,
-                      style: TextStyle(fontSize: 20),
-                      overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.center,
-                              maxLines: 3,
-
-                    ))),
-                    const Text(
-                      "",
-                      style: TextStyle(fontSize: 20),
-                      overflow: TextOverflow.ellipsis,
-
-                    )
-                  ],
-                ),
-                vocab.ex3ARA ==""? Container() : const Divider(
-                  thickness: 1, // thickness of the line
-                  indent: 20, // empty space to the leading edge of divider.
-                  endIndent: 20, // empty space to the trailing edge of the divider.
-                  color: Colors.black, // The color to use when painting the line.
-                  height: 10, // The divider's height extent.
-                ),
-                vocab.ex3ARA ==""? Container() : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                      overflow: TextOverflow.ellipsis,
-
-                    ),
-                    Expanded(flex: 5, child: Align(
-                        alignment: Alignment.topCenter,
-                        child:Text(
-                      vocab.ex3ARA,
-                      style: TextStyle(fontSize: 20),
-                      overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          maxLines: 3,
-
-                    )))
-                  ],
-                ),
-                vocab.ex3ENG ==""? Container() : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(flex: 5, child: Align(
-                        alignment: Alignment.topCenter,
-                        child:Text(
-                      vocab.ex3ENG,
-                      style: TextStyle(fontSize: 20),
-                      overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          maxLines: 3,
-
-                    ))),
-                  ],
-                ),
+                vocab.ex1ARA == ""
+                    ? Container()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                              flex: 5,
+                              child: Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Text(
+                                    vocab.ex1ARA,
+                                    maxLines: 3,
+                                    style: TextStyle(fontSize: 20),
+                                    overflow: TextOverflow.ellipsis,
+                                  )))
+                        ],
+                      ),
+                vocab.ex1ENG == ""
+                    ? Container()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                              flex: 5,
+                              child: Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Text(
+                                    vocab.ex1ENG,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: 20),
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                  ))),
+                          const Text(
+                            "",
+                            style: TextStyle(fontSize: 20),
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        ],
+                      ),
+                vocab.ex2ARA == ""
+                    ? Container()
+                    : const Divider(
+                        thickness: 1,
+                        // thickness of the line
+                        indent: 20,
+                        // empty space to the leading edge of divider.
+                        endIndent: 20,
+                        // empty space to the trailing edge of the divider.
+                        color: Colors.black,
+                        // The color to use when painting the line.
+                        height: 10, // The divider's height extent.
+                      ),
+                vocab.ex2ARA == ""
+                    ? Container()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                              flex: 5,
+                              child: Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Text(
+                                    vocab.ex2ARA,
+                                    style: TextStyle(fontSize: 20),
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 3,
+                                  )))
+                        ],
+                      ),
+                vocab.ex2ENG == ""
+                    ? Container()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                              flex: 5,
+                              child: Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Text(
+                                    vocab.ex2ENG,
+                                    style: TextStyle(fontSize: 20),
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 3,
+                                  ))),
+                          const Text(
+                            "",
+                            style: TextStyle(fontSize: 20),
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        ],
+                      ),
+                vocab.ex3ARA == ""
+                    ? Container()
+                    : const Divider(
+                        thickness: 1,
+                        // thickness of the line
+                        indent: 20,
+                        // empty space to the leading edge of divider.
+                        endIndent: 20,
+                        // empty space to the trailing edge of the divider.
+                        color: Colors.black,
+                        // The color to use when painting the line.
+                        height: 10, // The divider's height extent.
+                      ),
+                vocab.ex3ARA == ""
+                    ? Container()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Expanded(
+                              flex: 5,
+                              child: Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Text(
+                                    vocab.ex3ARA,
+                                    style: TextStyle(fontSize: 20),
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 3,
+                                  )))
+                        ],
+                      ),
+                vocab.ex3ENG == ""
+                    ? Container()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                              flex: 5,
+                              child: Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Text(
+                                    vocab.ex3ENG,
+                                    style: TextStyle(fontSize: 20),
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 3,
+                                  ))),
+                        ],
+                      ),
                 const Text(
                   " \n",
                   style: TextStyle(fontSize: 6, fontWeight: FontWeight.bold),
                   overflow: TextOverflow.ellipsis,
-
                 ),
               ],
             )));
-
   }
-
 }
 
 class Verb extends StatelessWidget {
@@ -691,18 +741,18 @@ class Verb extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Flexible(child:Text(
+                  Flexible(
+                      child: Text(
                     "\t \t \t \t" + vocab.verbEng,
                     style: TextStyle(fontSize: 20),
                   )),
-                  Flexible(child:Text(
-                    vocab.verb+ "\t \t \t \t",
+                  Flexible(
+                      child: Text(
+                    vocab.verb + "\t \t \t \t",
                     style: TextStyle(fontSize: 20),
-
                   ))
                 ],
               ),
-
               const Text(
                 " \n",
                 style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
@@ -737,13 +787,16 @@ class NominalVerb extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(flex: 5, child: Text(
-                    vocab.nomVerbType == ""
-                        ? "\t Nominal Verb"
-                        : "\t Nominal Verb (" + vocab.nomVerbType + ")",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    overflow: TextOverflow.ellipsis,
-                  )),
+                  Expanded(
+                      flex: 5,
+                      child: Text(
+                        vocab.nomVerbType == ""
+                            ? "\t Nominal Verb"
+                            : "\t Nominal Verb (" + vocab.nomVerbType + ")",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
+                      )),
                 ],
               ),
               const Text(
@@ -753,22 +806,28 @@ class NominalVerb extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(flex: 5, child: Padding(
-                      padding: EdgeInsets.fromLTRB(20,0,0,0),
-                      child: Text(
-                    vocab.nomVerbEng,
-                    maxLines: 3,
-                    style: TextStyle(fontSize: 20, ),
-                    overflow: TextOverflow.ellipsis,
-                  ))),
-          Expanded(flex: 5, child: Padding(
-
-            padding: EdgeInsets.fromLTRB(0,0,30,0),
-            child: Align(
-              alignment: Alignment.topRight,child: Text(
-                    vocab.nomVerbAra ,
-                    style: TextStyle(fontSize: 20),
-                  ))))
+                  Expanded(
+                      flex: 5,
+                      child: Padding(
+                          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          child: Text(
+                            vocab.nomVerbEng,
+                            maxLines: 3,
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ))),
+                  Expanded(
+                      flex: 5,
+                      child: Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
+                          child: Align(
+                              alignment: Alignment.topRight,
+                              child: Text(
+                                vocab.nomVerbAra,
+                                style: TextStyle(fontSize: 20),
+                              ))))
                 ],
               ),
               const Text(
@@ -817,21 +876,19 @@ class Noun extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                 children: [
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20,0,0,0),
-                    child: Text(
-                    vocab.nounEng,
-                    style: TextStyle(fontSize: 20),
-
-                  )),
+                      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                      child: Text(
+                        vocab.nounEng,
+                        style: TextStyle(fontSize: 20),
+                      )),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0,0,30,0),
-                    child: Text(
-                    vocab.noun,
-                    style: TextStyle(fontSize: 20),
-                  ))
+                      padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
+                      child: Text(
+                        vocab.noun,
+                        style: TextStyle(fontSize: 20),
+                      ))
                 ],
               ),
               const Text(
@@ -908,7 +965,7 @@ class Masder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (vocab.adjective == "") {
+    if (vocab.masder == "") {
       return Container();
     }
     return Padding(
@@ -926,7 +983,7 @@ class Masder extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Text(
-                    "\t Masder",
+                    "\t Masdar",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -946,6 +1003,124 @@ class Masder extends StatelessWidget {
                   Flexible(
                       child: Text(
                     vocab.masder + "\t \t \t \t",
+                    style: TextStyle(fontSize: 20),
+                  ))
+                ],
+              ),
+              const Text(
+                " \n",
+                style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ));
+  }
+}
+
+class NomVerbAct extends StatelessWidget {
+  final Vocab vocab;
+
+  const NomVerbAct(this.vocab, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (vocab.nomVerbAct == "") {
+      return Container();
+    }
+    return Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Container(
+          // height: 60,
+          color: Colors.blue[100],
+          child: Column(
+            children: <Widget>[
+              const Text(
+                " \n",
+                style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    "\t Nominal Verb (active)",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const Text(
+                " \n",
+                style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                      child: Text(
+                    "\t \t \t \t" + vocab.nomVerbActEng,
+                    style: TextStyle(fontSize: 20),
+                  )),
+                  Flexible(
+                      child: Text(
+                    vocab.nomVerbAct + "\t \t \t \t",
+                    style: TextStyle(fontSize: 20),
+                  ))
+                ],
+              ),
+              const Text(
+                " \n",
+                style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ));
+  }
+}
+
+class NomVerbPas extends StatelessWidget {
+  final Vocab vocab;
+
+  const NomVerbPas(this.vocab, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (vocab.nomVerbPas == "") {
+      return Container();
+    }
+    return Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Container(
+          // height: 60,
+          color: Colors.blue[100],
+          child: Column(
+            children: <Widget>[
+              const Text(
+                " \n",
+                style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    "\t Nominal Verb (passive)",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const Text(
+                " \n",
+                style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                      child: Text(
+                    "\t \t \t \t" + vocab.nomVerbPasEng,
+                    style: TextStyle(fontSize: 20),
+                  )),
+                  Flexible(
+                      child: Text(
+                    vocab.nomVerbPas + "\t \t \t \t",
                     style: TextStyle(fontSize: 20),
                   ))
                 ],
@@ -1021,3 +1196,135 @@ class ExampleSentences extends StatelessWidget {
             ])));
   }
 }*/
+class adjForms extends StatelessWidget {
+  final Vocab vocab;
+
+  const adjForms(this.vocab, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (vocab.aDJECTIVEfemale == "" &&
+        vocab.aDJECTIVEpl == "" &&
+        vocab.aDJECTIVEmale == "") {
+      return Container();
+    }
+    return Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Container(
+            // height: 60,
+            color: Colors.blue[100],
+            child: Column(children: [
+              Container(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Conjugation",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              Container(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[Column(
+                    children: [
+                      SizedBox(width: 200),
+                      Text(
+                  "male: " ,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                )]),
+                  Column(
+                    children: [
+                      SizedBox(width: 200),
+                      Text(vocab.aDJECTIVEmale == "" ?
+                    vocab.arabicMain : vocab.aDJECTIVEmale,
+                    style: TextStyle(fontSize: 20),
+                  )])]),
+              Container(
+                height: vocab.aDJECTIVEfemale == "" ? 0:10,
+              ),
+              vocab.aDJECTIVEfemale == "" ? Row():
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[Column(
+                      children: [
+                        SizedBox(width: 200),
+                        Text(
+                          "female: " ,
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        )]),
+                    Column(
+                        children: [
+                          SizedBox(width: 200),
+                          Text(vocab.aDJECTIVEfemale,
+                            style: TextStyle(fontSize: 20),
+                          )])]),
+              Container(
+                height: vocab.aDJECTIVEpl == "" ? 0:10,
+              ),
+              vocab.aDJECTIVEpl == "" ? Row():
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[Column(
+                      children: [
+                        SizedBox(width: 200),
+                        Text(
+                          "plural: " ,
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        )]),
+                    Column(
+                        children: [
+                          SizedBox(width: 200),
+                          Text(vocab.aDJECTIVEpl,
+                            style: TextStyle(fontSize: 20),
+                          )])]),
+              Container(
+                height: vocab.aDJECTIVEplMale == "" ? 0:10,
+              ),
+              vocab.aDJECTIVEplMale == "" ? Row():
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[Column(
+                      children: [
+                        SizedBox(width: 200),
+                        Text(
+                          "plural (m): " ,
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        )]),
+                    Column(
+                        children: [
+                          SizedBox(width: 200),
+                          Text(vocab.aDJECTIVEplMale,
+                            style: TextStyle(fontSize: 20),
+                          )])]),
+              Container(
+                height: vocab.aDJECTIVEplFemale == "" ? 0:10,
+              ),
+              vocab.aDJECTIVEplFemale == "" ? Row():
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[Column(
+                      children: [
+                        SizedBox(width: 200),
+                        Text(
+                          "plural (f): " ,
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        )]),
+                    Column(
+                        children: [
+                          SizedBox(width: 200),
+                          Text(vocab.aDJECTIVEplFemale,
+                            style: TextStyle(fontSize: 20),
+                          )])]),
+              Container(
+                height: 10,
+              ),
+              ])));
+
+  }
+}
