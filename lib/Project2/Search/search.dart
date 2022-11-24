@@ -81,18 +81,6 @@ class SearchWordScreenState extends State<SearchWordScreen> {
     hintText: 'Search Word',
     onChanged: searchVocab,
   );
-  /*Widget buildSearch() => Consumer<HoldVocab>(
-    builder: (context, holdVocab, _) {
-      vocabs = holdVocab.allVocabs;
-      //searchVocab(query);
-      return SearchWidget(
-            text: query,
-            hintText: 'Search Word',
-            onChanged: searchVocab,
-          );
-    }
-  );
-*/
   Widget buildVocab(Vocab vocab, DeewanUserData deewanUserData) => ListTile(
       //leading: Text(vocab.englishMain),
   title: Row(

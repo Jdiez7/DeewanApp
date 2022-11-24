@@ -49,13 +49,13 @@ class AuthService{
 
   //register with email & pw
 
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future registerWithEmailAndPassword(String email, String password, String name) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? myDeewanUser = result.user;
 
       // create a new document for the user with the uid
-      await DeewanDataBaseService(uid: myDeewanUser?.uid).updateDeewanUserData('new Deewan user', <int>[], <SinglePersonalVocabList>[]);
+      await DeewanDataBaseService(uid: myDeewanUser?.uid).updateDeewanUserData(name, <int>[], <SinglePersonalVocabList>[], [], []);
       // create deewan Lists
       await DeewanDataBaseService(uid: myDeewanUser?.uid).addNewFile('Verbs', fixed: true);
       await DeewanDataBaseService(uid: myDeewanUser?.uid).addNewFile('Nouns', fixed: true);

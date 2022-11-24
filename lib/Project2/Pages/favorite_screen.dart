@@ -44,9 +44,9 @@ class FavoriteScreenState extends State<FavoriteScreen> {
             });
             final int _Listlength;
             if (personalVocabList == null) {
-              _Listlength = 2;
+              _Listlength = 3;
             } else {
-              _Listlength = personalVocabList.length + 2;
+              _Listlength = personalVocabList.length + 3;
             }
 
             return ListView.builder(
@@ -81,6 +81,18 @@ class FavoriteScreenState extends State<FavoriteScreen> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   FavoriteScreenSubOld(widget.vocabs)),
+                        );
+                      });
+                }
+                if (index == _Listlength - 2) {
+                  return ListTile(
+                      title: Text('forgotten Vocab'),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ForgottenVocab(widget.vocabs)),
                         );
                       });
                 }

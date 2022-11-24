@@ -20,10 +20,14 @@ class DeewanUserData {
   final String? uid;
   final String? name;
   final List myFavoriteVocabs;
+  final List? forgottenVocab;
   final List personalVocab;
   final String? role;
+  final List? doneLevels;
 
-  DeewanUserData({ this.name, this.uid, this.role, required this.myFavoriteVocabs, required this.personalVocab});
+
+
+  DeewanUserData({ this.name, this.uid,this.doneLevels, this.forgottenVocab,  this.role = 'user', required this.myFavoriteVocabs, required this.personalVocab,});
 }
 
 class SinglePersonalVocabList{

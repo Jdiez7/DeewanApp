@@ -8,6 +8,7 @@ import 'Pages/quiz_page.dart';
 import 'Pages/favorite_words.dart';
 import 'Pages/learning_material.dart';
 import 'Pages/My_Account.dart';
+import 'Pages/quiz_screen.dart';
 import 'Pages/refer_to_a_friend.dart';
 import 'Pages/request_screen.dart';
 
@@ -146,6 +147,42 @@ class WordRequest extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => RequestScreen()),
+              );
+            },
+            splashColor: Colors.blue,
+            child: Center(
+                child:Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Icon(icon, size:70.0, color: warna,),
+                    Text(title, style : const TextStyle(fontSize: 17.0))
+                  ],
+                )
+            )
+        )
+    );
+
+  }
+}
+
+class Quiz extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final MaterialColor warna;
+
+  Quiz({this.title = 'ERROR', this.icon = Icons.error, this.warna = Colors.purple,});
+
+
+  @override
+  Widget build(BuildContext context) {
+    return  Card(
+
+        margin: const EdgeInsets.all(8.0),
+        child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => QuizScreen()),
               );
             },
             splashColor: Colors.blue,

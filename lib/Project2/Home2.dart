@@ -149,7 +149,9 @@ class _Home2State extends State<Home2>{
                           FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: Colors.blue, /*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
                           /*MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
                         */WordRequest(title: 'Word Request', icon: Icons.add, warna: Colors.blue,),
-                          AdminWordsRequested(title: 'Requests (ADMIN)', icon: Icons.list, warna: Colors.red,),
+                          Quiz(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
+
+                          AdminWordsRequested(title: 'Requests \n (ADMIN)', icon: Icons.list, warna: Colors.red,),
                           /* MyMenu5(title: 'My Account', icon: Icons.account_circle, warna: Colors.blue,),
                         MyMenu6(title: 'Refer to a friend', icon: Icons.send, warna: Colors.blue,),*/
                         ],)
@@ -164,6 +166,7 @@ class _Home2State extends State<Home2>{
                         FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: Colors.blue, /*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
                         /*MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
                         */WordRequest(title: 'Word Request', icon: Icons.add, warna: Colors.blue,),
+                        Quiz(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
 /*
                         AdminWordsRequested(title: 'Requests (ADMIN)', icon: Icons.list, warna: Colors.red,),
 */
@@ -176,6 +179,7 @@ class _Home2State extends State<Home2>{
           ),
         );
     } else {
+      print('sind wir hier?');
       return Loading();
     }
       }

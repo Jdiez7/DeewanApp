@@ -83,12 +83,14 @@ class DeewanDataBaseService {
   final CollectionReference requestCollection =
   FirebaseFirestore.instance.collection('requests');
 
-  Future<void> updateDeewanUserData(String name, List myFavoriteVocabs, List<SinglePersonalVocabList> personalVocab) async {
+  Future<void> updateDeewanUserData(String name, List myFavoriteVocabs, List<SinglePersonalVocabList> personalVocab, List levels, List forgottenVocab) async {
     return await deewanUserCollection.doc(uid).set({
       'name': name,
       'myFavoriteVocabs': myFavoriteVocabs,
       'personalVocab': personalVocab,
       'role': 'user',
+      'doneLevels': levels,
+      'forgottenVocab' : forgottenVocab,
     });
   }
 
@@ -104,6 +106,18 @@ class DeewanDataBaseService {
   Future<void> updateDeewanUserFavorite(List myFavoriteVocabs) async {
     return await deewanUserCollection.doc(uid).update({
       'myFavoriteVocabs': myFavoriteVocabs,
+    });
+  }
+
+  Future<void> updateForgottenVocab(List forgottenVocab) async {
+    return await deewanUserCollection.doc(uid).update({
+      'forgottenVocab': forgottenVocab,
+    });
+  }
+
+  Future<void> updateDoneLevel(List<int> levels) async {
+    return await deewanUserCollection.doc(uid).update({
+      'doneLevels': levels,
     });
   }
 
@@ -174,13 +188,54 @@ class DeewanDataBaseService {
 
   //Deewan userData from snapshot
   DeewanUserData _deewanUserDataFromSnapshot(DocumentSnapshot snapshot) {
-    return DeewanUserData(
-      uid: uid,
-      name: snapshot.get('name'),
-      role: snapshot.get('role') ?? 'user',
-      myFavoriteVocabs: snapshot.get('myFavoriteVocabs'),
-     personalVocab: snapshot.get('personalVocab'),
-    );
+    if(snapshot['doneLevels'].length >0 ) {
+      if(snapshot['forgottenVocab'].length >0) {
+        return DeewanUserData(
+          uid: uid,
+          name: snapshot.get('name'),
+          role: snapshot.get('role') ?? 'user',
+          myFavoriteVocabs: snapshot.get('myFavoriteVocabs'),
+          personalVocab: snapshot.get('personalVocab'),
+          doneLevels: snapshot.get('doneLevels'),
+          forgottenVocab:  snapshot.get('forgottenVocab'),
+        );
+      } else {
+        return DeewanUserData(
+          uid: uid,
+          name: snapshot.get('name'),
+          role: snapshot.get('role') ?? 'user',
+          myFavoriteVocabs: snapshot.get('myFavoriteVocabs'),
+          personalVocab: snapshot.get('personalVocab'),
+          doneLevels: snapshot.get('doneLevels') ?? [],
+          forgottenVocab: [],
+        );
+      }}else{
+
+      if(snapshot['forgottenVocab']!=null) {
+        return DeewanUserData(
+          uid: uid,
+          name: snapshot.get('name'),
+          role: snapshot.get('role') ?? 'user',
+          myFavoriteVocabs: snapshot.get('myFavoriteVocabs'),
+          personalVocab: snapshot.get('personalVocab'),
+          doneLevels:  [],
+          forgottenVocab: snapshot.get('forgottenVocab') ?? [],
+        );
+      } else {
+        return DeewanUserData(
+          uid: uid,
+          name: snapshot.get('name'),
+          role: snapshot.get('role') ?? 'user',
+          myFavoriteVocabs: snapshot.get('myFavoriteVocabs'),
+          personalVocab: snapshot.get('personalVocab'),
+          doneLevels: [],
+          forgottenVocab: [],
+        );
+      }
+
+    }
+
+
   }
 
   SinglePersonalVocabList _personalListFromSnapshot(DocumentSnapshot snapshot) {

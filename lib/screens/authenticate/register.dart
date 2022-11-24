@@ -20,6 +20,7 @@ class _RegisterState extends State<Register> {
 
   String email = '';
   String password = '';
+  String name = '';
   String error = '';
 
   @override
@@ -52,6 +53,7 @@ class _RegisterState extends State<Register> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 20.0),
+
                 TextFormField(
                   decoration: textInputDecoration.copyWith(hintText: 'Email'),
                   validator: (val) => val!.isEmpty ? 'Enter an E-Mail' : null,
@@ -69,6 +71,12 @@ class _RegisterState extends State<Register> {
                   },
                 ),
                 SizedBox(height: 20.0),
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(hintText: 'Name'),
+                  validator: (val) => val!.isEmpty ? 'Enter your Name' : null,
+                  onChanged: (val){
+                    setState(() => name = val);
+                  },),SizedBox(height: 20.0),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Colors.pink),
                   child: Text('Register',
@@ -79,7 +87,7 @@ class _RegisterState extends State<Register> {
                         loading = true;
                       });
                       dynamic result = await _auth.registerWithEmailAndPassword(
-                          email, password);
+                          email, password, name);
                       if (result == null) {
                         setState(() {
                           error = 'pleas supply a valid email';

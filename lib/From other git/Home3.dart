@@ -24,7 +24,7 @@ class Home3 extends StatelessWidget {
           title: Text('Vocaby'),
           elevation: 0.0,
           actions: <Widget>[
-            FlatButton.icon(
+            TextButton.icon(
               icon: Icon(Icons.person),
               label: Text('logout'),
               onPressed: () async {
