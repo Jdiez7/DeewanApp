@@ -1,3 +1,4 @@
+import 'package:appwithfirebase/Project2/TEST/TestSearch.dart';
 import 'package:appwithfirebase/screens/wrapper.dart';
 import 'package:appwithfirebase/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -152,6 +153,8 @@ class _Home2State extends State<Home2>{
                           Quiz(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
 
                           AdminWordsRequested(title: 'Requests \n (ADMIN)', icon: Icons.list, warna: Colors.red,),
+                          TestVocabs(title: 'Test', icon: Icons.search, warna: Colors.red,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
+
                           /* MyMenu5(title: 'My Account', icon: Icons.account_circle, warna: Colors.blue,),
                         MyMenu6(title: 'Refer to a friend', icon: Icons.send, warna: Colors.blue,),*/
                         ],)

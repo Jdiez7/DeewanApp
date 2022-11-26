@@ -280,7 +280,31 @@ class DeewanDataBaseService {
     return deewanUserCollection.doc(uid).collection('personalVocabs').snapshots().map(_personalVocabFromSnapshot);
   }
 
+  List<TestV> _testVocabListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      final id = int.tryParse(doc.get('id'));
+      if (id == null) throw Exception('couldn\'t pass ID');
+      return TestV(
+        id: id,
+        arabic1: doc.get('arabic1') ?? 'NO ENTRY',
+        arabic2: doc.get('arabic2') ?? 'NO ENTRY',
+        arabic3: doc.get('arabic3') ?? 'NO ENTRY',
+        arabic4: doc.get('arabic4') ?? 'NO ENTRY',
+        englisch1: doc.get('englisch1') ?? 'NO ENTRY',
+        englisch2: doc.get('englisch2') ?? 'NO ENTRY',
+        englisch3: doc.get('englisch3') ?? 'NO ENTRY',
+        englisch4: doc.get('englisch4') ?? 'NO ENTRY',
+        englisch5: doc.get('englisch5') ?? 'NO ENTRY',
+        englisch6: doc.get('englisch6') ?? 'NO ENTRY',
+        englisch7: doc.get('englisch7') ?? 'NO ENTRY',
+        englisch8: doc.get('englisch8') ?? 'NO ENTRY',
+        forms1: doc.get('forms1') ?? 'NO ENTRY',
+        forms2: doc.get('forms2') ?? 'NO ENTRY',
+        forms3: doc.get('forms3') ?? 'NO ENTRY',
 
+      );
+    }).toList();
+  }
 
   List<Vocab> _vocabListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
@@ -356,5 +380,8 @@ class DeewanDataBaseService {
   // get deewani stream
   Stream<List<Vocab>> get backendVocabs {
     return vocabularyCollection.snapshots().map(_vocabListFromSnapshot);
+  }
+  Stream<List<TestV>> get testVocabs {
+    return vocabularyCollection.snapshots().map(_testVocabListFromSnapshot);
   }
 }
