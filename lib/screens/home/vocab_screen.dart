@@ -1328,3 +1328,409 @@ class adjForms extends StatelessWidget {
 
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class TestVocabScreen extends StatefulWidget {
+  final TestV testVocab;
+
+  TestVocabScreen(this.testVocab, {Key? key}) : super(key: key);
+
+  @override
+  _TestVocabScreenState createState() => _TestVocabScreenState();
+}
+
+class _TestVocabScreenState extends State<TestVocabScreen> {
+  bool loading = false;
+  bool _isLoading = false;
+  static const routeName = '/extractArguments';
+
+  @override
+  Widget build(BuildContext context) {
+    MyUser user = Provider.of<MyUser>(context);
+    // Extract the arguments from the current ModalRoute
+    // settings and cast them as ScreenArguments.
+    return loading
+        ? Loading()
+        : StreamBuilder<List<SinglePersonalVocabList>>(
+        stream: DeewanDataBaseService(uid: user.uid).personalVocabData,
+        initialData: [],
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<SinglePersonalVocabList> _personalVocabList =
+            snapshot.data!;
+            _personalVocabList.sort((a, b) {
+              return a.listName
+                  .toLowerCase()
+                  .compareTo(b.listName.toLowerCase());
+            });
+            _personalVocabList.sort((a, b) {
+              if (b.fixed) {
+                return 1;
+              }
+              return -1;
+            });
+            var _list = [
+              for (var i = 0; i < _personalVocabList.length; i += 1) i
+            ];
+
+            return Scaffold(
+              appBar: AppBar(
+                centerTitle: true,
+                title: Text(widget.testVocab.englisch1 +
+                    ' - ' +
+                    widget.testVocab.arabic1)
+              ),
+              body: Container(
+                constraints: BoxConstraints.expand(),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/app_bg5.jpg"),
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.4), BlendMode.dstATop),
+                    )),
+                child: ListView(
+                  children: [
+                    const Placeholder(5),
+                    TestDefinitions(widget.testVocab),
+                    TestArabic(widget.testVocab),
+                    /*   const Placeholder(0),*//*
+                    Plural(widget.vocab),
+                    adjForms(widget.vocab),
+                    Fusha(widget.vocab),
+                    Prepositions(widget.vocab),
+                    Synonyms(widget.vocab),
+                    ExampleSentences2(widget.vocab),
+                    Verb(widget.vocab),
+                    NominalVerb(widget.vocab),
+                    Noun(widget.vocab),
+                    Adjective(widget.vocab),
+                    Masder(widget.vocab),
+                    NomVerbAct(widget.vocab),
+                    NomVerbPas(widget.vocab),
+                    const Placeholder(0),*/
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return Loading();
+          }
+        });
+  }
+}
+
+class TestDefinitions extends StatelessWidget {
+  final TestV vocab;
+
+  const TestDefinitions(this.vocab, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Container(
+        color: Colors.blue[100],
+        padding: EdgeInsets.all(4.0),
+        child: RichText(
+          text: TextSpan(
+            style: const TextStyle(
+              fontSize: 7.0,
+              color: Colors.black,
+            ),
+            children: <TextSpan>[
+              TextSpan(text: "\n"),
+              TextSpan(
+                  text: '\t Definition',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20)),
+              TextSpan(text: "\n"),
+              TextSpan(text: "\n"),
+              TextSpan(
+                  text: "\t \t  1. " + vocab.englisch1,
+                  style: TextStyle(fontSize: 17)),
+              TextSpan(text: "\n \n"),
+              vocab.englisch2 == "-"
+                  ? TextSpan(
+                style: TextStyle(height: 0, fontSize: 0),
+              )
+                  : TextSpan(
+                  text: "\t \t  2. " + vocab.englisch2,
+                  style: TextStyle(fontSize: 17)),
+              vocab.englisch2 == "-"
+                  ? TextSpan(
+                style: TextStyle(height: 0, fontSize: 0),
+              ) : TextSpan(text:"\n \n"),
+              vocab.englisch3 == "-"
+                  ? TextSpan(
+                style: TextStyle(height: 0, fontSize: 0),
+              )
+                  : TextSpan(
+                  text: "\t \t  3. " + vocab.englisch3,
+                  style: TextStyle(fontSize: 17)),
+              vocab.englisch3 == "-"
+                  ? TextSpan(
+                style: TextStyle(height: 0, fontSize: 0),
+              ) : TextSpan(text:"\n \n"),
+              vocab.englisch4 == "-"
+                  ? TextSpan(
+                style: TextStyle(height: 0, fontSize: 0),
+              )
+                  : TextSpan(
+                  text: "\t \t  4. " + vocab.englisch4,
+                  style: TextStyle(fontSize: 17)),
+              vocab.englisch4 == "-"
+                  ? TextSpan(
+                style: TextStyle(height: 0, fontSize: 0),
+              ) : TextSpan(text:"\n \n"),
+              vocab.englisch5 == "-"
+                  ? TextSpan(
+                style: TextStyle(height: 0, fontSize: 0),
+              )
+                  : TextSpan(
+                  text: "\t \t  5. " + vocab.englisch5,
+                  style: TextStyle(fontSize: 17)),
+              vocab.englisch5 == "-"
+                  ? TextSpan(
+                style: TextStyle(height: 0, fontSize: 0),
+              ) : TextSpan(text:"\n \n"),
+              vocab.englisch6 == "-"
+                  ? TextSpan(
+                style: TextStyle(height: 0, fontSize: 0),
+              )
+                  : TextSpan(
+                  text: "\t \t  6. " + vocab.englisch6,
+                  style: TextStyle(fontSize: 17)),
+              vocab.englisch6 == "-"
+                  ? TextSpan(
+                style: TextStyle(height: 0, fontSize: 0),
+              ) : TextSpan(text:"\n \n"),
+              vocab.englisch7 == "-"
+                  ? TextSpan(
+                style: TextStyle(height: 0, fontSize: 0),
+              )
+                  : TextSpan(
+                  text: "\t \t  7. " + vocab.englisch7,
+                  style: TextStyle(fontSize: 17)),
+              vocab.englisch7 == "-"
+                  ? TextSpan(
+                style: TextStyle(height: 0, fontSize: 0),
+              ) : TextSpan(text:"\n \n"),
+              vocab.englisch8 == "-"
+                  ? TextSpan(
+                style: TextStyle(height: 0, fontSize: 0),
+              )
+                  : TextSpan(
+                  text: "\t \t  8. " + vocab.englisch8,
+                  style: TextStyle(fontSize: 17)),
+              vocab.englisch6 == "-"
+                  ? TextSpan(
+                style: TextStyle(height: 0, fontSize: 0),
+              ) : TextSpan(text:"\n \n"),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TestArabic extends StatelessWidget {
+  final TestV vocab;
+
+  const TestArabic(this.vocab, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (vocab.arabic1 == "(أ / إ)") {
+      return Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Container(
+            // height: 60,
+            color: Colors.blue[100],
+            child: Column(
+              children: <Widget>[
+                const Text(
+                  " \n",
+                  style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Arabic Forms",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                const Text(
+                  " \n",
+                  style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Flexible(
+                        child: Text(
+                          "\t \t \t \t" + vocab.arabic2,
+                          style: TextStyle(fontSize: 20),
+                        )),
+                    Flexible(
+                        child: Text(
+                          vocab.forms1 + "\t \t \t \t",
+                          style: TextStyle(fontSize: 20),
+                        ))
+                  ],
+                ),
+                const Text(
+                  " \n",
+                  style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
+                ),
+                vocab.arabic3 == "-" ? Row(): Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Flexible(
+                        child: Text(
+                          "\t \t \t \t" + vocab.arabic3,
+                          style: TextStyle(fontSize: 20),
+                        )),
+                    Flexible(
+                        child: Text(
+                          vocab.forms2 + "\t \t \t \t",
+                          style: TextStyle(fontSize: 20),
+                        ))
+                  ],
+                ),
+                const Text(
+                  " \n",
+                  style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
+                ),
+                vocab.arabic4 == "-" ? Row(): Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Flexible(
+                        child: Text(
+                          "\t \t \t \t" + vocab.arabic4,
+                          style: TextStyle(fontSize: 20),
+                        )),
+                    Flexible(
+                        child: Text(
+                          vocab.forms3 + "\t \t \t \t",
+                          style: TextStyle(fontSize: 20),
+                        ))
+                  ],
+                ),
+                const Text(
+                  " \n",
+                  style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
+                ),
+
+              ],
+            ),
+          ));
+    }
+    return Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Container(
+          // height: 60,
+          color: Colors.blue[100],
+          child: Column(
+            children: <Widget>[
+              const Text(
+                " \n",
+                style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Arabic Forms",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const Text(
+                " \n",
+                style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Flexible(
+                      child: Text(
+                        "\t \t \t \t" + vocab.arabic1,
+                        style: TextStyle(fontSize: 20),
+                      )),
+                  Flexible(
+                      child: Text(
+                        vocab.forms1 + "\t \t \t \t",
+                        style: TextStyle(fontSize: 20),
+                      ))
+                ],
+              ),
+              const Text(
+                " \n",
+                style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
+              ),
+              vocab.arabic2 == "-" ? Row(): Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Flexible(
+                      child: Text(
+                        "\t \t \t \t" + vocab.arabic2,
+                        style: TextStyle(fontSize: 20),
+                      )),
+                  Flexible(
+                      child: Text(
+                        vocab.forms2 + "\t \t \t \t",
+                        style: TextStyle(fontSize: 20),
+                      ))
+                ],
+              ),
+              const Text(
+                " \n",
+                style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
+              ),
+              vocab.arabic3 == "-" ? Row(): Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Flexible(
+                      child: Text(
+                        "\t \t \t \t" + vocab.arabic3,
+                        style: TextStyle(fontSize: 20),
+                      )),
+                  Flexible(
+                      child: Text(
+                        vocab.forms3 + "\t \t \t \t",
+                        style: TextStyle(fontSize: 20),
+                      ))
+                ],
+              ),
+              const Text(
+                " \n",
+                style: TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
+              ),
+
+            ],
+          ),
+        ));
+  }
+}

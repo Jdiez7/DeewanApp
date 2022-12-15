@@ -72,25 +72,31 @@ class TestVocabs extends StatelessWidget{
   TestVocabs({this.title = 'ERROR', this.icon = Icons.error, this.warna = Colors.purple, required this.favoriteVocabs,/*required this.vocabs*/});
 
   Future<List<TestV>> _loadCSV() async {
-    final _rawData = await rootBundle.loadString("assets/test1.csv");
-    List<List<dynamic>> _listData = CsvToListConverter().convert(_rawData, eol: '\n', fieldDelimiter: ',');
-    print(_listData[2000]);
+    final _rawData1 = await rootBundle.loadString("assets/test1.csv");
+    final _rawData2 = await rootBundle.loadString("assets/test2.csv");
+    final _rawData3 = await rootBundle.loadString("assets/test3.csv");
 
+    List<List<dynamic>> _listData1 = CsvToListConverter().convert(_rawData1, eol: '\n', fieldDelimiter: ',');
+    List<List<dynamic>> _listData2 = CsvToListConverter().convert(_rawData2, eol: '\n', fieldDelimiter: ',');
+    List<List<dynamic>> _listData3 = CsvToListConverter().convert(_rawData3, eol: '\n', fieldDelimiter: ',');
+
+    var _listData = _listData1 + _listData2 +_listData3;
+    print(_listData.length);
     List<TestV> returnList = _listData // Skip the header row
         .map((parts) {
       return TestV(
-        id: 0,
-        englisch1: parts[2] != null ? parts[2] : "Empty",
-        englisch2: parts[3] != null ? "Empty" : "Empty",
-        englisch3: parts[4] != null ? parts[4] : "Empty",
+        id: parts[1] is int ? parts[1] as int : 0,
+        englisch1: parts[2] != null ? parts[2].startsWith("1. ") ?  parts[2].toString().substring(3,) :parts[2] : "Empty",
+        englisch2: parts[3] != null ? parts[3].toString() : "Empty",
+        englisch3: parts[4] != null ? parts[4].toString() : "Empty",
         englisch4: parts[5] != null ? parts[5] : "Empty",
         englisch5: parts[6] != null ? parts[6]: "Empty",
         englisch6: parts[7] != null ? parts[7] : "Empty",
         englisch7: parts[8] != null ? parts[8] : "Empty",
         englisch8: parts[9] != null ? parts[9] : "Empty",
-        arabic1: parts[10] != null ? parts[10] : "Empty",
-        arabic2: parts[11] != null ? parts[11] : "Empty",
-        arabic3: parts[12] != null ? parts[12] : "Empty",
+        arabic1: parts[10] != null ? parts[10] == "(أ / إ)"? parts[11] : parts[10]: "Empty",
+        arabic2: parts[11] != null ? parts[10] == "(أ / إ)"? parts[12] : parts[11] : "Empty",
+        arabic3: parts[12] != null ? parts[10] == "(أ / إ)"? parts[13] : parts[12] : "Empty",
         arabic4: parts[13] != null ? parts[13] : "Empty",
         forms1: parts[14] != null ? parts[14]: "Empty",
         forms2: parts[15] != null ? parts[15] : "Empty",

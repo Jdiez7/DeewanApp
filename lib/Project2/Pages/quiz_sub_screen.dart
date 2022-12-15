@@ -31,7 +31,7 @@ class _subQuizState extends State<subQuiz> {
   bool endOfQuiz = false;
   bool correctAnswerSelected = false;
   bool questionsCreated = false;
-  int _quizLength = 2;
+  int _quizLength = 10;
   final int count = 0;
   final double _pass = 0.7;
   final _random = new Random();

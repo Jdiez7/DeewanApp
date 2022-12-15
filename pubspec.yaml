@@ -80,6 +80,8 @@ flutter:
     - assets/app_bg5.jpg
     - assets/app_logo6.png
     - assets/test1.csv
+    - assets/test2.csv
+    - assets/test3.csv
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

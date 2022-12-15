@@ -32,6 +32,7 @@ class TestVocabScreenState extends State<TestVocabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<TestV> filteredData = vocabs.where((item) => item.englisch1.toString() != "-").toList();
     MyUser user = Provider.of<MyUser>(context);
     return StreamBuilder<DeewanUserData>(
         stream: DeewanDataBaseService(uid: user.uid).deewanUserData,
@@ -58,10 +59,10 @@ class TestVocabScreenState extends State<TestVocabsScreen> {
                     buildSearch(),
                     Expanded(
                       child: ListView.builder(
-                        itemCount: vocabs.length,
+                        itemCount: filteredData.length,
                         itemBuilder: (context, index) {
-                          vocabs.sort((a, b) => a.englisch1.toLowerCase().compareTo(b.englisch1.toLowerCase()));
-                          final vocab = vocabs[index];
+                          filteredData.sort((a, b) => a.englisch1.toLowerCase().compareTo(b.englisch1.toLowerCase()));
+                          final vocab = filteredData[index];
                           return buildTestVocab(vocab, deewanUserData);
                         },
                       ),
@@ -87,7 +88,7 @@ class TestVocabScreenState extends State<TestVocabsScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [Flexible(child:Text(vocab.englisch1,overflow: TextOverflow.ellipsis,)), Text(vocab.arabic1,overflow: TextOverflow.ellipsis,)],
       ),
-      trailing: IconButton(
+      /*trailing: IconButton(
         icon: Icon(
           deewanUserData.myFavoriteVocabs.contains(vocab.id)
               ? Icons.favorite
@@ -113,9 +114,15 @@ class TestVocabScreenState extends State<TestVocabsScreen> {
             }),
       ),
 
-    /*Navigator.pushNamed(context, VocabScreen.routeName,
+    *//*Navigator.pushNamed(context, VocabScreen.routeName,
               arguments: ScreenArguments(vocab));
         },*/
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TestVocabScreen(vocab)),
+        );
+      }
   );
 
   void searchVocab(String query) {

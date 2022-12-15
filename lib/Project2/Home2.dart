@@ -151,6 +151,24 @@ class _Home2State extends State<Home2>{
                           /*MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
                         */WordRequest(title: 'Word Request', icon: Icons.add, warna: Colors.blue,),
                           Quiz(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
+                          AdminWordsRequested(title: 'Requests \n (ADMIN)', icon: Icons.list, warna: Colors.red,),
+
+                          /* MyMenu5(title: 'My Account', icon: Icons.account_circle, warna: Colors.blue,),
+                        MyMenu6(title: 'Refer to a friend', icon: Icons.send, warna: Colors.blue,),*/
+                        ],)
+                  );
+                }else if(role=='dLksJEHdkfOokd'){
+                  return Container(
+                      padding: const EdgeInsets.all(30.0),
+                      child: GridView.count(
+                        crossAxisCount: 2,
+                        children:
+                        <Widget>[
+                          MyMenu(title: 'Word Search', icon: Icons.search, warna: Colors.blue,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
+                          FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: Colors.blue, /*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
+                          /*MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
+                        */WordRequest(title: 'Word Request', icon: Icons.add, warna: Colors.blue,),
+                          Quiz(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
 
                           AdminWordsRequested(title: 'Requests \n (ADMIN)', icon: Icons.list, warna: Colors.red,),
                           TestVocabs(title: 'Test', icon: Icons.search, warna: Colors.red,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
@@ -159,7 +177,9 @@ class _Home2State extends State<Home2>{
                         MyMenu6(title: 'Refer to a friend', icon: Icons.send, warna: Colors.blue,),*/
                         ],)
                   );
-                }else{return Container(
+                }else
+
+                {return Container(
                     padding: const EdgeInsets.all(30.0),
                     child: GridView.count(
                       crossAxisCount: 2,
