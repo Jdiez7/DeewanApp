@@ -152,7 +152,7 @@ class FavoriteScreenState extends State<FavoriteScreen> {
                   image: AssetImage("assets/app_bg5.jpg"),
                   fit: BoxFit.cover,
                   colorFilter:
-                  ColorFilter.mode(Colors.blue.withOpacity(0.4),
+                  ColorFilter.mode(Colors.black.withOpacity(0.4),
                       BlendMode.dstATop),)),
 
             child: _buildList(context)

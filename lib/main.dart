@@ -31,14 +31,17 @@ class MyApp extends StatelessWidget {
             appBarTheme: AppBarTheme(
               color: appBarColor,
             ),
-            textTheme: Theme.of(context).textTheme.apply(
+
+            textTheme: TextTheme(
+                titleLarge: TextStyle(color: Colors.pink)),
+            /*Theme.of(context).textTheme.apply(
               bodyColor: globalTextColor,
               displayColor: globalTextColor,
-            ),
+            ),*/
             textSelectionTheme: TextSelectionThemeData(
-              selectionHandleColor: Colors.black,),
-            primaryColor: Colors.black,// Change bubble to red
-            
+              selectionHandleColor: globalTextColor,),
+            primaryColor: globalTextColor,
+
           ),
         )
 

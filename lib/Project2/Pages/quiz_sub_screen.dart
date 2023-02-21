@@ -1,4 +1,5 @@
 import 'package:appwithfirebase/Project2/Pages/quizNotReady.dart';
+import 'package:appwithfirebase/shared/constants.dart';
 import 'package:appwithfirebase/shared/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -178,7 +179,6 @@ class _subQuizState extends State<subQuiz> {
       print(_previousDone);
           return Scaffold(
                 appBar: AppBar(
-                  backgroundColor: Colors.blue,
                   title: Text('Quiz - Level ' + widget.level.toString()),
                 ),
                 body: Container(
@@ -219,7 +219,7 @@ class _subQuizState extends State<subQuiz> {
                           padding:
                               EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
                           decoration: BoxDecoration(
-                              color: Colors.blue,
+                              color: appBarColor,
                               borderRadius: BorderRadius.circular((10.0))),
                           child: Center(
                               child: Text(
@@ -234,7 +234,7 @@ class _subQuizState extends State<subQuiz> {
                       as List<Map<String,Object>>).map((answer) => Answer(
                         answerText: answer['answerText'].toString(),
                         answerColor: answerWasSelected ? answer['score'] as bool ?
-                            Colors.green : Colors.red : Colors.blue,
+                            Colors.green : Colors.red : globalColor1,
                         answerTap: (){
                           if (answerWasSelected){
                             return;
@@ -257,7 +257,8 @@ class _subQuizState extends State<subQuiz> {
 
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            minimumSize: Size(double.infinity, 40.0),
+                            minimumSize: Size(400.0, 40.0),
+                            backgroundColor: appBarColor,
                           ),
                           onPressed: (){
                             if (!answerWasSelected){
@@ -291,7 +292,7 @@ class _subQuizState extends State<subQuiz> {
                         Container(
                                   height: 100,
                                   width: double.infinity,
-                                  color: Colors.blue,
+                                  color: globalColor2,
                                   child: Center(
                                     child: Text(
                                         _totalScore > _pass * _quizLength
@@ -337,7 +338,7 @@ class Answer extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           color: answerColor,
-          border: Border.all(color: Colors.blue),
+          border: Border.all(color: globalColor1),
           borderRadius: BorderRadius.circular(20.0),
         ),
         child: Center(

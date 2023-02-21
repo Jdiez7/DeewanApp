@@ -1,3 +1,4 @@
+import 'package:appwithfirebase/shared/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +35,7 @@ class quizNotReady extends StatelessWidget {
                     image: AssetImage("assets/app_bg5.jpg"),
                     fit: BoxFit.cover,
                     colorFilter:
-                    ColorFilter.mode(Colors.blue.withOpacity(0.1),
+                    ColorFilter.mode(Colors.black.withOpacity(0.1),
                         BlendMode.dstATop),)),
 
               child: Column(
@@ -50,6 +51,7 @@ class quizNotReady extends StatelessWidget {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   maximumSize: Size(double.infinity,40),
+                  backgroundColor: globalColor1,
                 ),
           onPressed: () {
             _previousDone.add(level+1);

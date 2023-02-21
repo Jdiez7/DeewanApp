@@ -8,6 +8,7 @@ import 'package:appwithfirebase/models/myuser.dart';
 import 'package:appwithfirebase/screens/home/vocab_screen.dart';
 import 'package:appwithfirebase/screens/wrapper.dart';
 import 'package:appwithfirebase/services/database.dart';
+import 'package:appwithfirebase/shared/constants.dart';
 import 'package:appwithfirebase/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -345,7 +346,7 @@ class SearchWordScreenState extends State<SearchWordScreen> {
         // Child text spans will inherit styles from parent
         style: const TextStyle(
           fontSize: 16.0,
-          color: Colors.blue,
+          color: globalTextColor,
         ),
         children: <TextSpan>[
           TextSpan(text: str.substring(0,index)),

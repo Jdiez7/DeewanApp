@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:appwithfirebase/Project2/Search/Xallvocabs.dart';
 import 'package:appwithfirebase/Project2/Search/search_widget.dart';
 import 'package:appwithfirebase/services/class_vocab.dart';
@@ -9,6 +11,8 @@ import 'package:appwithfirebase/services/database.dart';
 import 'package:appwithfirebase/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../shared/constants.dart';
 
 class TestVocabsScreen extends StatefulWidget {
   final List<TestV> vocabs;
@@ -62,6 +66,7 @@ class TestVocabScreenState extends State<TestVocabsScreen> {
                         itemCount: filteredData.length,
                         itemBuilder: (context, index) {
                           filteredData.sort((a, b) => a.englisch1.toLowerCase().compareTo(b.englisch1.toLowerCase()));
+                          query.length >= 2 ? filteredData.sort((a, b) => value(a, query).compareTo(value(b, query))): print('Query short');
                           final vocab = filteredData[index];
                           return buildTestVocab(vocab, deewanUserData);
                         },
@@ -77,52 +82,186 @@ class TestVocabScreenState extends State<TestVocabsScreen> {
           }
         });
   }
+
+  needsTestSubT(TestV vocab){
+    if( vocab.englisch1.toLowerCase().contains(query.toLowerCase())  ||
+        normalise(vocab.arabic1).contains(query.toLowerCase()) ){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  value(TestV vocab, String query){
+    String normQu = normalise(query);
+    String normAr = normalise(vocab.arabic1);
+    var len = normQu.length;
+    var len1 = min(vocab.englisch1.length, len);
+    var lenara = min(normAr.length, len);
+    var len2 = min(vocab.englisch2.length, len);
+    var len3 = min(vocab.englisch3.length, len);
+    var len4 = min(vocab.englisch4.length, len);
+    var len5 = min(vocab.englisch1.length, len+3);
+    var len6 = min(vocab.englisch2.length, len+3);
+    var len7 = min(vocab.englisch3.length, len+3);
+    var len8 = min(vocab.englisch4.length, len+3);
+    int val = 0;
+    if( vocab.englisch1.substring(0,len1).toLowerCase().contains(query.toLowerCase())  ||
+        vocab.englisch2.substring(0,len2).toLowerCase().contains(query.toLowerCase()) ||
+        vocab.englisch3.substring(0,len3).toLowerCase().contains(query.toLowerCase()) ||
+        vocab.englisch4.substring(0,len4).toLowerCase().contains(query.toLowerCase()) ||
+        vocab.englisch1.substring(min(3,vocab.englisch1.length),len5).toLowerCase().contains(query.toLowerCase()) && vocab.englisch1.substring(0,min(3,vocab.englisch1.length)).toLowerCase() == "to "||
+        vocab.englisch2.substring(min(3,vocab.englisch2.length),len6).toLowerCase().contains(query.toLowerCase()) && vocab.englisch2.substring(0,min(3,vocab.englisch2.length)).toLowerCase() == "to "||
+        vocab.englisch3.substring(min(3,vocab.englisch3.length),len7).toLowerCase().contains(query.toLowerCase()) && vocab.englisch3.substring(0,min(3,vocab.englisch3.length)).toLowerCase() == "to "||
+        vocab.englisch4.substring(min(3,vocab.englisch4.length),len8).toLowerCase().contains(query.toLowerCase()) && vocab.englisch4.substring(0,min(3,vocab.englisch4.length)).toLowerCase() == "to " ||
+        normAr.substring(0,lenara).toLowerCase().contains(normQu.toLowerCase())
+    ){
+      val -= 1000;
+    }
+    if( vocab.englisch1.toLowerCase().contains(query.toLowerCase())  ||
+        vocab.englisch2.toLowerCase().contains(query.toLowerCase()) ||
+        vocab.englisch3.toLowerCase().contains(query.toLowerCase()) ||
+        vocab.englisch4.toLowerCase().contains(query.toLowerCase()) ||
+        normalise(vocab.arabic1).contains(normalise(query)) ){
+      val -= 100;
+    }
+    if( vocab.englisch1.toLowerCase() == query.toLowerCase()  ||
+        vocab.englisch2.toLowerCase() == query.toLowerCase() ||
+        vocab.englisch3.toLowerCase()==query.toLowerCase() ||
+        vocab.englisch4.toLowerCase()== query.toLowerCase() ||
+        vocab.englisch5.toLowerCase()== query.toLowerCase() ||
+        vocab.englisch6.toLowerCase()== query.toLowerCase() ||
+        vocab.englisch7.toLowerCase()== query.toLowerCase() ||
+        normalise(vocab.arabic1) == normalise(query) ||
+        normalise(vocab.arabic2) == normalise(query) ||
+        normalise(vocab.arabic3) == normalise(query) ||
+        normalise(vocab.arabic4) == normalise(query)){
+      val -= 5000;
+    }
+    return val;
+  }
+
   Widget buildSearch() => SearchWidget(
     text: query,
     hintText: 'Search Word',
     onChanged: searchVocab,
   );
-  Widget buildTestVocab(TestV vocab, DeewanUserData deewanUserData) => ListTile(
+
+  Widget showTestSubtitle(TestV vocab) => query=="" ? SizedBox.shrink():
+  vocab.englisch1.toLowerCase().contains(query.toLowerCase())||normalise(vocab.arabic1.toLowerCase()).contains(normalise(query)) ?
+  SizedBox.shrink():
+  vocab.englisch2.toLowerCase().contains(query.toLowerCase())||vocab.englisch3.toLowerCase().contains(query.toLowerCase())||vocab.englisch4.toLowerCase().contains(query.toLowerCase())||vocab.englisch5.toLowerCase().contains(query.toLowerCase())||vocab.englisch6.toLowerCase().contains(query.toLowerCase())||vocab.englisch7.toLowerCase().contains(query.toLowerCase())||vocab.englisch8.toLowerCase().contains(query.toLowerCase())?
+  Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:Text('from: ' + vocab.englisch1,overflow: TextOverflow.ellipsis,))],
+  ):
+  Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:Text("FAIL",overflow: TextOverflow.ellipsis,))],
+  );
+
+
+  Widget buildTestVocab(TestV vocab, DeewanUserData deewanUserData) => needsTestSubT(vocab) ? ListTile(
     //leading: Text(vocab.englishMain),
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Flexible(child:Text(vocab.englisch1,overflow: TextOverflow.ellipsis,)), Text(vocab.arabic1,overflow: TextOverflow.ellipsis,)],
-      ),
-      /*trailing: IconButton(
-        icon: Icon(
-          deewanUserData.myFavoriteVocabs.contains(vocab.id)
-              ? Icons.favorite
-              : Icons.favorite_border,
-          color: Colors.red,
-        ),
-        onPressed: () =>
-
-            setState(()  {
-              List _withoutTheFavorite = List.from(deewanUserData.myFavoriteVocabs);
-              if (deewanUserData.myFavoriteVocabs.contains(vocab.id))  {
-                _withoutTheFavorite.remove(vocab.id);
-                DeewanDataBaseService(uid: deewanUserData.uid)
-                    .updateDeewanUserFavorite(
-                    _withoutTheFavorite);
-              }
-              else {
-                _withoutTheFavorite.add(vocab.id);
-                DeewanDataBaseService(uid: deewanUserData.uid)
-                    .updateDeewanUserFavorite(
-                    _withoutTheFavorite);
-              }
-            }),
-      ),
-
-    *//*Navigator.pushNamed(context, VocabScreen.routeName,
-              arguments: ScreenArguments(vocab));
-        },*/
+      title: showTestVocab(vocab),
+      subtitle: showTestSubtitle(vocab),
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => TestVocabScreen(vocab)),
         );
       }
+  ):ListTile(
+    //leading: Text(vocab.englishMain),
+      title: showTestVocab(vocab),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TestVocabScreen(vocab)),
+        );
+      });
+
+  Widget showTestVocab(TestV vocab) => query=="" ? Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:Text(vocab.englisch1,overflow: TextOverflow.ellipsis,)), Text(vocab.arabic1,overflow: TextOverflow.ellipsis,)],
+  ):
+  vocab.englisch1.toLowerCase().contains(query.toLowerCase())||normalise(vocab.arabic1.toLowerCase()).contains(normalise(query)) ?
+  Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:makeBold(vocab.englisch1,query)), Text(vocab.arabic1,overflow: TextOverflow.ellipsis,)],
+  ):
+  vocab.englisch2.toLowerCase().contains(query.toLowerCase()) ?
+  Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:makeBold(vocab.englisch2,query)), Text(vocab.arabic1,overflow: TextOverflow.ellipsis,)],
+  ):
+  vocab.englisch3.toLowerCase().contains(query.toLowerCase()) ?
+  Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:makeBold(vocab.englisch3,query)), Text(vocab.arabic1,overflow: TextOverflow.ellipsis,)],
+  ):
+
+  vocab.englisch4.toLowerCase().contains(query.toLowerCase()) ?
+  Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:makeBold(vocab.englisch4,query)), Text(vocab.arabic1 ,overflow: TextOverflow.ellipsis,)],
+  ):
+  vocab.englisch5.contains(query.toLowerCase())?
+  Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:makeBold(vocab.englisch5,query)), Text(vocab.arabic1,overflow: TextOverflow.ellipsis,)],
+  ):
+  vocab.englisch6.contains(query.toLowerCase())?
+  Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:makeBold(vocab.englisch6,query)), Text(vocab.arabic1,overflow: TextOverflow.ellipsis,)],
+  ):
+  vocab.englisch6.contains(query.toLowerCase())?
+  Row(
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+  Flexible(child:makeBold(vocab.englisch6,query)), Text(vocab.arabic1,overflow: TextOverflow.ellipsis,)],
+  ):
+  vocab.englisch7.contains(query.toLowerCase())?
+  Row(
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+  Flexible(child:makeBold(vocab.englisch7,query)), Text(vocab.arabic1,overflow: TextOverflow.ellipsis,)],
+  ):
+  normalise(vocab.arabic1).contains(normalise(query))?
+  Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:makeBold(vocab.englisch1,query)), Text(vocab.arabic1,overflow: TextOverflow.ellipsis,)],
+  ):
+  normalise(vocab.arabic2).contains(query)?
+  Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:makeBold(vocab.arabic2,query)), Text(vocab.englisch1,overflow: TextOverflow.ellipsis,)],
+  ): normalise(vocab.arabic3).contains(normalise(query))?
+  Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:makeBold(vocab.arabic3,query)), Text(vocab.englisch1,overflow: TextOverflow.ellipsis,)],
+  ):normalise(vocab.arabic4).contains(normalise(query)) ?
+  Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:makeBold(vocab.arabic4,query)), Text(vocab.englisch1,overflow: TextOverflow.ellipsis,)],
+  ):Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:Text("FAIL",overflow: TextOverflow.ellipsis,)), Text(vocab.arabic1,overflow: TextOverflow.ellipsis,)],
   );
 
   void searchVocab(String query) {
@@ -164,7 +303,30 @@ class TestVocabScreenState extends State<TestVocabsScreen> {
     });
   }
 }
+Widget makeBold(String str, String query){
+  var index = normalise(str.toLowerCase()).indexOf(normalise(query.toLowerCase()));
+  var ln = query.length;
+  if (index == -1){
+    return Text(str, overflow: TextOverflow.ellipsis,);
+  }
+  else {
+    return RichText(
+      text: TextSpan(
+        // Note: Styles for TextSpans must be explicitly defined.
+        // Child text spans will inherit styles from parent
+        style: const TextStyle(
+          fontSize: 16.0,
+          color: globalTextColor,
+        ),
+        children: <TextSpan>[
+          TextSpan(text: str.substring(0,index)),
+          TextSpan(text: str.substring(index, index +ln), style: const TextStyle(fontWeight: FontWeight.bold)),
+          TextSpan(text: str.substring(index+ln)),
 
+        ],
+      ),
+    );}
+}
 normalise(input) => input
     .replaceAll('\u0610', '') //ARABIC SIGN SALLALLAHOU ALAYHE WA SALLAM
     .replaceAll('\u0611', '') //ARABIC SIGN ALAYHE ASSALLAM
