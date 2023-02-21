@@ -70,7 +70,6 @@ class _FavoriteScreenSubOldState extends State<FavoriteScreenSubOld> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
           title: const Text('Favorite Words'),
         ),
         /*actions: <Widget>[
@@ -83,7 +82,7 @@ class _FavoriteScreenSubOldState extends State<FavoriteScreenSubOld> {
                   image: AssetImage("assets/app_bg5.jpg"),
                   fit: BoxFit.cover,
                   colorFilter:
-                  ColorFilter.mode(Colors.black.withOpacity(0.1),
+                  ColorFilter.mode(Colors.blue.withOpacity(0.1),
                       BlendMode.dstATop),)),
 
             child: _buildList(context)
@@ -157,7 +156,6 @@ class _forgottenVocab extends State<ForgottenVocab> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
           title: const Text('forgotten Vocab'),
         ),
         /*actions: <Widget>[
@@ -170,7 +168,7 @@ class _forgottenVocab extends State<ForgottenVocab> {
     image: AssetImage("assets/app_bg5.jpg"),
     fit: BoxFit.cover,
     colorFilter:
-    ColorFilter.mode(Colors.black.withOpacity(0.1),
+    ColorFilter.mode(Colors.blue.withOpacity(0.1),
     BlendMode.dstATop),)),
 
     child: _buildList(context)

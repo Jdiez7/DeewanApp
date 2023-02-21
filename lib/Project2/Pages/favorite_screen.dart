@@ -5,6 +5,7 @@ import 'package:appwithfirebase/services/class_vocab.dart';
 import 'package:appwithfirebase/models/myuser.dart';
 import 'package:appwithfirebase/screens/home/home.dart';
 import 'package:appwithfirebase/screens/home/vocab_screen.dart';
+import 'package:appwithfirebase/shared/constants.dart';
 import 'package:appwithfirebase/shared/loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,9 @@ class FavoriteScreenState extends State<FavoriteScreen> {
               padding: const EdgeInsets.all(16.0),
               itemBuilder: (context, index) {
                 if (index == _Listlength - 1) {
-                  return ListTile(
+                  return Container(
+                    color: globalTileColor,
+                  child: ListTile(
                       title: TextField(
                         onChanged: (text) {
                           _query = text;
@@ -70,10 +73,12 @@ class FavoriteScreenState extends State<FavoriteScreen> {
                             await DeewanDataBaseService(uid: user.uid)
                                 .addNewFile(_query);
                           }),
-                      onTap: () async {});
+                      onTap: () async {}));
                 }
                 if (index == 0) {
-                  return ListTile(
+                  return Container(
+                      color: globalTileColor,
+                      child:  ListTile(
                       title: Text('Favorite List'),
                       onTap: () {
                         Navigator.push(
@@ -82,10 +87,12 @@ class FavoriteScreenState extends State<FavoriteScreen> {
                               builder: (context) =>
                                   FavoriteScreenSubOld(widget.vocabs)),
                         );
-                      });
+                      }));
                 }
                 if (index == _Listlength - 2) {
-                  return ListTile(
+                  return Container(
+                    color: globalTileColor,
+                    child: ListTile(
                       title: Text('forgotten Vocab'),
                       onTap: () {
                         Navigator.push(
@@ -94,11 +101,14 @@ class FavoriteScreenState extends State<FavoriteScreen> {
                               builder: (context) =>
                                   ForgottenVocab(widget.vocabs)),
                         );
-                      });
+                      }));
                 }
 
-                return ListTile(
-                    title: Row(
+                return Container(
+                    color: globalTileColor,
+                    child:  ListTile(
+
+                  title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(personalVocabList![index - 1].listName),
@@ -117,7 +127,7 @@ class FavoriteScreenState extends State<FavoriteScreen> {
                 icon: Icon(Icons.remove),
                 onPressed: () async {await DeewanDataBaseService(uid: user.uid)
                     .deleteFile(personalVocabList[index - 1].docId);
-                }):null,);
+                }):null,));
               },
             );
           } else {
@@ -129,9 +139,9 @@ class FavoriteScreenState extends State<FavoriteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
           title: const Text('Favorite Words'),
         ),
+
         /*actions: <Widget>[
               IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved)
             ]),*/
@@ -142,7 +152,7 @@ class FavoriteScreenState extends State<FavoriteScreen> {
                   image: AssetImage("assets/app_bg5.jpg"),
                   fit: BoxFit.cover,
                   colorFilter:
-                  ColorFilter.mode(Colors.black.withOpacity(0.1),
+                  ColorFilter.mode(Colors.blue.withOpacity(0.4),
                       BlendMode.dstATop),)),
 
             child: _buildList(context)

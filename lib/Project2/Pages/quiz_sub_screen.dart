@@ -188,7 +188,7 @@ class _subQuizState extends State<subQuiz> {
                           image: AssetImage("assets/app_bg5.jpg"),
                           fit: BoxFit.cover,
                           colorFilter:
-                          ColorFilter.mode(Colors.black.withOpacity(0.1),
+                          ColorFilter.mode(Colors.blue.withOpacity(0.1),
                               BlendMode.dstATop),)),
 
                     child: Center(
@@ -291,7 +291,7 @@ class _subQuizState extends State<subQuiz> {
                         Container(
                                   height: 100,
                                   width: double.infinity,
-                                  color: Colors.black,
+                                  color: Colors.blue,
                                   child: Center(
                                     child: Text(
                                         _totalScore > _pass * _quizLength

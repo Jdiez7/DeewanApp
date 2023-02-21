@@ -1,4 +1,5 @@
 import 'package:appwithfirebase/services/class_vocab.dart';
+import 'package:appwithfirebase/shared/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -61,7 +62,7 @@ class _VocabScreenState extends State<VocabScreen> {
                         widget.vocab.arabicMain),
                     actions: [
                       PopupMenuButton(
-                          color: Colors.white,
+                          color: globalColor3,
                           elevation: 20,
                           enabled: true,
                           onSelected: (int value) async {
@@ -119,7 +120,7 @@ class _VocabScreenState extends State<VocabScreen> {
                                 },
                                 child: _isLoading
                                     ? SpinKitChasingDots(
-                                        color: Colors.white,
+                                        color: globalColor3,
                                         size: 25,
                                       )
                                     : Icon(
@@ -128,7 +129,7 @@ class _VocabScreenState extends State<VocabScreen> {
                                             : Icons.audiotrack,
                                         color: player.playing
                                             ? Colors.red
-                                            : Colors.white),
+                                            : globalColor3),
                               ),
                       )
                     ],
@@ -188,13 +189,13 @@ class Definitions extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Container(
-        color: Colors.blue[100],
+        color: globalColor1,
         padding: EdgeInsets.all(4.0),
         child: RichText(
           text: TextSpan(
             style: const TextStyle(
               fontSize: 7.0,
-              color: Colors.black,
+              color: globalTextColor,
             ),
             children: <TextSpan>[
               TextSpan(text: "\n"),
@@ -211,7 +212,7 @@ class Definitions extends StatelessWidget {
                   ? TextSpan(text: "")
                   : TextSpan(
                       text: "\t \t(" + vocab.englishMaincom + ")",
-                      style: TextStyle(fontSize: 17, color: Colors.black54)),
+                      style: TextStyle(fontSize: 17, color: globalTextColor)),
               TextSpan(text: "\n"),
               TextSpan(text: "\n"),
               vocab.english2 == ""
@@ -227,7 +228,7 @@ class Definitions extends StatelessWidget {
                     )
                   : TextSpan(
                       text: "\t \t(" + vocab.english2com + ")",
-                      style: TextStyle(fontSize: 17, color: Colors.black54)),
+                      style: TextStyle(fontSize: 17, color: globalTextColor)),
               vocab.english2 == ""
                   ? TextSpan(
                       style: TextStyle(height: 0, fontSize: 0),
@@ -251,7 +252,7 @@ class Definitions extends StatelessWidget {
                     )
                   : TextSpan(
                       text: "\t \t(" + vocab.english3com + ")",
-                      style: TextStyle(fontSize: 17, color: Colors.black54)),
+                      style: TextStyle(fontSize: 17, color: globalTextColor)),
               vocab.english3 == ""
                   ? TextSpan(
                       style: TextStyle(height: 0, fontSize: 0),
@@ -275,7 +276,7 @@ class Definitions extends StatelessWidget {
                     )
                   : TextSpan(
                       text: "\t \t(" + vocab.english4com + ")",
-                      style: TextStyle(fontSize: 17, color: Colors.black54)),
+                      style: TextStyle(fontSize: 17, color: globalTextColor)),
               TextSpan(text: "\n"),
             ],
           ),
@@ -303,12 +304,12 @@ class Synonyms extends StatelessWidget {
             : vocab.syn3 == ""
                 ? 100
                 : 130,
-        color: Colors.blue[100],
+        color: globalColor1,
         child: RichText(
           text: TextSpan(
             style: const TextStyle(
               fontSize: 7.0,
-              color: Colors.black,
+              color: globalTextColor,
             ),
             children: <TextSpan>[
               const TextSpan(text: "\n"),
@@ -360,12 +361,12 @@ class Prepositions extends StatelessWidget {
             : vocab.vERBprep3 == ""
                 ? 100
                 : 130,
-        color: Colors.blue[100],
+        color: globalColor1,
         child: RichText(
           text: TextSpan(
             style: const TextStyle(
               fontSize: 7.0,
-              color: Colors.black,
+              color: globalTextColor,
             ),
             children: <TextSpan>[
               const TextSpan(text: "\n"),
@@ -381,7 +382,7 @@ class Prepositions extends StatelessWidget {
                   ? TextSpan(text: "")
                   : TextSpan(
                       text: "(" + vocab.vERBprep1com + ")",
-                      style: TextStyle(fontSize: 17, color: Colors.black12)),
+                      style: TextStyle(fontSize: 17, color: globalTextColor)),
               TextSpan(text: "\n"),
               TextSpan(text: "\n"),
               vocab.vERBprep2 == ""
@@ -393,7 +394,7 @@ class Prepositions extends StatelessWidget {
                   ? TextSpan(text: "")
                   : TextSpan(
                       text: "(" + vocab.vERBprep2com + ")",
-                      style: TextStyle(fontSize: 17, color: Colors.black12)),
+                      style: TextStyle(fontSize: 17, color: globalTextColor)),
               TextSpan(text: "\n"),
               TextSpan(text: "\n"),
               vocab.vERBprep3 == ""
@@ -405,7 +406,7 @@ class Prepositions extends StatelessWidget {
                   ? TextSpan(text: "")
                   : TextSpan(
                       text: "(" + vocab.vERBprep3com + ")",
-                      style: TextStyle(fontSize: 17, color: Colors.black12)),
+                      style: TextStyle(fontSize: 17, color: globalTextColor)),
             ],
           ),
         ),
@@ -444,7 +445,7 @@ class Plural extends StatelessWidget {
         padding: const EdgeInsets.all(4.0),
         child: Container(
           height: 60,
-          color: Colors.blue[100],
+          color: globalColor1,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -476,7 +477,7 @@ class Fusha extends StatelessWidget {
         padding: const EdgeInsets.all(4.0),
         child: Container(
           height: 60,
-          color: Colors.blue[100],
+          color: globalColor1,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -507,7 +508,7 @@ class ExampleSentences2 extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.all(4.0),
         child: Container(
-            color: Colors.blue[100],
+            color: globalColor1,
             child: Column(
               children: <Widget>[
                 Row(
@@ -716,7 +717,7 @@ class Verb extends StatelessWidget {
         padding: const EdgeInsets.all(4.0),
         child: Container(
           // height: 60,
-          color: Colors.blue[100],
+          color: globalColor1,
           child: Column(
             children: <Widget>[
               const Text(
@@ -777,7 +778,7 @@ class NominalVerb extends StatelessWidget {
         padding: const EdgeInsets.all(4.0),
         child: Container(
           // height: 60,
-          color: Colors.blue[100],
+          color: globalColor1,
           child: Column(
             children: <Widget>[
               const Text(
@@ -854,7 +855,7 @@ class Noun extends StatelessWidget {
         padding: const EdgeInsets.all(4.0),
         child: Container(
           // height: 60,
-          color: Colors.blue[100],
+          color: globalColor1,
           child: Column(
             children: <Widget>[
               const Text(
@@ -915,7 +916,7 @@ class Adjective extends StatelessWidget {
         padding: const EdgeInsets.all(4.0),
         child: Container(
           // height: 60,
-          color: Colors.blue[100],
+          color: globalColor1,
           child: Column(
             children: <Widget>[
               const Text(
@@ -972,7 +973,7 @@ class Masder extends StatelessWidget {
         padding: const EdgeInsets.all(4.0),
         child: Container(
           // height: 60,
-          color: Colors.blue[100],
+          color: globalColor1,
           child: Column(
             children: <Widget>[
               const Text(
@@ -1031,7 +1032,7 @@ class NomVerbAct extends StatelessWidget {
         padding: const EdgeInsets.all(4.0),
         child: Container(
           // height: 60,
-          color: Colors.blue[100],
+          color: globalColor1,
           child: Column(
             children: <Widget>[
               const Text(
@@ -1090,7 +1091,7 @@ class NomVerbPas extends StatelessWidget {
         padding: const EdgeInsets.all(4.0),
         child: Container(
           // height: 60,
-          color: Colors.blue[100],
+          color: globalColor1,
           child: Column(
             children: <Widget>[
               const Text(
@@ -1160,7 +1161,7 @@ class ExampleSentences extends StatelessWidget {
                   text: TextSpan(
                       style: const TextStyle(
                         fontSize: 7.0,
-                        color: Colors.black,
+                        color: Colors.blue,
                       ),
                       children: <TextSpan>[
                         const TextSpan(text: "\n"),
@@ -1175,7 +1176,7 @@ class ExampleSentences extends StatelessWidget {
                       ])),
               RichText(
                 text: TextSpan(
-                  style: const TextStyle(fontSize: 17.0, color: Colors.black),
+                  style: const TextStyle(fontSize: 17.0, color: Colors.blue),
                   children: <TextSpan>[TextSpan(text: vocab.ex1ARA)],
                 ),
                 textAlign: TextAlign.right,
@@ -1212,7 +1213,7 @@ class adjForms extends StatelessWidget {
         padding: const EdgeInsets.all(4.0),
         child: Container(
             // height: 60,
-            color: Colors.blue[100],
+            color: globalColor1,
             child: Column(children: [
               Container(
                 height: 10,
@@ -1407,7 +1408,7 @@ class _TestVocabScreenState extends State<TestVocabScreen> {
                       image: AssetImage("assets/app_bg5.jpg"),
                       fit: BoxFit.cover,
                       colorFilter: ColorFilter.mode(
-                          Colors.black.withOpacity(0.4), BlendMode.dstATop),
+                          Colors.blue.withOpacity(0.4), BlendMode.dstATop),
                     )),
                 child: ListView(
                   children: [

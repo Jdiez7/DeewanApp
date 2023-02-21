@@ -26,28 +26,36 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
-        backgroundColor: Colors.brown[100],
         appBar: AppBar(
-          backgroundColor: Colors.brown[400],
           elevation: 0.0,
           title: Text('Register here'),
           actions: <Widget>[
             TextButton.icon(
                 icon: const Icon(
                   Icons.person,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
                 label: const Text(
                   'Sign in',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {
                   widget.toggleView();
                 })
           ],
         ),
+        backgroundColor: Colors.black,
         body: Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+          constraints: BoxConstraints.expand(),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/app_bg5.jpg"),
+                fit: BoxFit.cover,
+                colorFilter:
+                ColorFilter.mode(Colors.white.withOpacity(backgroundOpacity),
+                    BlendMode.dstATop),)),
+
           child: Form(
             key: _formKey,
             child: Column(

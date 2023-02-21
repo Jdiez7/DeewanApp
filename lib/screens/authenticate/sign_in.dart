@@ -30,29 +30,38 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() :  Scaffold(
-        backgroundColor: Colors.brown[100],
+        backgroundColor: Colors.black,
         appBar: AppBar(
-          backgroundColor: Colors.brown[400],
           elevation: 0.0,
           title: Text('Sign in to Deewan'),
           actions: <Widget>[
             TextButton.icon(
                 icon: const Icon(
                   Icons.person,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
                 label: const Text(
                   'Register',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {
                   widget.toggleView();
                 })
           ],
         ),
-        body: Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-          child: Form(
+        body:
+    Container(
+    padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+    constraints: BoxConstraints.expand(),
+    decoration: BoxDecoration(
+    image: DecorationImage(
+    image: AssetImage("assets/app_bg5.jpg"),
+    fit: BoxFit.cover,
+    colorFilter:
+    ColorFilter.mode(Colors.white.withOpacity(backgroundOpacity),
+    BlendMode.dstATop),)),
+
+    child: Form(
             key: _formKey,
             child: Column(
               children: <Widget>[
@@ -75,7 +84,7 @@ class _SignInState extends State<SignIn> {
                 ),
                 SizedBox(height: 20.0),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.pink),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                   child: Text(
                     'sign in',
                     style: TextStyle(color: Colors.white),
@@ -100,7 +109,7 @@ class _SignInState extends State<SignIn> {
                 SizedBox(height: 12.0,),
                 Text(
                   error,
-                  style: TextStyle(color: Colors.red, fontSize: 14.0),
+                  style: TextStyle(color: Colors.green, fontSize: 14.0),
                 )
               ],
             ),

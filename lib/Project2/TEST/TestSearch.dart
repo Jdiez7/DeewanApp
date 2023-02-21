@@ -135,10 +135,10 @@ class TestVocabScreenState extends State<TestVocabsScreen> {
       final englisch6 = vocab.englisch6.toLowerCase();
       final englisch7 = vocab.englisch7.toLowerCase();
       final englisch8 = vocab.englisch8.toLowerCase();
-      final arabic1 = vocab.arabic1.toLowerCase();
-      final arabic2 = vocab.arabic2.toLowerCase();
-      final arabic3 = vocab.arabic3.toLowerCase();
-      final arabic4 = vocab.arabic4.toLowerCase();
+      final arabic1 = normalise(vocab.arabic1);
+      final arabic2 = normalise(vocab.arabic2);
+      final arabic3 = normalise(vocab.arabic3);
+      final arabic4 = normalise(vocab.arabic4);
 
 
       final searchLower = normalise(query.toLowerCase());

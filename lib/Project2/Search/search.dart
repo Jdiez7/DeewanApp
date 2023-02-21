@@ -52,7 +52,7 @@ class SearchWordScreenState extends State<SearchWordScreen> {
                       image: AssetImage("assets/app_bg5.jpg"),
                       fit: BoxFit.cover,
                       colorFilter:
-                      ColorFilter.mode(Colors.black.withOpacity(0.1),
+                      ColorFilter.mode(Colors.blue.withOpacity(0.1),
                           BlendMode.dstATop),)),
 
                 child: Column(
@@ -82,8 +82,11 @@ class SearchWordScreenState extends State<SearchWordScreen> {
   }
 
   value(Vocab vocab, String query){
-    var len = query.length;
+    String normQu = normalise(query);
+    String normAr = normalise(vocab.arabicMain);
+    var len = normQu.length;
     var len1 = min(vocab.englishMain.length, len);
+    var lenara = min(normAr.length, len);
     var len2 = min(vocab.english2.length, len);
     var len3 = min(vocab.english3.length, len);
     var len4 = min(vocab.english4.length, len);
@@ -99,7 +102,8 @@ class SearchWordScreenState extends State<SearchWordScreen> {
         vocab.englishMain.substring(min(3,vocab.englishMain.length),len5).toLowerCase().contains(query.toLowerCase()) && vocab.englishMain.substring(0,min(3,vocab.englishMain.length)).toLowerCase() == "to "||
         vocab.english2.substring(min(3,vocab.english2.length),len6).toLowerCase().contains(query.toLowerCase()) && vocab.englishMain.substring(0,min(3,vocab.english2.length)).toLowerCase() == "to "||
         vocab.english3.substring(min(3,vocab.english3.length),len7).toLowerCase().contains(query.toLowerCase()) && vocab.englishMain.substring(0,min(3,vocab.english3.length)).toLowerCase() == "to "||
-        vocab.english4.substring(min(3,vocab.english4.length),len8).toLowerCase().contains(query.toLowerCase()) && vocab.englishMain.substring(0,min(3,vocab.english4.length)).toLowerCase() == "to "
+        vocab.english4.substring(min(3,vocab.english4.length),len8).toLowerCase().contains(query.toLowerCase()) && vocab.englishMain.substring(0,min(3,vocab.english4.length)).toLowerCase() == "to " ||
+    normAr.substring(0,lenara).toLowerCase().contains(normQu.toLowerCase())
     ){
       val -= 1000;
     }
@@ -231,46 +235,55 @@ class SearchWordScreenState extends State<SearchWordScreen> {
   Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Flexible(child:makeBold(vocab.englishMain,query)), Flexible(child:makeBold(vocab.arabicMain,query))],
+      Flexible(child:makeBold(vocab.englishMain,query)), Text(vocab.arabicMain,overflow: TextOverflow.ellipsis,)],
   ):
   vocab.english2.toLowerCase().contains(query.toLowerCase()) ?
   Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Flexible(child:makeBold(vocab.english2,query)), Flexible(child:makeBold(vocab.arabicMain,query))],
+      Flexible(child:makeBold(vocab.english2,query)), Text(vocab.arabicMain,overflow: TextOverflow.ellipsis,)],
   ):
   vocab.english3.toLowerCase().contains(query.toLowerCase()) ?
   Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Flexible(child:makeBold(vocab.english3,query)), Flexible(child:makeBold(vocab.arabicMain,query))],
+      Flexible(child:makeBold(vocab.english3,query)), Text(vocab.arabicMain,overflow: TextOverflow.ellipsis,)],
   ):
 
   vocab.english4.toLowerCase().contains(query.toLowerCase()) ?
   Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Flexible(child:makeBold(vocab.english4,query)), Flexible(child:makeBold(vocab.arabicMain,query))],
+      Flexible(child:makeBold(vocab.english4,query)), Text(vocab.arabicMain,overflow: TextOverflow.ellipsis,)],
   ):
   normalise(vocab.masder).contains(normalise(query))||vocab.masderENG.toLowerCase().contains(query.toLowerCase())?
   Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Flexible(child:makeBold(vocab.masderENG,query)), Flexible(child:makeBold(vocab.masder,query))],
+      Flexible(child:makeBold(vocab.masderENG,query)), Text(vocab.masder,overflow: TextOverflow.ellipsis,)],
   ):
   normalise(vocab.verb).contains(normalise(query))||vocab.verbEng.toLowerCase().contains(query.toLowerCase())?
   Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Flexible(child:makeBold(vocab.verbEng,query)), Flexible(child:makeBold(vocab.verb,query))],
+      Flexible(child:makeBold(vocab.verbEng,query)), Text(vocab.verb,overflow: TextOverflow.ellipsis,)],
   ):
   normalise(vocab.adjective).contains(query)||vocab.adjectiveEng.toLowerCase().contains(query.toLowerCase())?
   Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Flexible(child:makeBold(vocab.adjectiveEng,query)), Flexible(child:makeBold(vocab.adjective,query))],
-  ):
+      Flexible(child:makeBold(vocab.adjectiveEng,query)), Text(vocab.adjective,overflow: TextOverflow.ellipsis,)],
+  ): normalise(vocab.nomVerbAra).contains(normalise(query))||vocab.nomVerbEng.toLowerCase().contains(query.toLowerCase())?
   Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:makeBold(vocab.nomVerbEng,query)), Text(vocab.nomVerbAra,overflow: TextOverflow.ellipsis,)],
+  ):normalise(vocab.nOUNplural).contains(normalise(query)) ?
+  Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:makeBold(vocab.englishMain+ "(pl.)",query)), Text(vocab.nOUNplural ,overflow: TextOverflow.ellipsis,)],
+  ):Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Flexible(child:Text("FAIL",overflow: TextOverflow.ellipsis,)), Text(vocab.arabicMain,overflow: TextOverflow.ellipsis,)],
@@ -302,6 +315,16 @@ class SearchWordScreenState extends State<SearchWordScreen> {
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Flexible(child:Text('Adjective from: ' + vocab.englishMain,overflow: TextOverflow.ellipsis,)), Text(vocab.arabicMain,overflow: TextOverflow.ellipsis,)],
+  ):normalise(vocab.nomVerbAra).contains(normalise(query))||vocab.nomVerbEng.toLowerCase().contains(query.toLowerCase())?
+  Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:Text('Nominal Verb from: ' + vocab.englishMain,overflow: TextOverflow.ellipsis,)), Text(vocab.arabicMain,overflow: TextOverflow.ellipsis,)],
+  ):normalise(vocab.nOUNplural).contains(normalise(query)) ?
+  Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Flexible(child:Text("Plural from: " + vocab.englishMain)), Text(vocab.arabicMain,overflow: TextOverflow.ellipsis,)],
   ):
   Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -322,7 +345,7 @@ class SearchWordScreenState extends State<SearchWordScreen> {
         // Child text spans will inherit styles from parent
         style: const TextStyle(
           fontSize: 16.0,
-          color: Colors.black,
+          color: Colors.blue,
         ),
         children: <TextSpan>[
           TextSpan(text: str.substring(0,index)),
@@ -338,14 +361,14 @@ class SearchWordScreenState extends State<SearchWordScreen> {
     final vocabs = widget.vocabs.where((vocab) {
       final englishMain = vocab.englishMain.toLowerCase();
       final arabicMain = normalise(vocab.arabicMain.toLowerCase());
-      final nounPluralLower = vocab.nOUNplural.toLowerCase();
-      final verbLower = vocab.verb.toLowerCase();
-      final adjLower = vocab.adjective.toLowerCase();
+      final nounPluralLower = normalise(vocab.nOUNplural.toLowerCase());
+      final verbLower = normalise(vocab.verb.toLowerCase());
+      final adjLower = normalise(vocab.adjective.toLowerCase());
       final verbengLower = vocab.verbEng.toLowerCase();
       final adjengLower = vocab.adjectiveEng.toLowerCase();
-      final nomVerbLower = vocab.nomVerbAra.toLowerCase();
+      final nomVerbLower = normalise(vocab.nomVerbAra.toLowerCase());
       final nomengLower = vocab.nomVerbEng.toLowerCase();
-      final masLower = vocab.masder.toLowerCase();
+      final masLower = normalise(vocab.masder.toLowerCase());
       final masengLower = vocab.masderENG.toLowerCase();
       final english2 = vocab.english2.toLowerCase();
       final english3 = vocab.english3.toLowerCase();
@@ -376,7 +399,7 @@ class SearchWordScreenState extends State<SearchWordScreen> {
   }
 }
 
-normalise(input) => input
+normalise(String input) => input
     .replaceAll('\u0610', '') //ARABIC SIGN SALLALLAHOU ALAYHE WA SALLAM
     .replaceAll('\u0611', '') //ARABIC SIGN ALAYHE ASSALLAM
     .replaceAll('\u0612', '') //ARABIC SIGN RAHMATULLAH ALAYHE

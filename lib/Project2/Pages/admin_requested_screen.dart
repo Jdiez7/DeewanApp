@@ -103,7 +103,7 @@ class _AdminRequestedScreenState extends State<AdminRequestedScreen> {
                 image: AssetImage("assets/app_bg5.jpg"),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.1), BlendMode.dstATop),
+                    Colors.blue.withOpacity(0.1), BlendMode.dstATop),
               )),
           child: Column(
             children: [

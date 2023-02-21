@@ -1,5 +1,6 @@
 import 'package:appwithfirebase/Project2/Search/add_vocab.dart';
 import 'package:appwithfirebase/Project2/Search/search.dart';
+import 'package:appwithfirebase/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -91,11 +92,10 @@ class _FavoriteScreenSubState extends State<FavoriteScreenSub> {
     MyUser user = Provider.of<MyUser>(context);
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
           title: Text(widget._SinglePersonalVocabList.listName),
           actions: <Widget>[
             ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(primary: Colors.blue[300]),
+              style: ElevatedButton.styleFrom(backgroundColor: appBarColor),
               icon: const Icon(Icons.add),
               label: Text('Add Vocab'),
               onPressed: (){
@@ -117,7 +117,7 @@ class _FavoriteScreenSubState extends State<FavoriteScreenSub> {
                   image: AssetImage("assets/app_bg5.jpg"),
                   fit: BoxFit.cover,
                   colorFilter:
-                  ColorFilter.mode(Colors.black.withOpacity(0.1),
+                  ColorFilter.mode(Colors.blue.withOpacity(0.1),
                       BlendMode.dstATop),)),
 
             child: _buildList(context)

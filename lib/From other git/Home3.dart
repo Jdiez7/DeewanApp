@@ -19,7 +19,7 @@ class Home3 extends StatelessWidget {
       value: DeewanDataBaseService().backendVocabs,
       initialData: [],
       child: Scaffold(
-        backgroundColor: Colors.blue[800],
+        backgroundColor: Colors.blue,
         appBar: AppBar(
           title: Text('Vocaby'),
           elevation: 0.0,

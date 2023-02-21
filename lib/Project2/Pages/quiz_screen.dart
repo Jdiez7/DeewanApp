@@ -1,5 +1,6 @@
 import 'package:appwithfirebase/Project2/Pages/quiz_sub_screen.dart';
 import 'package:appwithfirebase/screens/home/home.dart';
+import 'package:appwithfirebase/shared/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,12 +37,12 @@ class _QuizScreenState extends State<QuizScreen> {
                 return ListTile(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30)),
-                  tileColor: _done.contains(level+1)  ? Colors.blue : _done.contains(level) || level == 1 ? Colors.green : Colors.grey,
+                  tileColor: _done.contains(level+1)  ? globalColor1 : _done.contains(level) || level == 1 ? Colors.green : Colors.white,
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Level ' + level.toString() + " - " + _levelNames[index],
-                    style: TextStyle(fontSize: 17, color: Colors.white,fontWeight: FontWeight.bold), ),
+                    style: TextStyle(fontSize: 17, color: _done.contains(level)|| level == 1  ? Colors.white : Colors.black,fontWeight: FontWeight.bold), ),
                     ],
                   ),
                   onTap: () {
@@ -68,9 +69,9 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
           title: const Text('Quiz'),
         ),
+        backgroundColor: Colors.grey,
         /*actions: <Widget>[
               IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved)
             ]),*/
@@ -81,7 +82,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   image: AssetImage("assets/app_bg5.jpg"),
                   fit: BoxFit.cover,
                   colorFilter:
-                  ColorFilter.mode(Colors.black.withOpacity(0.1),
+                  ColorFilter.mode(Colors.blue.withOpacity(0.1),
                       BlendMode.dstATop),)),
 
             child: _buildList(context)

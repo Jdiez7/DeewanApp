@@ -1,3 +1,4 @@
+import 'package:appwithfirebase/shared/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -30,89 +31,92 @@ class _RequestScreenState extends State<RequestScreen> {
       Padding(
         padding: const EdgeInsets.all(20.0),
         child: Container(
-          child: Column(children: <Widget>[
-            TextFormField(
-              controller: _englishWord,
-              decoration: InputDecoration(
-                prefixIcon: Container(
-                  margin: const EdgeInsets.all(5.0),
-                  padding: const EdgeInsets.all(3.0),
-                  width: 5,
-                  height: 5,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      border: Border.all(color: Colors.black)),
-                  child: FittedBox(
-                    child: Text('EN'),
-                  ),
-                ),
-                hintText: "English Word",
-              ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            TextFormField(
-              controller: _arabicWord,
-              decoration: InputDecoration(
-                prefixIcon: Container(
-                  margin: const EdgeInsets.all(5.0),
-                  padding: const EdgeInsets.all(1.0),
-                  width: 5,
-                  height: 5,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      border: Border.all(color: Colors.black)),
-                  child: FittedBox(
-                    child: Text('عربي'),
-                  ),
-                ),
-                hintText: "Arabic Word",
-              ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            TextFormField(
-              controller: _notes,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.notes),
-                hintText: "Further Notes",
-              ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: Text(
-                      "Request New Word",
-                      style: TextStyle(
+            child: Column(children: <Widget>[
+              TextFormField(
+                controller: _englishWord,
+                decoration: InputDecoration(
+                  prefixIcon: Container(
+                    margin: const EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(3.0),
+                    width: 5,
+                    height: 5,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                      ),
+                        border: Border.all(color:globalColor2)),
+                    child: FittedBox(
+                      child: Text('EN'),
                     ),
                   ),
-                  onPressed: ()
-                  async {
-                    if(_englishWord.text != "" || _arabicWord.text != ""){
-                    await DeewanDataBaseService(uid: user.uid)
-                        .newRequest(_englishWord, _arabicWord, _notes);}
-                    else {}
-                  },
+                  hintText: "English Word",
                 ),
-              ],
-            ),
-          ]),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              TextFormField(
+                controller: _arabicWord,
+                decoration: InputDecoration(
+                  prefixIcon: Container(
+                    margin: const EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(1.0),
+                    width: 5,
+                    height: 5,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        border: Border.all(color: globalColor2)),
+                    child: FittedBox(
+                      child: Text('عربي'),
+                    ),
+                  ),
+                  hintText: "Arabic Word",
+                ),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              TextFormField(
+                controller: _notes,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.notes),
+                  hintText: "Further Notes",
+                ),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: globalColor2,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: Text(
+                        "Request New Word",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
+                    onPressed: ()
+                    async {
+                      if(_englishWord.text != "" || _arabicWord.text != ""){
+                      await DeewanDataBaseService(uid: user.uid)
+                          .newRequest(_englishWord, _arabicWord, _notes);}
+                      else {}
+                    },
+                  ),
+                ],
+              ),
+            ]),
         ),
       )
     ]);
@@ -189,7 +193,6 @@ class _RequestScreenState extends State<RequestScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
           title: const Text('Your Requests'),
         ),
         /*actions: <Widget>[
@@ -202,7 +205,7 @@ class _RequestScreenState extends State<RequestScreen> {
             image: AssetImage("assets/app_bg5.jpg"),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.1), BlendMode.dstATop),
+                Colors.blue.withOpacity(0.1), BlendMode.dstATop),
           )),
           child: Column(
             children: [

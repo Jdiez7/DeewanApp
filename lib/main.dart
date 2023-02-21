@@ -3,6 +3,7 @@ import 'package:appwithfirebase/models/myuser.dart';
 import 'package:appwithfirebase/screens/wrapper.dart';
 import 'package:appwithfirebase/screens/wrapper2.dart';
 import 'package:appwithfirebase/services/auth.dart';
+import 'package:appwithfirebase/shared/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,6 +27,19 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           home: Wrapper(),
+          theme: ThemeData(
+            appBarTheme: AppBarTheme(
+              color: appBarColor,
+            ),
+            textTheme: Theme.of(context).textTheme.apply(
+              bodyColor: globalTextColor,
+              displayColor: globalTextColor,
+            ),
+            textSelectionTheme: TextSelectionThemeData(
+              selectionHandleColor: Colors.black,),
+            primaryColor: Colors.black,// Change bubble to red
+            
+          ),
         )
 
     );

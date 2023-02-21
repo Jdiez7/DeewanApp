@@ -1,6 +1,7 @@
 import 'package:appwithfirebase/Project2/TEST/TestSearch.dart';
 import 'package:appwithfirebase/screens/wrapper.dart';
 import 'package:appwithfirebase/services/database.dart';
+import 'package:appwithfirebase/shared/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -66,10 +67,11 @@ class _Home2State extends State<Home2>{
         return Scaffold(
           appBar: AppBar(
             title: const Text('Menu'),
-            backgroundColor: Colors.blue,
             actions: <Widget>[
               ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(primary: Colors.blue[300]),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: appBarColor,
+          ),
                 icon: const Icon(Icons.person),
                 label: Text('Logout'),
                 onPressed: () {
@@ -89,7 +91,7 @@ class _Home2State extends State<Home2>{
               )
             ],
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: backgroundColor,
 
           /*drawer: Drawer(
             child: ListView(
@@ -131,7 +133,7 @@ class _Home2State extends State<Home2>{
                     image: AssetImage("assets/app_bg5.jpg"),
                     fit: BoxFit.cover,
                   colorFilter:
-                  ColorFilter.mode(Colors.black.withOpacity(0.4),
+                  ColorFilter.mode(Colors.white.withOpacity(backgroundOpacity),
                       BlendMode.dstATop),)),
 
 
@@ -146,11 +148,11 @@ class _Home2State extends State<Home2>{
                         crossAxisCount: 2,
                         children:
                         <Widget>[
-                          MyMenu(title: 'Word Search', icon: Icons.search, warna: Colors.blue,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
-                          FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: Colors.blue, /*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
+                          MyMenu(title: 'Word Search', icon: Icons.search, warna: globalColor1,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
+                          FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: globalColor1, /*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
                           /*MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
-                        */WordRequest(title: 'Word Request', icon: Icons.add, warna: Colors.blue,),
-                          Quiz(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
+                        */WordRequest(title: 'Word Request', icon: Icons.add, warna: globalColor1,),
+                          Quiz(title: 'Quiz', icon: Icons.quiz, warna: globalColor1,),
                           AdminWordsRequested(title: 'Requests \n (ADMIN)', icon: Icons.list, warna: Colors.red,),
 
                           /* MyMenu5(title: 'My Account', icon: Icons.account_circle, warna: Colors.blue,),
@@ -164,11 +166,11 @@ class _Home2State extends State<Home2>{
                         crossAxisCount: 2,
                         children:
                         <Widget>[
-                          MyMenu(title: 'Word Search', icon: Icons.search, warna: Colors.blue,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
-                          FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: Colors.blue, /*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
+                          MyMenu(title: 'Word Search', icon: Icons.search, warna: globalColor1,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
+                          FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: globalColor1, /*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
                           /*MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
-                        */WordRequest(title: 'Word Request', icon: Icons.add, warna: Colors.blue,),
-                          Quiz(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
+                        */WordRequest(title: 'Word Request', icon: Icons.add, warna: globalColor1,),
+                          Quiz(title: 'Quiz', icon: Icons.quiz, warna: globalColor1,),
 
                           AdminWordsRequested(title: 'Requests \n (ADMIN)', icon: Icons.list, warna: Colors.red,),
                           TestVocabs(title: 'Test', icon: Icons.search, warna: Colors.red,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
@@ -185,11 +187,11 @@ class _Home2State extends State<Home2>{
                       crossAxisCount: 2,
                       children:
                       <Widget>[
-                        MyMenu(title: 'Word Search', icon: Icons.search, warna: Colors.blue,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
-                        FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: Colors.blue, /*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
+                        MyMenu(title: 'Word Search', icon: Icons.search, warna: globalColor1,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
+                        FavoriteVocabs(title: 'Favorites', icon: Icons.folder, warna: globalColor1, /*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
                         /*MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
-                        */WordRequest(title: 'Word Request', icon: Icons.add, warna: Colors.blue,),
-                        Quiz(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
+                        */WordRequest(title: 'Word Request', icon: Icons.add, warna: globalColor1,),
+                        Quiz(title: 'Quiz', icon: Icons.quiz, warna: globalColor1,),
 /*
                         AdminWordsRequested(title: 'Requests (ADMIN)', icon: Icons.list, warna: Colors.red,),
 */

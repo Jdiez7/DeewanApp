@@ -3,6 +3,7 @@ import 'package:appwithfirebase/Project2/Pages/admin_requested_screen.dart';
 import 'package:appwithfirebase/Project2/Search/search.dart';
 import 'package:appwithfirebase/Project2/TEST/TestSearch.dart';
 import 'package:appwithfirebase/services/class_vocab.dart';
+import 'package:appwithfirebase/shared/constants.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,11 +25,11 @@ class MyMenu extends StatelessWidget{
 
   final String title;
   final IconData icon;
-  final MaterialColor warna;
+  final Color warna;
   final List<int> favoriteVocabs;
   //final List<Vocab> vocabs;
 
-  MyMenu({this.title = 'ERROR', this.icon = Icons.error, this.warna = Colors.purple, required this.favoriteVocabs,/*required this.vocabs*/});
+  MyMenu({this.title = 'ERROR', this.icon = Icons.error, this.warna = globalColor1, required this.favoriteVocabs,/*required this.vocabs*/});
 
 
 
@@ -45,7 +46,7 @@ class MyMenu extends StatelessWidget{
                 MaterialPageRoute(builder: (context) => SearchWordScreen(vocabs, favoriteVocabs)),
               );
             },
-            splashColor: Colors.green,
+            splashColor: globalColor1,
             child: Center(
                 child:Column(
                   mainAxisSize: MainAxisSize.min,
@@ -65,7 +66,7 @@ class TestVocabs extends StatelessWidget{
 
   final String title;
   final IconData icon;
-  final MaterialColor warna;
+  final Color warna;
   final List<int> favoriteVocabs;
   //final List<Vocab> vocabs;
 
@@ -124,7 +125,7 @@ class TestVocabs extends StatelessWidget{
                 MaterialPageRoute(builder: (context) => TestVocabsScreen(testVocabs, favoriteVocabs)),
               );
             },
-            splashColor: Colors.green,
+            splashColor: globalColor1,
             child: Center(
                 child:Column(
                   mainAxisSize: MainAxisSize.min,
@@ -143,7 +144,7 @@ class FavoriteVocabs extends StatelessWidget{
 
   final String title;
   final IconData icon;
-  final MaterialColor warna;
+  final Color warna;
   final List<int> favoriteVocabs;
   //final List<Vocab> vocabs;
 
@@ -163,7 +164,7 @@ class FavoriteVocabs extends StatelessWidget{
                 MaterialPageRoute(builder: (context) => FavoriteScreen(vocabs,)),
               );
             },
-            splashColor: Colors.green,
+            splashColor: globalColor1,
             child: Center(
                 child:Column(
                   mainAxisSize: MainAxisSize.min,
@@ -182,7 +183,7 @@ class MyMenu3 extends StatelessWidget{
 
   final String title;
   final IconData icon;
-  final MaterialColor warna;
+  final Color warna;
 
   MyMenu3({this.title = 'ERROR', this.icon = Icons.error, this.warna = Colors.purple,});
 
@@ -199,7 +200,7 @@ class MyMenu3 extends StatelessWidget{
                 MaterialPageRoute(builder: (context) => quiz_page()),
               );
             },
-            splashColor: Colors.green,
+            splashColor: warna,
             child: Center(
                 child:Column(
                   mainAxisSize: MainAxisSize.min,
@@ -217,7 +218,7 @@ class MyMenu3 extends StatelessWidget{
 class WordRequest extends StatelessWidget {
   final String title;
   final IconData icon;
-  final MaterialColor warna;
+  final Color warna;
 
   WordRequest({this.title = 'ERROR', this.icon = Icons.error, this.warna = Colors.purple,});
 
@@ -234,7 +235,7 @@ class WordRequest extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => RequestScreen()),
               );
             },
-            splashColor: Colors.blue,
+            splashColor: warna,
             child: Center(
                 child:Column(
                   mainAxisSize: MainAxisSize.min,
@@ -253,7 +254,7 @@ class WordRequest extends StatelessWidget {
 class Quiz extends StatelessWidget {
   final String title;
   final IconData icon;
-  final MaterialColor warna;
+  final Color warna;
 
   Quiz({this.title = 'ERROR', this.icon = Icons.error, this.warna = Colors.purple,});
 
@@ -270,7 +271,7 @@ class Quiz extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => QuizScreen()),
               );
             },
-            splashColor: Colors.blue,
+            splashColor: warna,
             child: Center(
                 child:Column(
                   mainAxisSize: MainAxisSize.min,
@@ -289,7 +290,7 @@ class Quiz extends StatelessWidget {
 class AdminWordsRequested extends StatelessWidget {
   final String title;
   final IconData icon;
-  final MaterialColor warna;
+  final Color warna;
 
   AdminWordsRequested({this.title = 'ERROR', this.icon = Icons.error, this.warna = Colors.purple,});
 
@@ -306,7 +307,7 @@ class AdminWordsRequested extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => AdminRequestedScreen()),
               );
             },
-            splashColor: Colors.blue,
+            splashColor: globalColor1,
             child: Center(
                 child:Column(
                   mainAxisSize: MainAxisSize.min,
@@ -326,7 +327,7 @@ class MyMenu4 extends StatelessWidget{
 
   final String title;
   final IconData icon;
-  final MaterialColor warna;
+  final Color warna;
 
   MyMenu4({this.title = 'ERROR', this.icon = Icons.error, this.warna = Colors.purple,});
 
@@ -343,7 +344,7 @@ class MyMenu4 extends StatelessWidget{
                 MaterialPageRoute(builder: (context) => learning_material()),
               );
             },
-            splashColor: Colors.green,
+            splashColor: globalColor1,
             child: Center(
                 child:Column(
                   mainAxisSize: MainAxisSize.min,
@@ -362,7 +363,7 @@ class MyMenu5 extends StatelessWidget{
 
   final String title;
   final IconData icon;
-  final MaterialColor warna;
+  final Color warna;
 
   MyMenu5({this.title = 'ERROR', this.icon = Icons.error, this.warna = Colors.purple,});
 
@@ -379,7 +380,7 @@ class MyMenu5 extends StatelessWidget{
                 MaterialPageRoute(builder: (context) => my_account()),
               );
             },
-            splashColor: Colors.green,
+            splashColor: globalColor1,
             child: Center(
                 child:Column(
                   mainAxisSize: MainAxisSize.min,
@@ -398,7 +399,7 @@ class MyMenu6 extends StatelessWidget{
 
   final String title;
   final IconData icon;
-  final MaterialColor warna;
+  final Color warna;
 
   MyMenu6({this.title = 'ERROR', this.icon = Icons.error, this.warna = Colors.purple,});
 
@@ -415,7 +416,7 @@ class MyMenu6 extends StatelessWidget{
                 MaterialPageRoute(builder: (context) => refer_to_a_friend()),
               );
             },
-            splashColor: Colors.green,
+            splashColor: globalColor1,
             child: Center(
                 child:Column(
                   mainAxisSize: MainAxisSize.min,
