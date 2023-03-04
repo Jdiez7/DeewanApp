@@ -43,6 +43,8 @@ class Home2 extends StatefulWidget {
 class _Home2State extends State<Home2>{
   _Home2State({this.accountEmail = 'Hier könnte ihre Mailadresse stehen', this.accountName = 'MAX MUSTERMANN'});
 
+
+
   final String accountName;
   final String accountEmail;
   List<int> favoriteVocab = List<int>.empty(growable: true);
@@ -55,6 +57,8 @@ class _Home2State extends State<Home2>{
     await FirebaseAuth.instance.signOut();
   }
 
+
+
   Widget build(BuildContext context) {
     String? role = 'user';
     MyUser user = Provider.of<MyUser>(context);
@@ -62,6 +66,7 @@ class _Home2State extends State<Home2>{
       stream: DeewanDataBaseService(uid: user.uid).deewanUserData,
       builder: (context, snapshot) {
     if (snapshot.hasData) {
+
       DeewanUserData? deewanUserData = snapshot.data!;
       deewanUserData.role != null ? role = deewanUserData.role : null;
         return Scaffold(
@@ -153,6 +158,7 @@ class _Home2State extends State<Home2>{
                           /*MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
                         */WordRequest(title: 'Word Request', icon: Icons.add, warna: globalColor1,),
                           Quiz(title: 'Quiz', icon: Icons.quiz, warna: globalColor1,),
+                          ClassScheduling(title:"    Schedule\n your Classes!", icon: Icons.calendar_month, warna: globalColor1,),
                           AdminWordsRequested(title: 'Requests \n (ADMIN)', icon: Icons.list, warna: Colors.red,),
 
                           /* MyMenu5(title: 'My Account', icon: Icons.account_circle, warna: Colors.blue,),
@@ -171,7 +177,7 @@ class _Home2State extends State<Home2>{
                           /*MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
                         */WordRequest(title: 'Word Request', icon: Icons.add, warna: globalColor1,),
                           Quiz(title: 'Quiz', icon: Icons.quiz, warna: globalColor1,),
-
+                          ClassScheduling(title:"    Schedule\n your Classes!", icon: Icons.calendar_month, warna: globalColor1,),
                           AdminWordsRequested(title: 'Requests \n (ADMIN)', icon: Icons.list, warna: Colors.red,),
                           TestVocabs(title: 'Test', icon: Icons.search, warna: Colors.red,/*vocabs: vocabs,*/ favoriteVocabs: favoriteVocab),
 
@@ -192,6 +198,8 @@ class _Home2State extends State<Home2>{
                         /*MyMenu3(title: 'Quiz', icon: Icons.quiz, warna: Colors.blue,),
                         */WordRequest(title: 'Word Request', icon: Icons.add, warna: globalColor1,),
                         Quiz(title: 'Quiz', icon: Icons.quiz, warna: globalColor1,),
+                        ClassScheduling(title:"    Schedule\n your Classes!", icon: Icons.calendar_month, warna: globalColor1,),
+
 /*
                         AdminWordsRequested(title: 'Requests (ADMIN)', icon: Icons.list, warna: Colors.red,),
 */

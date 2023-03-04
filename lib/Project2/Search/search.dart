@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:appwithfirebase/Project2/Search/Xallvocabs.dart';
 import 'package:appwithfirebase/Project2/Search/search_widget.dart';
 import 'package:appwithfirebase/services/class_vocab.dart';
 import 'package:appwithfirebase/Project2/menu.dart';
@@ -25,12 +24,12 @@ class SearchWordScreen extends StatefulWidget {
 
 class SearchWordScreenState extends State<SearchWordScreen> {
   String query = '';
-  late List<Vocab> vocabs;
+  late List<Vocab> _vocabs;
 
   @override
   void initState() {
     super.initState();
-    vocabs = widget.vocabs;
+    _vocabs = widget.vocabs;
   }
 
   @override
@@ -61,12 +60,12 @@ class SearchWordScreenState extends State<SearchWordScreen> {
                     buildSearch(),
                     Expanded(
                       child: ListView.builder(
-                          itemCount: vocabs.length,
+                          itemCount: _vocabs.length,
                           itemBuilder: (context, index) {
-                            vocabs.sort((a, b) => a.englishMain.toLowerCase().compareTo(b.englishMain.toLowerCase()));
-                            vocabs.sort((a, b) => value(a, query).compareTo(value(b, query)));
+                            _vocabs.sort((a, b) => a.englishMain.toLowerCase().compareTo(b.englishMain.toLowerCase()));
+                            _vocabs.sort((a, b) => value(a, query).compareTo(value(b, query)));
 
-                            final vocab = vocabs[index];
+                            final vocab = _vocabs[index];
                             return buildVocab(vocab, deewanUserData);
                           },
                         ),
@@ -101,9 +100,9 @@ class SearchWordScreenState extends State<SearchWordScreen> {
         vocab.english3.substring(0,len3).toLowerCase().contains(query.toLowerCase()) ||
         vocab.english4.substring(0,len4).toLowerCase().contains(query.toLowerCase()) ||
         vocab.englishMain.substring(min(3,vocab.englishMain.length),len5).toLowerCase().contains(query.toLowerCase()) && vocab.englishMain.substring(0,min(3,vocab.englishMain.length)).toLowerCase() == "to "||
-        vocab.english2.substring(min(3,vocab.english2.length),len6).toLowerCase().contains(query.toLowerCase()) && vocab.englishMain.substring(0,min(3,vocab.english2.length)).toLowerCase() == "to "||
-        vocab.english3.substring(min(3,vocab.english3.length),len7).toLowerCase().contains(query.toLowerCase()) && vocab.englishMain.substring(0,min(3,vocab.english3.length)).toLowerCase() == "to "||
-        vocab.english4.substring(min(3,vocab.english4.length),len8).toLowerCase().contains(query.toLowerCase()) && vocab.englishMain.substring(0,min(3,vocab.english4.length)).toLowerCase() == "to " ||
+        vocab.english2.substring(min(3,vocab.english2.length),len6).toLowerCase().contains(query.toLowerCase()) && vocab.english2.substring(0,min(3,vocab.english2.length)).toLowerCase() == "to "||
+        vocab.english3.substring(min(3,vocab.english3.length),len7).toLowerCase().contains(query.toLowerCase()) && vocab.english3.substring(0,min(3,vocab.english3.length)).toLowerCase() == "to "||
+        vocab.english4.substring(min(3,vocab.english4.length),len8).toLowerCase().contains(query.toLowerCase()) && vocab.english4.substring(0,min(3,vocab.english4.length)).toLowerCase() == "to " ||
     normAr.substring(0,lenara).toLowerCase().contains(normQu.toLowerCase())
     ){
       val -= 1000;
@@ -359,7 +358,7 @@ class SearchWordScreenState extends State<SearchWordScreen> {
   }
 
   void searchVocab(String query) {
-    final vocabs = widget.vocabs.where((vocab) {
+    final _vocabs = widget.vocabs.where((vocab) {
       final englishMain = vocab.englishMain.toLowerCase();
       final arabicMain = normalise(vocab.arabicMain.toLowerCase());
       final nounPluralLower = normalise(vocab.nOUNplural.toLowerCase());
@@ -395,7 +394,7 @@ class SearchWordScreenState extends State<SearchWordScreen> {
 
     setState(() {
       this.query = query;
-      this.vocabs = vocabs;
+      this._vocabs = _vocabs;
     });
   }
 }

@@ -1,3 +1,4 @@
+import 'package:appwithfirebase/shared/constants.dart';
 import 'package:flutter/material.dart';
 
 class SearchWidget extends StatefulWidget {
@@ -21,7 +22,7 @@ class _SearchWidgetState extends State<SearchWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final styleActive = TextStyle(color: Colors.blue);
+    final styleActive = TextStyle(color: globalTextColor);
     final styleHint = TextStyle(color: Colors.black54);
     final style = widget.text.isEmpty ? styleHint : styleActive;
 

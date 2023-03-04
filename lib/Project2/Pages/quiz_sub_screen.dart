@@ -266,7 +266,7 @@ class _subQuizState extends State<subQuiz> {
                               return;
                             }
                             _nextQuestion();
-                          }, child: Text(endOfQuiz? 'Restart Quiz' : 'Next Question')),
+                          }, child: Text(endOfQuiz? 'Choose level' : 'Next Question')),
                       Container(padding: EdgeInsets.all(20.0),
                       child: Text(
                         '${_totalScore.toString()}/${_quizLength}',

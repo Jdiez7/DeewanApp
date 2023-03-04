@@ -1,4 +1,3 @@
-import 'package:appwithfirebase/Project2/Search/Xallvocabs.dart';
 import 'package:appwithfirebase/models/myuser.dart';
 import 'package:appwithfirebase/screens/wrapper.dart';
 import 'package:appwithfirebase/screens/wrapper2.dart';
@@ -31,15 +30,31 @@ class MyApp extends StatelessWidget {
             appBarTheme: AppBarTheme(
               color: appBarColor,
             ),
+            hintColor: globalTextColor,
 
             textTheme: TextTheme(
-                titleLarge: TextStyle(color: Colors.pink)),
-            /*Theme.of(context).textTheme.apply(
-              bodyColor: globalTextColor,
-              displayColor: globalTextColor,
-            ),*/
+              titleMedium: TextStyle(color: globalTextColor),
+                titleSmall: TextStyle(color: globalTextColor),
+                displayLarge: TextStyle(color: globalTextColor),
+                displayMedium: TextStyle(color: globalTextColor),
+                displaySmall: TextStyle(color: globalTextColor),
+                headlineLarge: TextStyle(color: globalTextColor),
+                headlineMedium: TextStyle(color: globalTextColor),
+                headlineSmall: TextStyle(color: globalTextColor),
+                bodyLarge: TextStyle(color:globalTextColor),
+                bodyMedium: TextStyle(color: globalTextColor),
+                bodySmall: TextStyle(color: globalTextColor),
+                labelLarge: TextStyle(color: globalTextColor),
+                labelMedium: TextStyle(color: globalTextColor),
+                labelSmall: TextStyle(color: globalTextColor),
+
+                titleLarge: TextStyle(color: globalTextColor)),
             textSelectionTheme: TextSelectionThemeData(
-              selectionHandleColor: globalTextColor,),
+              cursorColor: globalTextColor,
+              selectionColor: globalTextColor,
+              selectionHandleColor: globalTextColor,
+            ),
+
             primaryColor: globalTextColor,
 
           ),

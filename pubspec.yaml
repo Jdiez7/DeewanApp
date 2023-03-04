@@ -45,6 +45,7 @@ dependencies:
   firebase_crashlytics: any
   firebase_messaging: any
   csv: ^5.0.1
+  url_launcher: ^6.1.9
 
 
 dev_dependencies:

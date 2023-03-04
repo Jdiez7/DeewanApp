@@ -4,6 +4,7 @@ import 'package:appwithfirebase/Project2/Search/search.dart';
 import 'package:appwithfirebase/Project2/TEST/TestSearch.dart';
 import 'package:appwithfirebase/services/class_vocab.dart';
 import 'package:appwithfirebase/shared/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +19,8 @@ import 'Pages/refer_to_a_friend.dart';
 import 'Pages/request_screen.dart';
 import 'dart:async';
 import 'dart:io';
+import 'package:url_launcher/url_launcher.dart';
+
 
 
 
@@ -428,5 +431,54 @@ class MyMenu6 extends StatelessWidget{
             )
         )
     );
+  }
+}
+
+class ClassScheduling extends StatelessWidget{
+
+  final String title;
+  final IconData icon;
+  final Color warna;
+
+  ClassScheduling({this.title = 'ERROR', this.icon = Icons.error, this.warna = globalColor1,});
+
+
+
+  @override
+  Widget build(BuildContext context){
+    return  Card(
+
+        margin: const EdgeInsets.all(8.0),
+        child: InkWell(
+            onTap: _launchUrl,
+            splashColor: globalColor1,
+            child: Center(
+                child:Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Icon(icon, size:70.0, color: warna,),
+                    Text(title, style : const TextStyle(fontSize: 17.0))
+                  ],
+                )
+            )
+        )
+    );
+  }
+}
+
+Future<void> _launchUrl() async {
+  String url_string;
+  DocumentSnapshot snapshot = await FirebaseFirestore.instance
+      .collection('LinkList')
+      .doc('08twnp6BnP81vVRbkttP')
+      .get();
+  if (snapshot.exists) {
+    url_string = snapshot.get('ClassScheduling');
+  } else {
+    url_string = 'Document does not exist';
+  }
+  final Uri _url = Uri.parse(url_string);
+  if (!await launchUrl(_url)) {
+    throw Exception('Could not launch $_url');
   }
 }
