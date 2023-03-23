@@ -333,7 +333,7 @@ class Synonyms extends StatelessWidget {
               vocab.syn3 == ""
                   ? TextSpan(text: "")
                   : TextSpan(
-                      text: "\t \t  3. " + vocab.english3,
+                      text: "\t \t  3. " + vocab.syn3,
                       style: TextStyle(fontSize: 17)),
             ],
           ),
